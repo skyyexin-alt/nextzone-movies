@@ -48,7 +48,7 @@ export default async function Home() {
     <div className="pb-20">
       <Hero item={heroItem} />
       
-      <div className="container mx-auto px-4 md:px-8 max-w-[1200px] mt-4">
+      <div className="container mx-auto px-4 md:px-8 mt-4">
         <TelegramBanner />
         <ShareButtons />
         <ContinueWatchingSection />
