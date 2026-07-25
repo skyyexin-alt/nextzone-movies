@@ -54,6 +54,7 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
           className="w-full h-full absolute inset-0 bg-black"
           src={getEmbedUrl()}
           title={`${title} Player`}
+          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         ></iframe>
