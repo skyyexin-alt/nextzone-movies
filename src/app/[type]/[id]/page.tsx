@@ -32,7 +32,7 @@ export default async function DetailPage({
   const trailerKey = (videos.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube') || videos.find((v: any) => v.site === 'YouTube'))?.key;
 
   return (
-    <div className="container mx-auto px-4 md:px-8 py-8 min-h-screen pt-24">
+    <div className="w-full mx-auto px-4 md:px-12 lg:px-24 xl:px-32 py-8 min-h-screen pt-24">
       
       {/* Breadcrumbs */}
       <div className="flex items-center gap-2 text-sm text-zinc-400 mb-6 font-medium">
@@ -78,7 +78,7 @@ export default async function DetailPage({
 
       {/* Similar Titles */}
       {similar.length > 0 && (
-        <div className="mt-12 border-t border-white/5 pt-8 -mx-4 md:-mx-8 px-4 md:px-8">
+        <div className="mt-12 border-t border-white/5 pt-8 -mx-4 md:-mx-12 lg:-mx-24 xl:-mx-32 px-4 md:px-12 lg:px-24 xl:px-32">
           <ContentRail title="You May Also Like" items={similar.slice(0, 15)} />
         </div>
       )}
