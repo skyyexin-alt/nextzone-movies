@@ -35,7 +35,7 @@ export default function Hero({ item }: HeroProps) {
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#1a1a3e] via-[#1a1a3e]/80 to-transparent"></div>
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1a1a3e] via-[#1a1a3e]/20 to-transparent"></div>
 
-      <div className="container mx-auto px-4 md:px-8 relative z-20 mt-20">
+      <div className="container max-w-[1200px] mx-auto px-4 md:px-8 relative z-20 mt-20">
         <div className="max-w-2xl">
           <div className="flex items-center gap-3 mb-4 flex-wrap">
             <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-600/20 text-violet-400 border border-violet-500/30 backdrop-blur-md">

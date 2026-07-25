@@ -20,7 +20,7 @@ export default function TelegramBanner() {
       </div>
       
       <Link 
-        href="https://telegram.org" 
+        href="https://t.me/+bsT00OZEZWpjZDA9" 
         target="_blank"
         rel="noopener noreferrer"
         className="relative z-10 whitespace-nowrap bg-[#1e88e5] text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-[#1565c0] transition-colors shadow-lg"
