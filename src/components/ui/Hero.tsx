@@ -18,7 +18,7 @@ export default function Hero({ item }: HeroProps) {
     : '';
 
   return (
-    <section className="relative w-full h-[75vh] md:h-[85vh] min-h-[600px] flex items-center overflow-hidden">
+    <section className="relative w-full h-[55vh] md:h-[60vh] min-h-[500px] flex items-center overflow-hidden">
       {/* Background Image */}
       {backdrop && (
         <div className="absolute inset-0 z-0">
