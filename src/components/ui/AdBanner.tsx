@@ -35,7 +35,7 @@ export default function AdBanner() {
   }, []);
 
   return (
-    <div className="w-full flex justify-center items-center my-6 min-h-[90px] overflow-hidden bg-black/20 rounded-xl border border-white/5 py-2">
+    <div className="w-full flex justify-center items-center my-6 min-h-[90px] overflow-hidden">
       <div ref={bannerRef} className="flex justify-center items-center text-center w-[728px] max-w-full">
         {/* The ad will be injected here by the invoke.js script */}
       </div>
