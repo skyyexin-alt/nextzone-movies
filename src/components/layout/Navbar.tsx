@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Menu, X, ChevronDown, ListVideo, Shuffle } from 'lucide-react';
+import { Search, Menu, X, ChevronDown, Heart, Shuffle, ListVideo } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import SearchOverlay from './SearchOverlay';
 
@@ -21,10 +21,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Movies', href: '/movies' },
-    { name: 'TV Shows', href: '/tv' },
-    { name: 'New', href: '/new-releases' },
+    { name: 'HOME', href: '/' },
+    { name: 'MOVIES', href: '/movies' },
+    { name: 'TV SHOWS', href: '/tv' },
+    { name: 'NEW', href: '/new-releases' },
   ];
 
   const browseLinks = [
@@ -43,65 +43,89 @@ export default function Navbar() {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-[#1a1a3e]/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-5'
+          isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-5'
         }`}
       >
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center group-hover:scale-105 transition-transform">
-                <ListVideo className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <ListVideo className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xl font-bold text-white tracking-wide">NextZone</span>
+              <span className="text-xl font-extrabold text-white tracking-tight">FlickZone</span>
             </Link>
 
             <nav className="hidden lg:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-white ${
-                    pathname === link.href ? 'text-white' : 'text-zinc-400'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`relative text-xs font-bold tracking-wider transition-colors py-2 ${
+                      isActive ? 'text-white' : 'text-zinc-400 hover:text-white'
+                    }`}
+                  >
+                    {link.name}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-violet-500 rounded-full"></span>
+                    )}
+                  </Link>
+                );
+              })}
               
               <div className="relative group">
-                <button className="flex items-center gap-1 text-sm font-medium text-zinc-400 hover:text-white transition-colors py-2">
-                  Browse <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180" />
+                <button className="flex items-center gap-1 text-xs font-bold tracking-wider text-zinc-400 hover:text-white transition-colors py-2">
+                  BROWSE <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
                 </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-[#222255] rounded-xl shadow-xl border border-white/5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all grid grid-cols-1 overflow-hidden">
+                <div className="absolute top-full left-0 mt-2 w-48 bg-[#151530] rounded-xl shadow-xl border border-white/5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all grid grid-cols-1 overflow-hidden">
                   {browseLinks.map((link) => (
                     <Link
                       key={link.name}
                       href={link.href}
-                      className="px-4 py-2.5 text-sm text-zinc-300 hover:bg-white/5 hover:text-white transition-colors"
+                      className="px-4 py-2.5 text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-white transition-colors"
                     >
                       {link.name}
                     </Link>
                   ))}
                 </div>
               </div>
+
+              <Link
+                href="/network"
+                className="text-xs font-black tracking-widest text-white transition-colors py-2"
+              >
+                FLIXNETWORK
+              </Link>
             </nav>
           </div>
 
-          <div className="flex items-center gap-2 md:gap-4">
+          <div className="flex items-center gap-3">
+            <div 
+              onClick={() => setSearchOpen(true)}
+              className="hidden md:flex items-center gap-2 bg-[#1a1a3e] border border-white/5 hover:border-white/10 rounded-full px-4 py-2 cursor-pointer transition-colors"
+            >
+              <Search className="w-4 h-4 text-zinc-400" />
+              <span className="text-xs font-medium text-zinc-500 min-w-[120px]">Enter keywords...</span>
+            </div>
+
             <button 
               onClick={() => setSearchOpen(true)}
-              className="p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-full transition-colors flex items-center gap-2"
+              className="md:hidden p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
             >
               <Search className="w-5 h-5" />
-              <span className="hidden md:block text-sm opacity-70">Search...</span>
+            </button>
+
+            <button className="p-2.5 bg-[#1a1a3e] border border-white/5 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white transition-colors hidden sm:block">
+              <Shuffle className="w-4 h-4" />
             </button>
 
             <Link
               href="/watchlist"
-              className="p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
+              className="p-2.5 bg-[#1a1a3e] border border-white/5 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white transition-colors"
               title="My List"
             >
-              <ListVideo className="w-5 h-5" />
+              <Heart className="w-4 h-4" />
             </Link>
 
             <button

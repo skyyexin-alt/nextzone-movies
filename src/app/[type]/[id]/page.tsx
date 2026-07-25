@@ -37,11 +37,11 @@ export default async function DetailPage({
       {/* Breadcrumbs */}
       <div className="flex items-center gap-2 text-sm text-zinc-400 mb-6 font-medium">
         <Link href="/" className="hover:text-white transition-colors">Home</Link>
-        <ChevronRight className="w-3.5 h-3.5" />
+        <span className="text-zinc-600">/</span>
         <Link href={`/${type === 'movie' ? 'movies' : 'tv'}`} className="hover:text-white transition-colors">
           {type === 'movie' ? 'Movies' : 'TV Shows'}
         </Link>
-        <ChevronRight className="w-3.5 h-3.5" />
+        <span className="text-zinc-600">/</span>
         <span className="text-white truncate">{title}</span>
       </div>
 
