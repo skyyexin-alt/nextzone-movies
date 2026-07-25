@@ -1,8 +1,8 @@
 import { getDetails } from '@/lib/tmdb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Star, ChevronRight } from 'lucide-react';
-import ContentRail from '@/components/ui/ContentRail';
+import { Star, ChevronRight, Heart } from 'lucide-react';
+import MovieCard from '@/components/ui/MovieCard';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 
 export default async function DetailPage({
@@ -78,8 +78,21 @@ export default async function DetailPage({
 
       {/* Similar Titles */}
       {similar.length > 0 && (
-        <div className="mt-12 border-t border-white/5 pt-8 -mx-4 md:-mx-8 px-4 md:px-8">
-          <ContentRail title="You May Also Like" items={similar.slice(0, 15)} />
+        <div className="mt-12 border-t border-white/5 pt-8">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="w-10 h-10 rounded-xl bg-violet-600/20 border border-violet-500/30 flex items-center justify-center">
+              <Heart className="w-5 h-5 text-violet-400" />
+            </span>
+            <div>
+              <h2 className="text-xl font-bold text-white">You may also like</h2>
+              <p className="text-xs text-zinc-500 mt-0.5">Because you're watching {title}</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-4 md:gap-5 justify-start">
+            {similar.slice(0, 18).map((item: any) => (
+              <MovieCard key={item.id} item={item} />
+            ))}
+          </div>
         </div>
       )}
     </div>
