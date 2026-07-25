@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Providers } from "./Providers";
 import RandomPick from "@/components/ui/RandomPick";
+import StickySocialSidebar from "@/components/ui/StickySocialSidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,6 +35,7 @@ export default function RootLayout({
             {children}
           </main>
           <RandomPick />
+          <StickySocialSidebar />
           <Footer />
         </Providers>
       </body>

@@ -1,9 +1,10 @@
 import { getDetails } from '@/lib/tmdb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Star, ChevronRight, Heart } from 'lucide-react';
+import { Star, ChevronRight, Heart, TrendingUp } from 'lucide-react';
 import MovieCard from '@/components/ui/MovieCard';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
+import HistoryTracker from '@/components/ui/HistoryTracker';
 
 export default async function DetailPage({
   params,
@@ -33,6 +34,7 @@ export default async function DetailPage({
 
   return (
     <div className="max-w-[1200px] w-full mx-auto px-4 md:px-8 py-8 min-h-screen pt-24">
+      <HistoryTracker item={data} />
       
       {/* Breadcrumbs */}
       <div className="flex items-center gap-2 text-sm text-zinc-400 mb-6 font-medium">

@@ -1,6 +1,9 @@
 import { Suspense } from 'react';
 import Hero from '@/components/ui/Hero';
 import ContentRail from '@/components/ui/ContentRail';
+import TelegramBanner from '@/components/ui/TelegramBanner';
+import ShareButtons from '@/components/ui/ShareButtons';
+import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
 import { 
   getTrending, 
   getPopularMovies, 
@@ -44,6 +47,12 @@ export default async function Home() {
   return (
     <div className="pb-20">
       <Hero item={heroItem} />
+      
+      <div className="container mx-auto px-4 md:px-8 max-w-[1200px] mt-4">
+        <TelegramBanner />
+        <ShareButtons />
+        <ContinueWatchingSection />
+      </div>
       
       <div className="mt-8 flex flex-col gap-4">
         <Suspense fallback={<div className="h-64 animate-pulse bg-white/5 rounded-xl mx-4 md:mx-8"></div>}>
