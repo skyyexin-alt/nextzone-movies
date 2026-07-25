@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Star, ChevronRight, Heart, TrendingUp } from 'lucide-react';
 import MovieCard from '@/components/ui/MovieCard';
+import TelegramBanner from '@/components/ui/TelegramBanner';
+import Container from '@/components/ui/Container';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 
@@ -33,7 +35,7 @@ export default async function DetailPage({
   const trailerKey = (videos.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube') || videos.find((v: any) => v.site === 'YouTube'))?.key;
 
   return (
-    <div className="max-w-[95%] w-full mx-auto px-4 md:px-8 py-8 min-h-screen pt-24">
+    <Container className="py-8 min-h-screen pt-24">
       <HistoryTracker item={data} />
       
       {/* Breadcrumbs */}
@@ -97,6 +99,6 @@ export default async function DetailPage({
           </div>
         </div>
       )}
-    </div>
+    </Container>
   );
 }

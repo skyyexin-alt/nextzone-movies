@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import { MediaItem } from '@/lib/tmdb';
 import MovieCard from './MovieCard';
+import Container from '@/components/ui/Container';
 
 interface ContentRailProps {
   title: string;
@@ -33,7 +34,7 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
 
   return (
     <section className="py-8 relative group">
-      <div className="container mx-auto px-4 md:px-8">
+      <Container>
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
             <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20 border border-violet-500/20 flex items-center justify-center text-violet-400">
@@ -78,7 +79,7 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
             <ChevronRight className="w-6 h-6" />
           </button>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -4,6 +4,7 @@ import ContentRail from '@/components/ui/ContentRail';
 import TelegramBanner from '@/components/ui/TelegramBanner';
 import ShareButtons from '@/components/ui/ShareButtons';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
+import Container from '@/components/ui/Container';
 import { 
   getTrending, 
   getPopularMovies, 
@@ -48,14 +49,14 @@ export default async function Home() {
     <div className="pb-20">
       <Hero item={heroItem} />
       
-      <div className="container mx-auto px-4 md:px-8 max-w-[95%] mt-4">
+      <Container className="mt-4">
         <TelegramBanner />
         <ShareButtons />
         <ContinueWatchingSection />
-      </div>
+      </Container>
       
-      <div className="mt-8 flex flex-col gap-4 max-w-[95%] mx-auto w-full">
-        <Suspense fallback={<div className="h-64 animate-pulse bg-white/5 rounded-xl mx-4 md:mx-8"></div>}>
+      <div className="mt-8 flex flex-col gap-4 w-full">
+        <Suspense fallback={<Container><div className="h-64 animate-pulse bg-white/5 rounded-xl"></div></Container>}>
           <ContentRail 
             title="Trending This Week" 
             items={trendingItems} 
@@ -128,7 +129,7 @@ export default async function Home() {
 
         {/* SEO Text Block */}
         <section className="py-16">
-          <div className="container mx-auto px-4 md:px-8">
+          <Container>
             <div className="bg-[#222255]/50 border border-white/5 rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto backdrop-blur-sm">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Your Ultimate Streaming Destination</h2>
               <p className="text-zinc-400 leading-relaxed mb-4">
@@ -138,7 +139,7 @@ export default async function Home() {
                 Enjoy seamless playback across all your devices without the hassle of registration. Our smart recommendation engine helps you discover hidden gems, while our responsive design ensures a perfect viewing experience whether you're on a mobile phone or a massive smart TV.
               </p>
             </div>
-          </div>
+          </Container>
         </section>
 
         <Suspense fallback={<div className="h-64 animate-pulse bg-white/5 rounded-xl mx-4 md:mx-8"></div>}>

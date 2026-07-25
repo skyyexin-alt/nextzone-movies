@@ -2,13 +2,14 @@
 
 import { useWatchlist } from '@/context/WatchlistContext';
 import MovieCard from '@/components/ui/MovieCard';
+import Container from '@/components/ui/Container';
 import { ListVideo } from 'lucide-react';
 
 export default function WatchlistPage() {
   const { watchlist } = useWatchlist();
 
   return (
-    <div className="container mx-auto px-4 md:px-8 py-24 md:py-32 min-h-screen">
+    <Container className="py-24 md:py-32 min-h-screen">
       <div className="flex items-center gap-3 mb-10">
         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20 border border-violet-500/20 flex items-center justify-center text-violet-400">
           <ListVideo className="w-6 h-6" />
@@ -31,6 +32,6 @@ export default function WatchlistPage() {
           </p>
         </div>
       )}
-    </div>
+    </Container>
   );
 }

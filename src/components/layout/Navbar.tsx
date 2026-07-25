@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Search, Menu, X, ChevronDown, Heart, Shuffle, ListVideo } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import SearchOverlay from './SearchOverlay';
+import Container from '@/components/ui/Container';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,7 +47,7 @@ export default function Navbar() {
           isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-5'
         }`}
       >
-        <div className="max-w-[95%] w-full mx-auto px-4 md:px-8 flex items-center justify-between">
+      <Container className="w-full flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -135,7 +136,7 @@ export default function Navbar() {
               <Menu className="w-6 h-6" />
             </button>
           </div>
-        </div>
+        </Container>
       </header>
 
       {/* Mobile Menu Drawer */}

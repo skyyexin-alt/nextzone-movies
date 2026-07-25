@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, Search as SearchIcon, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import Container from '@/components/ui/Container';
 import { searchMedia, MediaItem } from '@/lib/tmdb';
 
 interface SearchOverlayProps {
@@ -62,7 +63,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
   return (
     <div className="fixed inset-0 z-[100] bg-[#1a1a3e]/95 backdrop-blur-xl animate-in fade-in duration-200">
-      <div className="container mx-auto px-4 py-6 md:py-12 h-full flex flex-col">
+      <Container className="py-6 md:py-12 h-full flex flex-col">
         <div className="flex items-center gap-4 relative">
           <SearchIcon className="w-6 h-6 text-zinc-400 absolute left-4" />
           <input
@@ -123,7 +124,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
             </div>
           )}
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

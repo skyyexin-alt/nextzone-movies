@@ -4,6 +4,8 @@ import CatalogFilters from '@/components/ui/CatalogFilters';
 import Pagination from '@/components/ui/Pagination';
 import TelegramBanner from '@/components/ui/TelegramBanner';
 import BrowseMore from '@/components/ui/BrowseMore';
+import { Suspense } from 'react';
+import Container from '@/components/ui/Container';
 import { notFound } from 'next/navigation';
 
 export default async function CatalogPage({ 
@@ -59,7 +61,7 @@ export default async function CatalogPage({
   const genres = genresData?.genres || [];
 
   return (
-    <div className="container mx-auto px-4 md:px-8 py-24 min-h-screen">
+    <Container className="py-24 min-h-screen">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{title}</h1>
@@ -86,6 +88,6 @@ export default async function CatalogPage({
       <TelegramBanner />
       
       <BrowseMore genres={genres} />
-    </div>
+    </Container>
   );
 }
