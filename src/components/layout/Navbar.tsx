@@ -46,7 +46,7 @@ export default function Navbar() {
           isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-5'
         }`}
       >
-        <div className="w-full mx-auto px-4 md:px-12 lg:px-24 xl:px-32 flex items-center justify-between">
+        <div className="max-w-[1600px] w-full mx-auto px-4 md:px-8 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center group-hover:scale-105 transition-transform">
