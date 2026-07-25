@@ -1,0 +1,91 @@
+import { getDiscoverMovies, getDiscoverTV, getGenres } from '@/lib/tmdb';
+import MovieCard from '@/components/ui/MovieCard';
+import CatalogFilters from '@/components/ui/CatalogFilters';
+import Pagination from '@/components/ui/Pagination';
+import TelegramBanner from '@/components/ui/TelegramBanner';
+import BrowseMore from '@/components/ui/BrowseMore';
+import { notFound } from 'next/navigation';
+
+export default async function CatalogPage({ 
+  params,
+  searchParams 
+}: { 
+  params: Promise<{ type: string }>,
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const type = resolvedParams.type;
+  let isMovie = true;
+  let title = 'Movies';
+
+  // Determine base type and title
+  if (['movies', 'trending', 'top-rated', 'new-releases', 'now-playing', 'upcoming', 'action'].includes(type)) {
+    isMovie = true;
+    title = 'Movies';
+  } else if (['tv', 'airing-today'].includes(type)) {
+    isMovie = false;
+    title = 'TV Shows';
+  } else {
+    return notFound();
+  }
+
+  // Parse search params for TMDB discover endpoint
+  const page = typeof resolvedSearchParams.page === 'string' ? resolvedSearchParams.page : '1';
+  const sortBy = typeof resolvedSearchParams.sort_by === 'string' ? resolvedSearchParams.sort_by : 'popularity.desc';
+  const withGenres = typeof resolvedSearchParams.with_genres === 'string' ? resolvedSearchParams.with_genres : undefined;
+  const primaryReleaseYear = typeof resolvedSearchParams.primary_release_year === 'string' ? resolvedSearchParams.primary_release_year : undefined;
+
+  // Build the query object
+  const queryParams: Record<string, string> = {
+    page,
+    sort_by: sortBy,
+  };
+  if (withGenres) queryParams.with_genres = withGenres;
+  if (primaryReleaseYear) {
+    if (isMovie) queryParams.primary_release_year = primaryReleaseYear;
+    else queryParams.first_air_date_year = primaryReleaseYear;
+  }
+
+  // Fetch data in parallel
+  const [data, genresData] = await Promise.all([
+    isMovie ? getDiscoverMovies(queryParams) : getDiscoverTV(queryParams),
+    getGenres(isMovie ? 'movie' : 'tv')
+  ]);
+
+  const items = data?.results || [];
+  const totalPages = data?.total_pages || 1;
+  const currentPage = parseInt(page, 10);
+  const genres = genresData?.genres || [];
+
+  return (
+    <div className="container mx-auto px-4 md:px-8 py-24 min-h-screen">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{title}</h1>
+          <p className="text-zinc-400 text-sm">Page {currentPage} of {Math.min(totalPages, 500)}</p>
+        </div>
+      </div>
+
+      <CatalogFilters genres={genres} />
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+        {items.map((item: any) => (
+          <MovieCard key={item.id} item={item} />
+        ))}
+      </div>
+
+      {items.length === 0 && (
+        <div className="text-center py-20 text-zinc-400">
+          No results found matching your filters.
+        </div>
+      )}
+
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      
+      <TelegramBanner />
+      
+      <BrowseMore genres={genres} />
+    </div>
+  );
+}
