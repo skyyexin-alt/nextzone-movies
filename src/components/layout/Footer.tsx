@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ListVideo, Heart, Github, Twitter, Mail } from 'lucide-react';
+import { ListVideo } from 'lucide-react';
 import Container from '@/components/ui/Container';
 
 export default function Footer() {
