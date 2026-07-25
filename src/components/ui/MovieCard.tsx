@@ -32,14 +32,14 @@ export default function MovieCard({ item }: MovieCardProps) {
     : 'https://via.placeholder.com/342x513?text=No+Poster';
 
   return (
-    <Link href={url} className="group relative flex flex-col gap-2 rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-violet-500 w-[140px] md:w-[160px] lg:w-[180px] flex-shrink-0">
+    <Link href={url} className="group/card relative flex flex-col gap-2 rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-violet-500 w-[140px] md:w-[160px] lg:w-[180px] flex-shrink-0">
       <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-white/5 border border-white/5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img 
           src={poster} 
           alt={title}
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110"
         />
         
         {/* Quality Badge */}
@@ -51,21 +51,21 @@ export default function MovieCard({ item }: MovieCardProps) {
         <button 
           onClick={handleWatchlist}
           suppressHydrationWarning
-          className="absolute top-2 left-2 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-violet-600 hover:border-violet-500"
+          className="absolute top-2 left-2 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white opacity-0 group-hover/card:opacity-100 transition-opacity hover:bg-violet-600 hover:border-violet-500"
         >
           {isLoaded && inList ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
         </button>
 
         {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
-          <div className="w-12 h-12 rounded-full bg-violet-600 flex items-center justify-center shadow-[0_0_20px_rgba(108,92,231,0.6)] transform scale-75 group-hover:scale-100 transition-transform duration-300">
+        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
+          <div className="w-12 h-12 rounded-full bg-violet-600 flex items-center justify-center shadow-[0_0_20px_rgba(108,92,231,0.6)] transform scale-75 group-hover/card:scale-100 transition-transform duration-300">
             <Play className="w-5 h-5 text-white ml-1" fill="currentColor" />
           </div>
         </div>
       </div>
 
       <div className="px-1">
-        <h3 className="font-semibold text-sm text-white truncate group-hover:text-violet-400 transition-colors">
+        <h3 className="font-semibold text-sm text-white truncate group-hover/card:text-violet-400 transition-colors">
           {title}
         </h3>
         <div className="flex items-center gap-2 mt-1 flex-wrap">
