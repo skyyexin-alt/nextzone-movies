@@ -5,6 +5,7 @@ import { Star, ChevronRight, Heart, TrendingUp } from 'lucide-react';
 import MovieCard from '@/components/ui/MovieCard';
 import TelegramBanner from '@/components/ui/TelegramBanner';
 import Container from '@/components/ui/Container';
+import AdBanner from '@/components/ui/AdBanner';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 
@@ -47,6 +48,10 @@ export default async function DetailPage({
         </Link>
         <span className="text-zinc-600">/</span>
         <span className="text-white truncate">{title}</span>
+      </div>
+
+      <div className="mb-6">
+        <AdBanner />
       </div>
 
       {/* Integrated Player & Server Selection */}

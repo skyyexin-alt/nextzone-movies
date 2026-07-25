@@ -5,6 +5,7 @@ import TelegramBanner from '@/components/ui/TelegramBanner';
 import ShareButtons from '@/components/ui/ShareButtons';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
 import Container from '@/components/ui/Container';
+import AdBanner from '@/components/ui/AdBanner';
 import { 
   getTrending, 
   getPopularMovies, 
@@ -50,6 +51,7 @@ export default async function Home() {
       <Hero item={heroItem} />
       
       <Container className="mt-4">
+        <AdBanner />
         <TelegramBanner />
         <ShareButtons />
         <ContinueWatchingSection />
