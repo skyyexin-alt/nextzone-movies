@@ -33,7 +33,7 @@ export default async function DetailPage({
   const trailerKey = (videos.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube') || videos.find((v: any) => v.site === 'YouTube'))?.key;
 
   return (
-    <div className="max-w-[1200px] w-full mx-auto px-4 md:px-8 py-8 min-h-screen pt-24">
+    <div className="max-w-[95%] w-full mx-auto px-4 md:px-8 py-8 min-h-screen pt-24">
       <HistoryTracker item={data} />
       
       {/* Breadcrumbs */}
