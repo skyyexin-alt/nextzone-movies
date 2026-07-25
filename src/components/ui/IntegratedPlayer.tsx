@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Play, TriangleAlert, Star } from 'lucide-react';
+import { TriangleAlert, Star } from 'lucide-react';
 
 interface IntegratedPlayerProps {
   title: string;
@@ -12,7 +12,6 @@ interface IntegratedPlayerProps {
 }
 
 export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, type }: IntegratedPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [activeServer, setActiveServer] = useState('vidsrc.mov');
 
   const servers = [
@@ -50,33 +49,14 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
     <div className="w-full flex flex-col gap-6">
       {/* Video Container */}
       <div className="relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5">
-        {!isPlaying ? (
-          <div className="absolute inset-0 group cursor-pointer" onClick={() => setIsPlaying(true)}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
-              src={backdrop} 
-              alt={title} 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
-            
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="w-20 h-20 rounded-full bg-violet-600/90 flex items-center justify-center shadow-[0_0_30px_rgba(108,92,231,0.6)] group-hover:scale-110 transition-transform duration-300">
-                <Play className="w-8 h-8 text-white ml-2" fill="currentColor" />
-              </div>
-              <p className="text-white font-bold text-xl mt-4 drop-shadow-lg">{title}</p>
-            </div>
-          </div>
-        ) : (
-          <iframe
-            key={activeServer}
-            className="w-full h-full absolute inset-0 bg-black"
-            src={getEmbedUrl()}
-            title={`${title} Player`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        )}
+        <iframe
+          key={activeServer}
+          className="w-full h-full absolute inset-0 bg-black"
+          src={getEmbedUrl()}
+          title={`${title} Player`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       </div>
 
       {/* Server Selection Section */}
@@ -99,7 +79,6 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
                 key={server.id}
                 onClick={() => {
                   setActiveServer(server.name);
-                  setIsPlaying(true);
                 }}
                 className={`flex items-center gap-2 px-4 py-2 rounded-md text-xs font-semibold transition-colors ${
                   activeServer === server.name 
