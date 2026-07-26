@@ -88,7 +88,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
               <Loader2 className="w-10 h-10 animate-spin" />
             </div>
           ) : results.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
               {results.map(item => {
                 const title = item.title || item.name;
                 const isMovie = item.media_type === 'movie';
@@ -98,7 +98,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                   : 'https://via.placeholder.com/342x513?text=No+Poster';
                   
                 return (
-                  <Link href={href} key={item.id} onClick={onClose} className="group flex flex-col gap-2">
+                  <Link href={href} key={item.id} onClick={onClose} className="group flex flex-col gap-2 w-full">
                     <div className="aspect-[2/3] rounded-xl overflow-hidden bg-white/5 relative">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img 
