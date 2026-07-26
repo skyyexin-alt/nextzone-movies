@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getPersonDetails, getPersonCredits } from '@/lib/tmdb';
 import Container from '@/components/ui/Container';
-import MovieCard from '@/components/ui/MovieCard';
+import PersonFilmography from '@/components/ui/PersonFilmography';
 import { User, Calendar, MapPin, Star } from 'lucide-react';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
@@ -89,27 +89,8 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
             </div>
           </div>
 
-          {/* Filmography Grid */}
-          <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-              Known For
-              <span className="text-sm font-semibold bg-white/10 text-white/60 px-2 py-0.5 rounded-md">
-                {castCredits.length}
-              </span>
-            </h2>
-          </div>
-
-          {castCredits.length > 0 ? (
-            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-5">
-              {castCredits.map((item: any) => (
-                <MovieCard key={`${item.id}-${item.credit_id}`} item={item} className="w-full" />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20 bg-white/5 rounded-2xl border border-white/5">
-              <p className="text-zinc-500">No filmography available.</p>
-            </div>
-          )}
+          {/* Filmography Section with Filters */}
+          <PersonFilmography credits={castCredits} />
         </Container>
       </main>
     );
