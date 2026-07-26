@@ -10,7 +10,7 @@ interface PersonFilmographyProps {
 
 export default function PersonFilmography({ credits }: PersonFilmographyProps) {
   const [sortBy, setSortBy] = useState<'popular' | 'top_rated' | 'newest'>('popular');
-  const [selectedGenre, setSelectedGenre] = useState<string>('all');
+  const [selectedGenre, setSelectedGenre] = useState<string>('28'); // Action by default
   const [selectedYear, setSelectedYear] = useState<string>('all');
 
   // Hardcode genre names since TMDB gives us IDs. This is standard mapping.
