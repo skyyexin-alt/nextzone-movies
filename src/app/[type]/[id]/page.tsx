@@ -54,14 +54,16 @@ export default async function DetailPage({
         <AdBanner />
       </div>
 
-      {/* Integrated Player & Server Selection */}
-      <IntegratedPlayer 
-        title={title} 
-        backdrop={backdrop} 
-        trailerKey={trailerKey} 
-        tmdbId={id} 
-        type={type} 
-      />
+      {/* Integrated Player — 10% larger than the container */}
+      <div className="-mx-[5%] w-[110%]">
+        <IntegratedPlayer 
+          title={title} 
+          backdrop={backdrop} 
+          trailerKey={trailerKey} 
+          tmdbId={id} 
+          type={type} 
+        />
+      </div>
 
       {/* Movie Details (Below Player) */}
       <div className="mt-8">
