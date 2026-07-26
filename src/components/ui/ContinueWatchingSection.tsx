@@ -44,10 +44,10 @@ export default function ContinueWatchingSection() {
 
       <div className="relative">
         <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-4 md:gap-6">
+          <div className="flex -ml-3 md:-ml-4">
             {history.map((item) => (
-              <div key={item.id} className="flex-none w-[140px] md:w-[160px] lg:w-[180px]">
-                <MovieCard item={item} />
+              <div key={item.id} className="flex-[0_0_33.333333%] md:flex-none md:w-auto pl-3 md:pl-4 min-w-0">
+                <MovieCard item={item} className="w-full md:w-[160px] lg:w-[180px]" />
               </div>
             ))}
           </div>

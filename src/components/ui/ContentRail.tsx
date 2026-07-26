@@ -60,13 +60,13 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
           <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-16 bg-gradient-to-l from-[#0f0f23] to-transparent z-10 pointer-events-none rounded-r-xl" />
 
           <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-3 sm:gap-4">
+            <div className="flex -ml-3 md:-ml-4">
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className="flex-[0_0_calc((100vw-56px)/3)] sm:flex-none sm:w-auto min-w-0"
+                  className="flex-[0_0_33.333333%] md:flex-none md:w-auto pl-3 md:pl-4 min-w-0"
                 >
-                  <MovieCard item={item} className="w-full sm:w-[140px] md:w-[160px] lg:w-[175px]" />
+                  <MovieCard item={item} className="w-full md:w-[160px] lg:w-[175px]" />
                 </div>
               ))}
             </div>
