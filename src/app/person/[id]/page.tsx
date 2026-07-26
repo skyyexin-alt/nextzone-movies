@@ -4,9 +4,10 @@ import Container from '@/components/ui/Container';
 import MovieCard from '@/components/ui/MovieCard';
 import { User, Calendar, MapPin, Star } from 'lucide-react';
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   try {
-    const person = await getPersonDetails(params.id);
+    const { id } = await params;
+    const person = await getPersonDetails(id);
     return {
       title: `${person.name} - Movies & TV Shows | XFlix`,
       description: person.biography?.substring(0, 160) || `Watch movies and TV shows starring ${person.name}.`,
@@ -16,11 +17,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   }
 }
 
-export default async function PersonPage({ params }: { params: { id: string } }) {
+export default async function PersonPage({ params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const [person, credits] = await Promise.all([
-      getPersonDetails(params.id),
-      getPersonCredits(params.id)
+      getPersonDetails(id),
+      getPersonCredits(id)
     ]);
 
     // Filter out items without posters and sort by popularity
