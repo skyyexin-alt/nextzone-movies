@@ -34,7 +34,7 @@ export default function MovieCard({ item, className = '' }: MovieCardProps) {
     : null;
 
   return (
-    <Link href={url} className={`group/card relative flex flex-col gap-2 focus:outline-none focus:ring-2 focus:ring-violet-500 flex-shrink-0 ${className || 'w-[calc((100vw-56px)/3)] sm:w-[140px] md:w-[160px] lg:w-[175px]'}`}>
+    <Link href={url} className={`group/card relative flex flex-col gap-2 focus:outline-none focus:ring-2 focus:ring-violet-500 flex-shrink-0 ${className || 'w-[140px] md:w-[160px] lg:w-[175px]'}`}>
       {/* Poster */}
       <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-white/5 border border-white/5">
         {poster ? (
