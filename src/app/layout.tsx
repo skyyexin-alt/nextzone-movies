@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
@@ -7,7 +7,7 @@ import { Providers } from "./Providers";
 import RandomPick from "@/components/ui/RandomPick";
 import StickySocialSidebar from "@/components/ui/StickySocialSidebar";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   title: "XFlix - Watch Free Movies & TV Shows Online in HD",
@@ -21,6 +21,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0f0f23",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={`${inter.className} bg-[#1a1a3e] text-white antialiased`} suppressHydrationWarning>
+      <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
         <Providers>
           <Navbar />
           <main className="min-h-screen">

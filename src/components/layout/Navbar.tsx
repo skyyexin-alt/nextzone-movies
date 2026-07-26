@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Menu, X, ChevronDown, Heart, Shuffle, ListVideo } from 'lucide-react';
+import { Search, Menu, X, ChevronDown, Heart, Shuffle, ListVideo, Home, Film, Tv, Compass } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import SearchOverlay from './SearchOverlay';
 import Container from '@/components/ui/Container';
@@ -17,9 +17,14 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close drawer on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const navLinks = [
     { name: 'HOME', href: '/' },
@@ -40,22 +45,36 @@ export default function Navbar() {
     { name: 'Airing Today', href: '/airing-today' },
   ];
 
+  // Bottom nav tabs for mobile
+  const bottomTabs = [
+    { icon: Home, label: 'Home', href: '/' },
+    { icon: Film, label: 'Movies', href: '/movies' },
+    { icon: Tv, label: 'TV', href: '/tv' },
+    { icon: Compass, label: 'Browse', href: '/trending' },
+    { icon: Heart, label: 'Watchlist', href: '/watchlist' },
+  ];
+
   return (
     <>
+      {/* ── Top Header ── */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-[#0a0a1a]/95 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-5'
+          isScrolled
+            ? 'bg-[#0a0a1a]/97 backdrop-blur-xl shadow-[0_1px_0_rgba(255,255,255,0.05)] py-3'
+            : 'bg-gradient-to-b from-black/60 to-transparent py-4'
         }`}
       >
-      <Container className="w-full flex items-center justify-between">
+        <Container className="w-full flex items-center justify-between">
+          {/* Logo + Desktop Nav */}
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center group-hover:scale-105 group-active:scale-95 transition-transform shadow-lg shadow-violet-500/30">
                 <ListVideo className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xl font-extrabold text-white tracking-tight">XFlix</span>
+              <span className="text-lg font-extrabold text-white tracking-tight">XFlix</span>
             </Link>
 
+            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-6">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
@@ -69,17 +88,18 @@ export default function Navbar() {
                   >
                     {link.name}
                     {isActive && (
-                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-violet-500 rounded-full"></span>
+                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-violet-500 rounded-full" />
                     )}
                   </Link>
                 );
               })}
               
-              <div className="relative group">
+              {/* Browse Dropdown */}
+              <div className="relative group/browse">
                 <button className="flex items-center gap-1 text-xs font-bold tracking-wider text-zinc-400 hover:text-white transition-colors py-2">
-                  BROWSE <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
+                  BROWSE <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover/browse:rotate-180" />
                 </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-[#151530] rounded-xl shadow-xl border border-white/5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all grid grid-cols-1 overflow-hidden">
+                <div className="absolute top-full left-0 mt-2 w-48 bg-[#0f0f23] rounded-xl shadow-2xl border border-white/5 opacity-0 invisible group-hover/browse:opacity-100 group-hover/browse:visible transition-all grid grid-cols-1 overflow-hidden">
                   {browseLinks.map((link) => (
                     <Link
                       key={link.name}
@@ -94,100 +114,165 @@ export default function Navbar() {
 
               <Link
                 href="/network"
-                className="text-xs font-black tracking-widest text-white transition-colors py-2"
+                className="text-xs font-black tracking-widest text-white/90 hover:text-violet-400 transition-colors py-2"
               >
                 FLIXNETWORK
               </Link>
             </nav>
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* Right side actions */}
+          <div className="flex items-center gap-2">
+            {/* Desktop search bar */}
             <div 
               onClick={() => setSearchOpen(true)}
-              className="hidden md:flex items-center gap-2 bg-[#1a1a3e] border border-white/5 hover:border-white/10 rounded-full px-4 py-2 cursor-pointer transition-colors"
+              className="hidden md:flex items-center gap-2 bg-white/5 border border-white/8 hover:border-white/15 rounded-full px-4 py-2 cursor-pointer transition-all hover:bg-white/8"
             >
-              <Search className="w-4 h-4 text-zinc-400" />
-              <span className="text-xs font-medium text-zinc-500 min-w-[120px]">Enter keywords...</span>
+              <Search className="w-3.5 h-3.5 text-zinc-400" />
+              <span className="text-xs font-medium text-zinc-500 min-w-[100px]">Search...</span>
             </div>
 
+            {/* Mobile search icon */}
             <button 
               onClick={() => setSearchOpen(true)}
-              className="md:hidden p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              className="md:hidden p-2 text-zinc-300 hover:text-white rounded-xl hover:bg-white/8 transition-colors"
+              aria-label="Search"
             >
               <Search className="w-5 h-5" />
             </button>
 
-            <button className="p-2.5 bg-[#1a1a3e] border border-white/5 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white transition-colors hidden sm:block">
+            {/* Shuffle — desktop only */}
+            <button className="p-2 bg-white/5 border border-white/8 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-colors hidden sm:block">
               <Shuffle className="w-4 h-4" />
             </button>
 
+            {/* Watchlist — desktop only (mobile has bottom nav) */}
             <Link
               href="/watchlist"
-              className="p-2.5 bg-[#1a1a3e] border border-white/5 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white transition-colors"
-              title="My List"
+              className="p-2 bg-white/5 border border-white/8 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-colors hidden lg:block"
+              title="My Watchlist"
             >
               <Heart className="w-4 h-4" />
             </Link>
 
+            {/* Hamburger — tablet/desktop drawer trigger */}
             <button
-              className="lg:hidden p-2 text-zinc-400 hover:text-white"
+              className="lg:hidden p-2 text-zinc-300 hover:text-white rounded-xl hover:bg-white/8 transition-colors"
               onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open menu"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5" />
             </button>
           </div>
         </Container>
       </header>
 
-      {/* Mobile Menu Drawer */}
+      {/* ── Mobile Slide-in Drawer ── */}
       <div 
-        className={`fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm transition-opacity lg:hidden ${
-          mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 z-[60] transition-all duration-300 lg:hidden ${
+          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
-        onClick={() => setMobileMenuOpen(false)}
       >
+        {/* Backdrop */}
         <div 
-          className={`absolute top-0 right-0 bottom-0 w-64 bg-[#1a1a3e] border-l border-white/10 shadow-2xl transition-transform transform ${
+          className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+
+        {/* Drawer panel */}
+        <div 
+          className={`absolute top-0 right-0 bottom-0 w-72 bg-[#0f0f23] border-l border-white/8 shadow-2xl transition-transform duration-300 flex flex-col ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
-          onClick={e => e.stopPropagation()}
         >
-          <div className="p-4 border-b border-white/10 flex items-center justify-between">
-            <span className="font-bold text-white">Menu</span>
-            <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-zinc-400 hover:text-white">
+          {/* Header */}
+          <div className="p-4 border-b border-white/8 flex items-center justify-between flex-shrink-0">
+            <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
+                <ListVideo className="w-3.5 h-3.5 text-white" />
+              </div>
+              <span className="font-bold text-white">XFlix</span>
+            </Link>
+            <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-white/5 transition-colors">
               <X className="w-5 h-5" />
             </button>
           </div>
-          <div className="py-4 px-3 flex flex-col gap-1 overflow-y-auto h-full pb-20">
+
+          {/* Scrollable nav content */}
+          <div className="flex-1 overflow-y-auto py-3 px-3">
+            <p className="px-3 py-1.5 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Navigation</p>
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-3 rounded-lg text-sm font-medium ${
-                  pathname === link.href ? 'bg-violet-600/20 text-violet-400' : 'text-zinc-300 hover:bg-white/5'
+                className={`flex items-center px-3 py-3 rounded-xl text-sm font-semibold mb-0.5 transition-colors ${
+                  pathname === link.href ? 'bg-violet-600/15 text-violet-400' : 'text-zinc-300 hover:bg-white/5'
                 }`}
               >
                 {link.name}
               </Link>
             ))}
             
-            <div className="h-px bg-white/10 my-2 mx-2"></div>
-            <p className="px-4 py-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Browse</p>
+            <div className="h-px bg-white/8 my-3 mx-2" />
+            <p className="px-3 py-1.5 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Browse</p>
             
             {browseLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-4 py-2.5 rounded-lg text-sm text-zinc-300 hover:bg-white/5"
+                className="flex items-center px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/5 mb-0.5 transition-colors"
               >
                 {link.name}
               </Link>
             ))}
           </div>
+
+          {/* Bottom safe area */}
+          <div className="h-20 flex-shrink-0 safe-bottom" />
         </div>
       </div>
+
+      {/* ── Mobile Bottom Navigation Bar ── */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden safe-bottom">
+        <div className="bg-[#0a0a1a]/98 backdrop-blur-xl border-t border-white/8 px-1 pt-2 pb-2">
+          <div className="flex items-center justify-around max-w-lg mx-auto">
+            {bottomTabs.map((tab) => {
+              const isActive = pathname === tab.href || (tab.href !== '/' && pathname.startsWith(tab.href));
+              const Icon = tab.icon;
+              return (
+                <Link
+                  key={tab.href}
+                  href={tab.href}
+                  className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all active:scale-90 ${
+                    isActive ? 'text-violet-400' : 'text-zinc-500 hover:text-zinc-300'
+                  }`}
+                >
+                  <div className={`relative transition-all ${isActive ? 'scale-110' : ''}`}>
+                    <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
+                    {isActive && (
+                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-violet-400" />
+                    )}
+                  </div>
+                  <span className={`text-[10px] font-semibold leading-none ${isActive ? 'text-violet-400' : 'text-zinc-600'}`}>
+                    {tab.label}
+                  </span>
+                </Link>
+              );
+            })}
+
+            {/* Search tab — triggers overlay */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl text-zinc-500 hover:text-zinc-300 active:scale-90 transition-all"
+            >
+              <Search className="w-5 h-5" strokeWidth={2} />
+              <span className="text-[10px] font-semibold leading-none text-zinc-600">Search</span>
+            </button>
+          </div>
+        </div>
+      </nav>
 
       <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>

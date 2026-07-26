@@ -47,7 +47,7 @@ export default async function Home() {
   const trendingItems = trending?.results?.slice(1) || [];
 
   return (
-    <div className="pb-20">
+    <div className="pb-28 md:pb-20">
       <Hero item={heroItem} />
       
       <Container className="mt-4">

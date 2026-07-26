@@ -20,6 +20,7 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
     align: 'start',
     skipSnaps: false,
     dragFree: true,
+    containScroll: 'trimSnaps',
   });
 
   const scrollPrev = useCallback(() => {
@@ -33,28 +34,33 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
   if (!items || items.length === 0) return null;
 
   return (
-    <section className="py-8 relative group">
+    <section className="py-5 sm:py-7 relative group/rail">
       <Container>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600/20 to-fuchsia-600/20 border border-violet-500/20 flex items-center justify-center text-violet-400">
-              {icon || <TrendingUp className="w-5 h-5" />}
+        {/* Section Header */}
+        <div className="flex items-center justify-between mb-4 sm:mb-5">
+          <h2 className="text-base sm:text-lg md:text-xl font-bold text-white flex items-center gap-2.5">
+            <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-violet-600/25 to-fuchsia-600/25 border border-violet-500/20 flex items-center justify-center text-violet-400 flex-shrink-0">
+              {icon || <TrendingUp className="w-4 h-4" />}
             </span>
             {title}
           </h2>
           {viewAllLink && (
             <Link 
               href={viewAllLink}
-              className="text-sm font-semibold text-zinc-400 hover:text-white flex items-center gap-1 transition-colors"
+              className="flex items-center gap-0.5 text-xs sm:text-sm font-semibold text-zinc-400 hover:text-violet-400 active:text-violet-300 transition-colors whitespace-nowrap"
             >
-              View All <ChevronRight className="w-4 h-4" />
+              See all <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           )}
         </div>
 
+        {/* Carousel with edge fade */}
         <div className="relative">
+          {/* Right edge fade (mobile hint that more cards exist) */}
+          <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-16 bg-gradient-to-l from-[#0f0f23] to-transparent z-10 pointer-events-none rounded-r-xl" />
+
           <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-4">
+            <div className="flex gap-3 sm:gap-4">
               {items.map((item) => (
                 <div key={item.id} className="flex-none">
                   <MovieCard item={item} />
@@ -63,20 +69,21 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
             </div>
           </div>
 
+          {/* Desktop nav arrows */}
           <button
             onClick={scrollPrev}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 backdrop-blur border border-white/10 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex hover:bg-violet-600 hover:border-violet-500 z-10"
+            className="absolute -left-3 top-1/3 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur border border-white/10 rounded-full items-center justify-center text-white opacity-0 group-hover/rail:opacity-100 transition-all disabled:opacity-0 hidden md:flex hover:bg-violet-600 hover:border-violet-500 hover:scale-105 z-20 shadow-xl"
             aria-label="Previous"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5" />
           </button>
           
           <button
             onClick={scrollNext}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 backdrop-blur border border-white/10 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex hover:bg-violet-600 hover:border-violet-500 z-10"
+            className="absolute -right-3 top-1/3 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur border border-white/10 rounded-full items-center justify-center text-white opacity-0 group-hover/rail:opacity-100 transition-all disabled:opacity-0 hidden md:flex hover:bg-violet-600 hover:border-violet-500 hover:scale-105 z-20 shadow-xl"
             aria-label="Next"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-5 h-5" />
           </button>
         </div>
       </Container>

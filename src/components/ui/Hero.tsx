@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Play, Info, Star } from 'lucide-react';
+import { Play, Info, Star, ChevronRight } from 'lucide-react';
 import { MediaItem } from '@/lib/tmdb';
 import Container from '@/components/ui/Container';
 
@@ -17,9 +17,10 @@ export default function Hero({ item }: HeroProps) {
   const backdrop = item.backdrop_path 
     ? `https://image.tmdb.org/t/p/original${item.backdrop_path}` 
     : '';
+  const rating = item.vote_average ? item.vote_average.toFixed(1) : null;
 
   return (
-    <section className="relative w-full h-[55vh] md:h-[60vh] min-h-[500px] flex items-center overflow-hidden">
+    <section className="relative w-full h-[58vh] sm:h-[62vh] md:h-[68vh] min-h-[340px] sm:min-h-[440px] flex items-end overflow-hidden">
       {/* Background Image */}
       {backdrop && (
         <div className="absolute inset-0 z-0">
@@ -27,57 +28,73 @@ export default function Hero({ item }: HeroProps) {
           <img 
             src={backdrop} 
             alt={title}
-            className="w-full h-full object-cover object-top"
+            className="w-full h-full object-cover object-center"
+            fetchPriority="high"
           />
         </div>
       )}
 
-      {/* Cinematic Gradients */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#1a1a3e] via-[#1a1a3e]/80 to-transparent"></div>
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#1a1a3e] via-[#1a1a3e]/20 to-transparent"></div>
+      {/* Deep cinematic gradient — stronger at bottom for mobile legibility */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0f0f23] via-[#0f0f23]/60 to-transparent" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0f0f23]/90 via-[#0f0f23]/40 to-transparent hidden sm:block" />
 
-      <Container className="relative z-20 mt-20">
-        <div className="max-w-2xl">
-          <div className="flex items-center gap-3 mb-4 flex-wrap">
-            <span className="px-3 py-1 text-xs font-semibold rounded-full bg-violet-600/20 text-violet-400 border border-violet-500/30 backdrop-blur-md">
-              {isMovie ? 'Movie' : 'TV Show'}
+      {/* Content — anchored to bottom for a Netflix-style feel */}
+      <Container className="relative z-20 pb-8 sm:pb-12 w-full">
+        <div className="max-w-xl">
+          {/* Badges */}
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <span className="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-violet-600 text-white uppercase tracking-widest">
+              {isMovie ? 'Movie' : 'Series'}
             </span>
-            <span className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 backdrop-blur-md">
-              <Star className="w-3.5 h-3.5 fill-currentColor" />
-              {item.vote_average ? item.vote_average.toFixed(1) : 'NR'}
-            </span>
-            <span className="px-3 py-1 text-xs rounded-full bg-white/10 text-zinc-300 border border-white/10 backdrop-blur-md">
-              {year}
-            </span>
+            {rating && (
+              <span className="flex items-center gap-1 px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                <Star className="w-3 h-3 fill-current" />
+                {rating}
+              </span>
+            )}
+            {year && (
+              <span className="px-2.5 py-0.5 text-[11px] rounded-full bg-white/10 text-zinc-300 border border-white/10">
+                {year}
+              </span>
+            )}
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1] tracking-tight">
+          {/* Title */}
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-3 leading-[1.05] tracking-tight drop-shadow-lg">
             {title}
           </h1>
 
-          <p className="text-base md:text-lg text-zinc-300 mb-8 line-clamp-3 md:line-clamp-4 leading-relaxed max-w-xl font-light">
+          {/* Overview — 2 lines on mobile, 3 on desktop */}
+          <p className="text-sm sm:text-base text-zinc-300 mb-5 line-clamp-2 md:line-clamp-3 leading-relaxed font-light max-w-lg">
             {item.overview || 'No synopsis available.'}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          {/* CTA Buttons */}
+          <div className="flex gap-3">
             <Link 
               href={`/watch/${isMovie ? 'movie' : 'tv'}/${item.id}`}
-              className="flex items-center justify-center gap-2 bg-white text-black px-8 py-3.5 rounded-full font-semibold hover:bg-zinc-200 transition-colors"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-bold text-sm sm:text-base hover:bg-zinc-100 active:scale-95 transition-all shadow-lg"
             >
-              <Play className="w-5 h-5 fill-black" />
+              <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-black flex-shrink-0" />
               Watch Now
             </Link>
             
             <Link 
               href={url}
-              className="flex items-center justify-center gap-2 bg-white/10 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/20 transition-colors backdrop-blur-md border border-white/10"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 glass-panel text-white px-6 py-3 rounded-xl font-bold text-sm sm:text-base hover:bg-white/15 active:scale-95 transition-all"
             >
-              <Info className="w-5 h-5" />
-              More Info
+              <Info className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+              Details
             </Link>
           </div>
         </div>
       </Container>
+
+      {/* Scroll hint for mobile */}
+      <div className="absolute bottom-2 right-4 z-20 sm:hidden flex items-center gap-1 text-white/40 text-[10px]">
+        <ChevronRight className="w-3 h-3" />
+        <span>Scroll to browse</span>
+      </div>
     </section>
   );
 }
