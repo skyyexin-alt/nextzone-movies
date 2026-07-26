@@ -97,3 +97,11 @@ export async function getDiscoverTV(params: Record<string, string> = {}) {
 export async function getGenres(type: 'movie' | 'tv') {
   return fetchAPI(`/genre/${type}/list`);
 }
+
+export async function getPersonDetails(id: string) {
+  return fetchAPI(`/person/${id}`);
+}
+
+export async function getPersonCredits(id: string) {
+  return fetchAPI(`/person/${id}/combined_credits`);
+}

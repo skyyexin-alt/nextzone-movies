@@ -5,6 +5,7 @@ import { Star, ChevronRight, Heart, Clock, Globe, Calendar, Users } from 'lucide
 import MovieCard from '@/components/ui/MovieCard';
 import Container from '@/components/ui/Container';
 import AdBanner from '@/components/ui/AdBanner';
+import CastCarousel from '@/components/ui/CastCarousel';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 
@@ -222,42 +223,7 @@ export default async function DetailPage({
         </div>
 
         {/* ── Cast Section ── */}
-        {cast.length > 0 && (
-          <div>
-            <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-              <Users className="w-5 h-5 text-violet-400" />
-              Cast
-            </h2>
-            <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
-              {cast.map((actor: any) => {
-                const photo = actor.profile_path
-                  ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
-                  : null;
-                return (
-                  <div key={actor.id} className="flex flex-col items-center gap-1.5 flex-shrink-0 w-20 sm:w-24">
-                    {/* Circular photo */}
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-violet-500/30 bg-white/5 flex-shrink-0">
-                      {photo ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={photo} alt={actor.name} className="w-full h-full object-cover" loading="lazy" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-violet-600/20">
-                          <Users className="w-6 h-6 text-violet-400" />
-                        </div>
-                      )}
-                    </div>
-                    {/* Name */}
-                    <span className="text-xs font-semibold text-white text-center leading-tight line-clamp-2">{actor.name}</span>
-                    {/* Character */}
-                    {actor.character && (
-                      <span className="text-[10px] text-zinc-500 text-center leading-tight line-clamp-1">{actor.character}</span>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
+        <CastCarousel cast={cast} />
       </div>
 
       {/* Similar Titles */}
