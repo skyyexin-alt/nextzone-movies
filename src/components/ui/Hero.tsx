@@ -20,7 +20,7 @@ export default function Hero({ item }: HeroProps) {
   const rating = item.vote_average ? item.vote_average.toFixed(1) : null;
 
   return (
-    <section className="relative w-full h-[58vh] sm:h-[62vh] md:h-[68vh] min-h-[340px] sm:min-h-[440px] flex items-center overflow-hidden">
+    <section className="relative w-full h-[50vh] sm:h-[60vh] md:h-[65vh] min-h-[380px] sm:min-h-[440px] flex items-end overflow-hidden">
       {/* Background Image */}
       {backdrop && (
         <div className="absolute inset-0 z-0">
@@ -28,18 +28,18 @@ export default function Hero({ item }: HeroProps) {
           <img 
             src={backdrop} 
             alt={title}
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-top sm:object-center opacity-90"
             fetchPriority="high"
           />
         </div>
       )}
 
-      {/* Deep cinematic gradient — stronger at bottom for mobile legibility */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0f0f23] via-[#0f0f23]/60 to-transparent" />
+      {/* Deep cinematic gradient — stronger at bottom for legibility */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0f0f23] via-[#0f0f23]/40 to-transparent" />
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0f0f23]/90 via-[#0f0f23]/40 to-transparent hidden sm:block" />
 
-      {/* Content — anchored to bottom for a Netflix-style feel */}
-      <Container className="relative z-20 pb-4 pt-20 sm:pt-24 w-full">
+      {/* Content — anchored to bottom but with good padding */}
+      <Container className="relative z-20 pb-10 sm:pb-16 pt-32 w-full">
         <div className="max-w-xl">
           {/* Badges */}
           <div className="flex items-center gap-2 mb-3 flex-wrap">
