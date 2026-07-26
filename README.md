@@ -1,4 +1,4 @@
-# NextZone
+# XFlix
 
 A complete, production-ready cinematic movie and TV discovery platform built with Next.js 14, Tailwind CSS, and the TMDB API.
 

@@ -10,14 +10,14 @@ import StickySocialSidebar from "@/components/ui/StickySocialSidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "NextZone - Watch Free Movies & TV Shows Online in HD",
-  description: "NextZone is a free online streaming platform offering thousands of movies and TV shows in HD and 4K quality. Watch instantly without registration or ads.",
+  title: "XFlix - Watch Free Movies & TV Shows Online in HD",
+  description: "XFlix is a free online streaming platform offering thousands of movies and TV shows in HD and 4K quality. Watch instantly without registration or ads.",
   openGraph: {
-    title: "NextZone",
-    description: "NextZone - Watch unlimited movies and TV shows online free in HD, 1080p, 4K quality.",
+    title: "XFlix",
+    description: "XFlix - Watch unlimited movies and TV shows online free in HD, 1080p, 4K quality.",
     type: "website",
     locale: "en_US",
-    siteName: "NextZone",
+    siteName: "XFlix",
   },
 };
 

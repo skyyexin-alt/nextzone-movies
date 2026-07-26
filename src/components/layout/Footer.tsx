@@ -18,7 +18,7 @@ export default function Footer() {
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center">
                 <ListVideo className="w-5 h-5 text-white" />
               </div>
-              <span className="text-2xl font-bold text-white tracking-wide">NextZone</span>
+              <span className="text-2xl font-bold text-white tracking-wide">XFlix</span>
             </Link>
             <p className="text-zinc-400 text-sm leading-relaxed max-w-sm mb-6">
               Stream your favorite movies and TV shows in HD quality. Free, fast, and always updated with the latest releases. The best cinematic experience on the web.
@@ -57,7 +57,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/10 gap-6">
           <p className="text-xs text-zinc-500">
-            &copy; {currentYear} NextZone. All rights reserved. This site does not store any files on its server. All contents are provided by non-affiliated third parties.
+            &copy; {currentYear} XFlix. All rights reserved. This site does not store any files on its server. All contents are provided by non-affiliated third parties.
           </p>
           <div className="flex items-center gap-6">
             <Link href="/dmca" className="text-xs text-zinc-500 hover:text-white transition-colors">DMCA</Link>

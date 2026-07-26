@@ -18,7 +18,7 @@ export function HistoryProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem('nextzone_history');
+      const stored = localStorage.getItem('xflix_history');
       if (stored) {
         setHistory(JSON.parse(stored));
       }
@@ -30,7 +30,9 @@ export function HistoryProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem('nextzone_history', JSON.stringify(history));
+      try {
+        localStorage.setItem('xflix_history', JSON.stringify(history));
+      } catch (error) {}
     }
   }, [history, isLoaded]);
 

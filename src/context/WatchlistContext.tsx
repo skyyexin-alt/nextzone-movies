@@ -19,7 +19,7 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem('nextzone_watchlist');
+      const stored = localStorage.getItem('xflix_watchlist');
       if (stored) {
         setWatchlist(JSON.parse(stored));
       }
@@ -31,7 +31,9 @@ export function WatchlistProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem('nextzone_watchlist', JSON.stringify(watchlist));
+      try {
+        localStorage.setItem('xflix_watchlist', JSON.stringify(watchlist));
+      } catch (error) {}
     }
   }, [watchlist, isLoaded]);
 

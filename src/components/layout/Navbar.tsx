@@ -53,7 +53,7 @@ export default function Navbar() {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center group-hover:scale-105 transition-transform">
                 <ListVideo className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xl font-extrabold text-white tracking-tight">FlickZone</span>
+              <span className="text-xl font-extrabold text-white tracking-tight">XFlix</span>
             </Link>
 
             <nav className="hidden lg:flex items-center gap-6">

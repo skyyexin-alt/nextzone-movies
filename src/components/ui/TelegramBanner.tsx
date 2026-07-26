@@ -12,7 +12,7 @@ export default function TelegramBanner() {
           <MessageCircle className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h3 className="text-white font-bold text-lg mb-1">Join NextZone Telegram Group</h3>
+          <h3 className="text-white font-bold text-lg mb-1">Join XFlix Telegram Group</h3>
           <p className="text-[#1e88e5] text-sm opacity-90 font-medium">
             If the site ever closes, this is where we'll post the new link. Be the first to know about news and updates.
           </p>
