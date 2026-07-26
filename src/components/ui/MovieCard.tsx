@@ -8,9 +8,10 @@ import { useWatchlist } from '@/context/WatchlistContext';
 interface MovieCardProps {
   item: MediaItem;
   className?: string;
+  progress?: number;
 }
 
-export default function MovieCard({ item, className = '' }: MovieCardProps) {
+export default function MovieCard({ item, className = '', progress }: MovieCardProps) {
   const { addToWatchlist, removeFromWatchlist, isInWatchlist, isLoaded } = useWatchlist();
   const inList = isInWatchlist(item.id);
 
@@ -83,6 +84,16 @@ export default function MovieCard({ item, className = '' }: MovieCardProps) {
             <Play className="w-5 h-5 text-white ml-0.5" fill="currentColor" />
           </div>
         </div>
+
+        {/* Progress Bar (Continue Watching) */}
+        {progress !== undefined && (
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/60 z-20">
+            <div 
+              className="h-full bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)] rounded-r"
+              style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
+            />
+          </div>
+        )}
       </div>
 
       {/* Info */}

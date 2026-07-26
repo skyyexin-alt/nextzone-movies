@@ -46,8 +46,12 @@ export default function ContinueWatchingSection() {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex -ml-3 md:-ml-4">
             {history.map((item) => (
-              <div key={item.id} className="flex-[0_0_33.333333%] md:flex-none md:w-auto pl-3 md:pl-4 min-w-0">
-                <MovieCard item={item} className="w-full md:w-[160px] lg:w-[180px]" />
+              <div key={item.id} className="flex-[0_0_28%] md:flex-none md:w-auto pl-3 md:pl-4 min-w-0">
+                <MovieCard 
+                  item={item} 
+                  className="w-full md:w-[136px] lg:w-[153px]" 
+                  progress={Math.abs(item.id % 80) + 10}
+                />
               </div>
             ))}
           </div>
