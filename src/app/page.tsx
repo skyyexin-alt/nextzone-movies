@@ -133,6 +133,7 @@ export default async function Home() {
           <ContentRail 
             title="Action Movies" 
             items={actionMovies?.results || []} 
+            viewAllLink="/genre/28"
           />
         </Suspense>
 
@@ -140,6 +141,7 @@ export default async function Home() {
           <ContentRail 
             title="Horror Movies" 
             items={horrorMovies?.results || []} 
+            viewAllLink="/genre/27"
           />
         </Suspense>
 
@@ -147,6 +149,7 @@ export default async function Home() {
           <ContentRail 
             title="Science Fiction" 
             items={scifiMovies?.results || []} 
+            viewAllLink="/genre/878"
           />
         </Suspense>
 
