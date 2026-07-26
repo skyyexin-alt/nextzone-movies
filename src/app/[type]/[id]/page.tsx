@@ -97,9 +97,9 @@ export default async function DetailPage({
               <p className="text-xs text-zinc-500 mt-0.5">Because you're watching {title}</p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-4 md:gap-5 justify-start">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-4">
             {similar.slice(0, 18).map((item: any) => (
-              <MovieCard key={item.id} item={item} />
+              <MovieCard key={item.id} item={item} className="w-full" />
             ))}
           </div>
         </div>
