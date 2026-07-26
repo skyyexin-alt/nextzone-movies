@@ -92,6 +92,7 @@ export default async function DetailPage({
         trailerKey={trailerKey}
         tmdbId={id}
         type={type}
+        seasons={data.seasons || []}
       />
 
       {/* ── Movie Details Section ── */}
