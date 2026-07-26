@@ -20,26 +20,28 @@ export default function Hero({ item }: HeroProps) {
   const rating = item.vote_average ? item.vote_average.toFixed(1) : null;
 
   return (
-    <section className="relative w-full h-[50vh] sm:h-[60vh] md:h-[65vh] min-h-[380px] sm:min-h-[440px] flex items-center overflow-hidden">
+    <section className="relative w-full overflow-hidden">
       {/* Background Image */}
       {backdrop && (
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 h-full w-full">
+          <div className="absolute inset-0 bg-[#0f0f23]" /> {/* Fallback/base color */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
             src={backdrop} 
             alt={title}
-            className="w-full h-full object-cover object-top sm:object-center opacity-90"
+            className="w-full h-[120%] object-cover object-top sm:object-center opacity-70 mask-image-b"
+            style={{ WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)' }}
             fetchPriority="high"
           />
         </div>
       )}
 
-      {/* Deep cinematic gradient — stronger at bottom for legibility */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0f0f23] via-[#0f0f23]/40 to-transparent" />
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0f0f23]/90 via-[#0f0f23]/40 to-transparent hidden sm:block" />
+      {/* Deep cinematic gradient — blends perfectly into the page background */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0f0f23] via-[#0f0f23]/80 to-transparent" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0f0f23]/90 via-[#0f0f23]/50 to-transparent hidden sm:block" />
 
-      {/* Content — centered vertically to match reference design */}
-      <Container className="relative z-20 pb-4 pt-16 sm:pt-24 w-full">
+      {/* Content — natural flow height */}
+      <Container className="relative z-20 pt-28 pb-6 sm:pt-36 sm:pb-12 w-full">
         <div className="max-w-xl">
           {/* Badges */}
           <div className="flex items-center gap-2 mb-3 flex-wrap">
