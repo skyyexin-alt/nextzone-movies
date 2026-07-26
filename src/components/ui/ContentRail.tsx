@@ -47,9 +47,9 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
           {viewAllLink && (
             <Link 
               href={viewAllLink}
-              className="flex items-center gap-0.5 text-xs sm:text-sm font-semibold text-zinc-400 hover:text-violet-400 active:text-violet-300 transition-colors whitespace-nowrap"
+              className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-white bg-white/5 hover:bg-white/15 active:scale-95 transition-all whitespace-nowrap px-3 py-1.5 rounded-md border border-white/10 uppercase tracking-wider"
             >
-              See all <ChevronRight className="w-3.5 h-3.5" />
+              View All <ChevronRight className="w-3.5 h-3.5" strokeWidth={3} />
             </Link>
           )}
         </div>

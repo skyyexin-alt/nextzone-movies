@@ -70,6 +70,7 @@ export default async function Home() {
             title="Hot Today" 
             items={popularMovies?.results?.slice(0, 10) || []} 
             icon={<Zap className="w-5 h-5" />} 
+            viewAllLink="/movies"
           />
         </Suspense>
 
