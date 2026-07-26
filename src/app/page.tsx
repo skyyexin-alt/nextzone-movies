@@ -127,20 +127,6 @@ export default async function Home() {
           />
         </Suspense>
 
-        {/* SEO Text Block */}
-        <section className="py-16">
-          <Container>
-            <div className="bg-[#222255]/50 border border-white/5 rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto backdrop-blur-sm">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Your Ultimate Streaming Destination</h2>
-              <p className="text-zinc-400 leading-relaxed mb-4">
-                XFlix is the premiere platform for streaming movies and television shows online in high definition. We offer an extensive library spanning decades of cinematic history, from timeless classics to the latest blockbusters hitting theaters.
-              </p>
-              <p className="text-zinc-400 leading-relaxed">
-                Enjoy seamless playback across all your devices without the hassle of registration. Our smart recommendation engine helps you discover hidden gems, while our responsive design ensures a perfect viewing experience whether you're on a mobile phone or a massive smart TV.
-              </p>
-            </div>
-          </Container>
-        </section>
 
         <Suspense fallback={<div className="h-64 animate-pulse bg-white/5 rounded-xl mx-4 md:mx-8"></div>}>
           <ContentRail 
@@ -162,6 +148,21 @@ export default async function Home() {
             items={scifiMovies?.results || []} 
           />
         </Suspense>
+
+        {/* SEO Text Block */}
+        <section className="py-12">
+          <Container>
+            <div className="bg-[#222255]/50 border border-white/5 rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto backdrop-blur-sm">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Your Ultimate Streaming Destination</h2>
+              <p className="text-zinc-400 leading-relaxed mb-4">
+                XFlix is the premiere platform for streaming movies and television shows online in high definition. We offer an extensive library spanning decades of cinematic history, from timeless classics to the latest blockbusters hitting theaters.
+              </p>
+              <p className="text-zinc-400 leading-relaxed">
+                Enjoy seamless playback across all your devices without the hassle of registration. Our smart recommendation engine helps you discover hidden gems, while our responsive design ensures a perfect viewing experience whether you&apos;re on a mobile phone or a massive smart TV.
+              </p>
+            </div>
+          </Container>
+        </section>
       </div>
     </div>
   );
