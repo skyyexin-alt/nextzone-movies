@@ -62,10 +62,9 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex gap-3 sm:gap-4">
               {items.map((item) => (
-                // Slide wrapper: exactly 1/3 of the embla container on mobile
                 <div
                   key={item.id}
-                  className="flex-none w-[calc((100%-24px)/3)] sm:w-auto"
+                  className="flex-[0_0_calc((100vw-56px)/3)] sm:flex-none sm:w-auto min-w-0"
                 >
                   <MovieCard item={item} className="w-full sm:w-[140px] md:w-[160px] lg:w-[175px]" />
                 </div>
