@@ -19,6 +19,11 @@ export const metadata: Metadata = {
     locale: "en_US",
     siteName: "XFlix",
   },
+  appleWebApp: {
+    capable: true,
+    title: "XFlix",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport: Viewport = {
