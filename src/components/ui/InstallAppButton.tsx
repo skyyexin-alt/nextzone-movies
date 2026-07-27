@@ -46,15 +46,13 @@ export default function InstallAppButton() {
       }
       setDeferredPrompt(null);
     } else {
-      // iOS Safari fallback
+      // Show iOS fallback or instructions if native prompt isn't available
       setShowIosInstructions(true);
     }
   };
 
-  // Don't render anything if it's already installed, dismissed, or we know it can't be installed
-  // In development, we allow it to render for UI preview purposes
-  const isDev = process.env.NODE_ENV === 'development';
-  if (isInstalled || isDismissed || (!isInstallable && !showIosInstructions && !isDev)) return null;
+  // Don't render anything if it's already installed or explicitly dismissed
+  if (isInstalled || isDismissed) return null;
 
   return (
     <>
