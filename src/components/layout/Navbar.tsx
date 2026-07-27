@@ -123,41 +123,28 @@ export default function Navbar() {
 
           {/* Right side actions */}
           <div className="flex items-center gap-2">
-            {/* Desktop search bar */}
-            <div 
-              onClick={() => setSearchOpen(true)}
-              className="hidden md:flex items-center gap-2 bg-white/5 border border-white/8 hover:border-white/15 rounded-full px-4 py-2 cursor-pointer transition-all hover:bg-white/8"
-            >
-              <Search className="w-3.5 h-3.5 text-zinc-400" />
-              <span className="text-xs font-medium text-zinc-500 min-w-[100px]">Search...</span>
-            </div>
-
-            {/* Mobile search icon */}
             <button 
               onClick={() => setSearchOpen(true)}
-              className="md:hidden p-2 text-zinc-300 hover:text-white rounded-xl hover:bg-white/8 transition-colors"
+              className="p-2.5 bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-all"
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
             </button>
 
-            {/* Shuffle — desktop only */}
-            <button className="p-2 bg-white/5 border border-white/8 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-colors hidden sm:block">
-              <Shuffle className="w-4 h-4" />
+            <button className="p-2.5 bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-all hidden sm:block">
+              <Shuffle className="w-5 h-5" />
             </button>
 
-            {/* Watchlist — desktop only (mobile has bottom nav) */}
             <Link
               href="/watchlist"
-              className="p-2 bg-white/5 border border-white/8 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-colors hidden lg:block"
+              className="p-2.5 bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-all hidden sm:block"
               title="My Watchlist"
             >
-              <Heart className="w-4 h-4" />
+              <Heart className="w-5 h-5" />
             </Link>
 
-            {/* Hamburger — tablet/desktop drawer trigger */}
             <button
-              className="lg:hidden p-2 text-zinc-300 hover:text-white rounded-xl hover:bg-white/8 transition-colors"
+              className="p-2.5 bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl text-zinc-400 hover:text-white transition-all lg:hidden"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
             >
