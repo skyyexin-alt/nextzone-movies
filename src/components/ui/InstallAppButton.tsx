@@ -1,13 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { X, Share } from "lucide-react";
+import { X, Share, Download } from "lucide-react";
 
 export default function InstallAppButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [showIosInstructions, setShowIosInstructions] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
 
   useEffect(() => {
     // Check if already in standalone mode (installed)
@@ -50,22 +51,53 @@ export default function InstallAppButton() {
     }
   };
 
-  // Don't render anything if it's already installed or we know it can't be installed
-  if (isInstalled || (!isInstallable && !showIosInstructions)) return null;
+  // Don't render anything if it's already installed, dismissed, or we know it can't be installed
+  // In development, we allow it to render for UI preview purposes
+  const isDev = process.env.NODE_ENV === 'development';
+  if (isInstalled || isDismissed || (!isInstallable && !showIosInstructions && !isDev)) return null;
 
   return (
     <>
-      <button
-        onClick={handleInstallClick}
-        className="fixed bottom-20 lg:bottom-6 right-6 z-40 bg-gradient-to-r from-violet-600 to-fuchsia-600 p-2 pr-5 rounded-full shadow-[0_0_25px_rgba(139,92,246,0.6)] hover:scale-105 transition-transform flex items-center gap-3 text-white border border-white/20 animate-bounce"
-        style={{ animationDuration: '3s' }}
-        aria-label="Install App"
-      >
-        <div className="w-10 h-10 rounded-[10px] overflow-hidden shrink-0 shadow-md">
-          <Image src="/icon-192.png" alt="XFlix App Icon" width={40} height={40} className="w-full h-full object-cover" />
+      <div className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-40 animate-in slide-in-from-bottom-5 fade-in duration-500">
+        <div className="relative overflow-hidden rounded-2xl p-4 w-[320px] max-w-[calc(100vw-2rem)] border border-violet-500/30 bg-[#0f0f23]/95 backdrop-blur-xl shadow-[0_8px_30px_rgb(139,92,246,0.3)]">
+          {/* Background glow elements */}
+          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-violet-600/20 to-transparent pointer-events-none" />
+          <div className="absolute -top-4 -right-4 w-24 h-24 bg-fuchsia-600/20 rounded-full blur-2xl pointer-events-none" />
+
+          {/* Close Button */}
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsDismissed(true);
+            }}
+            className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors z-20"
+            aria-label="Dismiss"
+          >
+            <X className="w-4 h-4" />
+          </button>
+
+          <div className="relative z-10 flex flex-col gap-3">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-[12px] overflow-hidden shrink-0 shadow-lg border border-white/10 relative">
+                <Image src="/icon-192.png" alt="XFlix App Icon" width={48} height={48} className="w-full h-full object-cover" />
+              </div>
+              <div className="pr-6">
+                <h3 className="font-bold text-white text-[15px] leading-tight">Install XFlix App Now</h3>
+                <p className="text-zinc-400 text-xs mt-1 line-clamp-2 leading-relaxed">
+                  Watch movies smoothly in full screen without interruptions.
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={handleInstallClick}
+              className="w-full mt-1 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 active:scale-[0.98] transition-all text-white font-bold rounded-xl text-sm shadow-[0_0_20px_rgba(139,92,246,0.4)] flex items-center justify-center gap-2"
+            >
+              <Download className="w-4 h-4" />
+              Install App
+            </button>
+          </div>
         </div>
-        <span className="font-extrabold text-sm tracking-wide whitespace-nowrap">Install Now</span>
-      </button>
+      </div>
 
       {/* iOS Instructions Modal */}
       {showIosInstructions && (
