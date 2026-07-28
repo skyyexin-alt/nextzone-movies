@@ -29,7 +29,7 @@ export default function Hero({ item }: HeroProps) {
           <img 
             src={backdrop} 
             alt={title}
-            className="w-full h-[120%] object-cover object-top sm:object-center opacity-70 mask-image-b"
+            className="w-full h-[120%] object-cover object-top opacity-70 mask-image-b"
             style={{ WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)' }}
             fetchPriority="high"
           />
