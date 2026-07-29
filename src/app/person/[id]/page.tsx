@@ -3,6 +3,7 @@ import { getPersonDetails, getPersonCredits } from '@/lib/tmdb';
 import Container from '@/components/ui/Container';
 import PersonFilmography from '@/components/ui/PersonFilmography';
 import { User, Calendar, MapPin, Star } from 'lucide-react';
+import GlobalBackButton from '@/components/ui/GlobalBackButton';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   try {
@@ -37,6 +38,9 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
     return (
       <main className="min-h-screen bg-[#0f0f23] pt-24 pb-16">
         <Container>
+          <div className="mb-6">
+            <GlobalBackButton />
+          </div>
           {/* Profile Header */}
           <div className="flex flex-col md:flex-row gap-8 mb-12 bg-white/5 border border-white/5 p-6 md:p-8 rounded-3xl shadow-2xl backdrop-blur-sm">
             <div className="flex-shrink-0 mx-auto md:mx-0 relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-[#1e88e5]/20 shadow-[0_0_30px_rgba(30,136,229,0.15)]">

@@ -8,6 +8,7 @@ import AdBanner from '@/components/ui/AdBanner';
 import CastCarousel from '@/components/ui/CastCarousel';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
+import GlobalBackButton from '@/components/ui/GlobalBackButton';
 
 export default async function DetailPage({
   params,
@@ -68,6 +69,10 @@ export default async function DetailPage({
   return (
     <Container className="py-8 min-h-screen pt-24">
       <HistoryTracker item={data} />
+
+      <div className="mb-6">
+        <GlobalBackButton />
+      </div>
 
       {/* Breadcrumbs */}
       <div className="flex items-center gap-2 text-sm text-zinc-400 mb-6 font-medium flex-wrap">

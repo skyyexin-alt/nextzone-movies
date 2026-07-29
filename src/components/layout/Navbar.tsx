@@ -6,7 +6,6 @@ import { Search, Menu, X, ChevronDown, Heart, Shuffle, ListVideo, Home, Film, Tv
 import { usePathname } from 'next/navigation';
 import SearchOverlay from './SearchOverlay';
 import Container from '@/components/ui/Container';
-import GlobalBackButton from '@/components/ui/GlobalBackButton';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -68,15 +67,12 @@ export default function Navbar() {
         <Container className="w-full flex items-center justify-between">
           {/* Logo + Desktop Nav */}
           <div className="flex items-center gap-8">
-            <div className="flex items-center">
-              <GlobalBackButton />
-              <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center group-hover:scale-105 group-active:scale-95 transition-transform shadow-lg shadow-violet-500/30">
-                  <ListVideo className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-lg font-extrabold text-white tracking-tight">XFlix</span>
-              </Link>
-            </div>
+            <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center group-hover:scale-105 group-active:scale-95 transition-transform shadow-lg shadow-violet-500/30">
+                <ListVideo className="w-4 h-4 text-white" />
+              </div>
+              <span className="text-lg font-extrabold text-white tracking-tight">XFlix</span>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-6">
