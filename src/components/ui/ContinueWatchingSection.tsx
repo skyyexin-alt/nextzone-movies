@@ -29,7 +29,7 @@ export default function ContinueWatchingSection() {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
           <span className="w-10 h-10 rounded-xl bg-[#25d366]/20 border border-[#25d366]/30 flex items-center justify-center text-[#25d366]">
-            <PlayCircle className="w-5 h-5" />
+            <PlayCircle className="w-5 h-5 animate-pulse" />
           </span>
           Continue Watching
         </h2>

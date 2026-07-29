@@ -69,7 +69,7 @@ export default async function Home() {
           <ContentRail 
             title="Hot Today" 
             items={popularMovies?.results?.slice(0, 10) || []} 
-            icon={<Zap className="w-5 h-5" />} 
+            icon={<Zap className="w-5 h-5 animate-pulse text-yellow-400" />} 
             viewAllLink="/movies"
           />
         </Suspense>
@@ -78,7 +78,7 @@ export default async function Home() {
           <ContentRail 
             title="Popular Movies" 
             items={popularMovies?.results?.slice(10, 20) || []} 
-            icon={<Film className="w-5 h-5" />} 
+            icon={<Film className="w-5 h-5 animate-pulse text-blue-400" />} 
             viewAllLink="/movies" 
           />
         </Suspense>
@@ -87,7 +87,7 @@ export default async function Home() {
           <ContentRail 
             title="Popular TV Shows" 
             items={popularTV?.results || []} 
-            icon={<Tv className="w-5 h-5" />} 
+            icon={<Tv className="w-5 h-5 animate-pulse text-green-400" />} 
             viewAllLink="/tv" 
           />
         </Suspense>
@@ -96,7 +96,7 @@ export default async function Home() {
           <ContentRail 
             title="In Theaters Now" 
             items={nowPlaying?.results || []} 
-            icon={<PlayCircle className="w-5 h-5" />} 
+            icon={<PlayCircle className="w-5 h-5 animate-pulse text-red-500" />} 
             viewAllLink="/now-playing" 
           />
         </Suspense>
@@ -105,7 +105,7 @@ export default async function Home() {
           <ContentRail 
             title="Coming Soon" 
             items={upcoming?.results || []} 
-            icon={<Calendar className="w-5 h-5" />} 
+            icon={<Calendar className="w-5 h-5 animate-pulse text-purple-400" />} 
             viewAllLink="/upcoming" 
           />
         </Suspense>
@@ -114,7 +114,7 @@ export default async function Home() {
           <ContentRail 
             title="On Air Now" 
             items={airingToday?.results || []} 
-            icon={<Radio className="w-5 h-5" />} 
+            icon={<Radio className="w-5 h-5 animate-pulse text-orange-500" />} 
             viewAllLink="/airing-today" 
           />
         </Suspense>
@@ -123,7 +123,7 @@ export default async function Home() {
           <ContentRail 
             title="Top Rated" 
             items={topRated?.results || []} 
-            icon={<Star className="w-5 h-5" />} 
+            icon={<Star className="w-5 h-5 animate-pulse text-yellow-500" />} 
             viewAllLink="/top-rated" 
           />
         </Suspense>
