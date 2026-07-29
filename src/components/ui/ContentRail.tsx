@@ -33,6 +33,12 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
 
   if (!items || items.length === 0) return null;
 
+  // Split items into chunks of 2 for a 2-row layout
+  const chunkedItems = [];
+  for (let i = 0; i < items.length; i += 2) {
+    chunkedItems.push(items.slice(i, i + 2));
+  }
+
   return (
     <section className="py-5 sm:py-7 relative group/rail">
       <Container>
@@ -61,12 +67,14 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
 
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex -ml-3 md:-ml-4">
-              {items.map((item) => (
+              {chunkedItems.map((chunk, idx) => (
                 <div
-                  key={item.id}
-                  className="flex-[0_0_33.333333%] md:flex-none md:w-auto pl-3 md:pl-4 min-w-0"
+                  key={idx}
+                  className="flex-[0_0_33.333333%] md:flex-none md:w-auto pl-3 md:pl-4 min-w-0 flex flex-col gap-4 sm:gap-6"
                 >
-                  <MovieCard item={item} className="w-full md:w-[160px] lg:w-[175px]" />
+                  {chunk.map(item => (
+                    <MovieCard key={item.id} item={item} className="w-full md:w-[160px] lg:w-[175px]" />
+                  ))}
                 </div>
               ))}
             </div>
@@ -75,7 +83,7 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
           {/* Desktop nav arrows */}
           <button
             onClick={scrollPrev}
-            className="absolute -left-3 top-1/3 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur border border-white/10 rounded-full items-center justify-center text-white opacity-0 group-hover/rail:opacity-100 transition-all disabled:opacity-0 hidden md:flex hover:bg-violet-600 hover:border-violet-500 hover:scale-105 z-20 shadow-xl"
+            className="absolute -left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur border border-white/10 rounded-full items-center justify-center text-white opacity-0 group-hover/rail:opacity-100 transition-all disabled:opacity-0 hidden md:flex hover:bg-violet-600 hover:border-violet-500 hover:scale-105 z-20 shadow-xl"
             aria-label="Previous"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -83,7 +91,7 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
           
           <button
             onClick={scrollNext}
-            className="absolute -right-3 top-1/3 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur border border-white/10 rounded-full items-center justify-center text-white opacity-0 group-hover/rail:opacity-100 transition-all disabled:opacity-0 hidden md:flex hover:bg-violet-600 hover:border-violet-500 hover:scale-105 z-20 shadow-xl"
+            className="absolute -right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/70 backdrop-blur border border-white/10 rounded-full items-center justify-center text-white opacity-0 group-hover/rail:opacity-100 transition-all disabled:opacity-0 hidden md:flex hover:bg-violet-600 hover:border-violet-500 hover:scale-105 z-20 shadow-xl"
             aria-label="Next"
           >
             <ChevronRight className="w-5 h-5" />
