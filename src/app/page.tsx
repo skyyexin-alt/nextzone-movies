@@ -60,7 +60,7 @@ export default async function Home() {
           <ContentRail 
             title="Trending This Week" 
             items={trendingItems} 
-            icon={<Flame className="w-5 h-5" />} 
+            icon={<Flame className="w-5 h-5 animate-pulse text-fuchsia-400" />} 
             viewAllLink="/trending" 
           />
         </Suspense>
