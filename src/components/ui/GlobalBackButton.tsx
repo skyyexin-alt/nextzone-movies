@@ -19,11 +19,11 @@ export default function GlobalBackButton() {
   return (
     <button
       onClick={() => router.back()}
-      className="fixed top-20 left-4 md:top-24 md:left-6 lg:left-8 z-[45] flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-full bg-black/40 hover:bg-white/15 backdrop-blur-xl border border-white/10 text-zinc-300 hover:text-white shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-all active:scale-90 group"
+      className="flex items-center justify-center w-9 h-9 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-zinc-300 hover:text-white transition-all active:scale-90 group mr-2"
       aria-label="Go back"
       title="Go back"
     >
-      <ArrowLeft className="w-5 h-5 md:w-5 md:h-5 group-hover:-translate-x-0.5 transition-transform" />
+      <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
     </button>
   );
 }
