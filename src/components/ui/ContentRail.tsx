@@ -16,7 +16,14 @@ interface ContentRailProps {
 }
 
 export default function ContentRail({ title, items, icon, viewAllLink }: ContentRailProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
+  const [emblaRefMobile, emblaApiMobile] = useEmblaCarousel({
+    align: 'start',
+    skipSnaps: false,
+    dragFree: true,
+    containScroll: 'trimSnaps',
+  });
+
+  const [emblaRefDesktop, emblaApiDesktop] = useEmblaCarousel({
     align: 'start',
     skipSnaps: false,
     dragFree: true,
@@ -24,16 +31,16 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
   });
 
   const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
+    if (emblaApiDesktop) emblaApiDesktop.scrollPrev();
+  }, [emblaApiDesktop]);
 
   const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
+    if (emblaApiDesktop) emblaApiDesktop.scrollNext();
+  }, [emblaApiDesktop]);
 
   if (!items || items.length === 0) return null;
 
-  // Split items into chunks of 2 for a 2-row layout
+  // Split items into chunks of 2 for the mobile 2-row layout
   const chunkedItems = [];
   for (let i = 0; i < items.length; i += 2) {
     chunkedItems.push(items.slice(i, i + 2));
@@ -65,16 +72,31 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
           {/* Right edge fade (mobile hint that more cards exist) */}
           <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-16 bg-gradient-to-l from-[#0f0f23] to-transparent z-10 pointer-events-none rounded-r-xl" />
 
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex -ml-3 md:-ml-4">
+          {/* MOBILE 2-ROW CAROUSEL */}
+          <div className="overflow-hidden md:hidden" ref={emblaRefMobile}>
+            <div className="flex -ml-3">
               {chunkedItems.map((chunk, idx) => (
                 <div
                   key={idx}
-                  className="flex-[0_0_33.333333%] md:flex-none md:w-auto pl-3 md:pl-4 min-w-0 flex flex-col gap-4 sm:gap-6"
+                  className="flex-[0_0_33.333333%] pl-3 min-w-0 flex flex-col gap-4"
                 >
                   {chunk.map(item => (
-                    <MovieCard key={item.id} item={item} className="w-full md:w-[160px] lg:w-[175px]" />
+                    <MovieCard key={item.id} item={item} className="w-full" />
                   ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* DESKTOP 1-ROW CAROUSEL */}
+          <div className="overflow-hidden hidden md:block" ref={emblaRefDesktop}>
+            <div className="flex -ml-4">
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex-none w-auto pl-4 min-w-0"
+                >
+                  <MovieCard item={item} className="w-[160px] lg:w-[175px]" />
                 </div>
               ))}
             </div>
