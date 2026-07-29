@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { Providers } from "./Providers";
 import InstallAppButton from "@/components/ui/InstallAppButton";
 import StickySocialSidebar from "@/components/ui/StickySocialSidebar";
+import GlobalBackButton from "@/components/ui/GlobalBackButton";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -43,6 +44,7 @@ export default function RootLayout({
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
         <Providers>
           <Navbar />
+          <GlobalBackButton />
           <main className="min-h-screen">
             {children}
           </main>
