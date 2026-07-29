@@ -20,7 +20,7 @@ export default function Hero({ item }: HeroProps) {
   const rating = item.vote_average ? item.vote_average.toFixed(1) : null;
 
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative w-full overflow-hidden flex flex-col justify-end min-h-[60vh] sm:min-h-[70vh] lg:min-h-[85vh]">
       {/* Background Image */}
       {backdrop && (
         <div className="absolute inset-0 z-0 h-full w-full">
@@ -29,8 +29,8 @@ export default function Hero({ item }: HeroProps) {
           <img 
             src={backdrop} 
             alt={title}
-            className="w-full h-[120%] object-cover object-top sm:object-[center_25%] opacity-70 mask-image-b"
-            style={{ WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)' }}
+            className="w-full h-full object-cover object-top sm:object-[center_15%] opacity-70 mask-image-b"
+            style={{ WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)' }}
             fetchPriority="high"
           />
         </div>
@@ -41,7 +41,7 @@ export default function Hero({ item }: HeroProps) {
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0f0f23]/90 via-[#0f0f23]/50 to-transparent hidden sm:block" />
 
       {/* Content — natural flow height */}
-      <Container className="relative z-20 pt-28 pb-6 sm:pt-36 sm:pb-12 w-full">
+      <Container className="relative z-20 mt-auto pt-32 pb-8 sm:pt-40 sm:pb-16 w-full">
         <div className="max-w-xl">
           {/* Badges */}
           <div className="flex items-center gap-2 mb-3 flex-wrap">
