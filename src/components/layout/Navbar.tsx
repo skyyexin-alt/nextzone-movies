@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Menu, X, ChevronDown, Heart, Shuffle, ListVideo, Home, Film, Tv, Compass } from 'lucide-react';
+import { Search, Menu, X, ChevronDown, Heart, Shuffle, ListVideo, Home, Film, Tv, Compass, Sparkles, Flame, LayoutList, Star, Library, Globe, Radio, PlayCircle, Calendar, Clock } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import SearchOverlay from './SearchOverlay';
 import Container from '@/components/ui/Container';
@@ -27,22 +27,22 @@ export default function Navbar() {
   }, [pathname]);
 
   const navLinks = [
-    { name: 'HOME', href: '/' },
-    { name: 'MOVIES', href: '/movies' },
-    { name: 'TV SHOWS', href: '/tv' },
-    { name: 'NEW', href: '/new-releases' },
+    { name: 'HOME', href: '/', icon: Home },
+    { name: 'MOVIES', href: '/movies', icon: Film },
+    { name: 'TV SHOWS', href: '/tv', icon: Tv },
+    { name: 'NEW', href: '/new-releases', icon: Sparkles },
   ];
 
   const browseLinks = [
-    { name: 'Trending', href: '/trending' },
-    { name: 'Genres', href: '/genre' },
-    { name: 'Top Rated', href: '/top-rated' },
-    { name: 'Collections', href: '/collections' },
-    { name: 'Countries', href: '/country' },
-    { name: 'Networks', href: '/networks' },
-    { name: 'Now Playing', href: '/now-playing' },
-    { name: 'Upcoming', href: '/upcoming' },
-    { name: 'Airing Today', href: '/airing-today' },
+    { name: 'Trending', href: '/trending', icon: Flame },
+    { name: 'Genres', href: '/genre', icon: LayoutList },
+    { name: 'Top Rated', href: '/top-rated', icon: Star },
+    { name: 'Collections', href: '/collections', icon: Library },
+    { name: 'Countries', href: '/country', icon: Globe },
+    { name: 'Networks', href: '/networks', icon: Radio },
+    { name: 'Now Playing', href: '/now-playing', icon: PlayCircle },
+    { name: 'Upcoming', href: '/upcoming', icon: Calendar },
+    { name: 'Airing Today', href: '/airing-today', icon: Clock },
   ];
 
   // Bottom nav tabs for mobile
@@ -188,32 +188,38 @@ export default function Navbar() {
           {/* Scrollable nav content */}
           <div className="flex-1 overflow-y-auto py-3 px-3">
             <p className="px-3 py-1.5 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Navigation</p>
-            {navLinks.map((link) => (
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              return (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center px-3 py-3 rounded-xl text-sm font-semibold mb-0.5 transition-colors ${
+                className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold mb-0.5 transition-colors ${
                   pathname === link.href ? 'bg-violet-600/15 text-violet-400' : 'text-zinc-300 hover:bg-white/5'
                 }`}
               >
+                <Icon className="w-4 h-4 opacity-70" />
                 {link.name}
               </Link>
-            ))}
+            )})}
             
             <div className="h-px bg-white/8 my-3 mx-2" />
             <p className="px-3 py-1.5 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Browse</p>
             
-            {browseLinks.map((link) => (
+            {browseLinks.map((link) => {
+              const Icon = link.icon;
+              return (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/5 mb-0.5 transition-colors"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/5 mb-0.5 transition-colors"
               >
+                <Icon className="w-4 h-4 opacity-70" />
                 {link.name}
               </Link>
-            ))}
+            )})}
           </div>
 
           {/* Bottom safe area */}
