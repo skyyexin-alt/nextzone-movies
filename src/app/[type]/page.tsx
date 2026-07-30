@@ -28,6 +28,9 @@ export default async function CatalogPage({
   } else if (['tv', 'airing-today'].includes(type)) {
     isMovie = false;
     title = 'TV Shows';
+  } else if (type === '18-plus') {
+    isMovie = true;
+    title = '18+ Intimacy';
   } else {
     return notFound();
   }
@@ -47,6 +50,12 @@ export default async function CatalogPage({
   if (primaryReleaseYear) {
     if (isMovie) queryParams.primary_release_year = primaryReleaseYear;
     else queryParams.first_air_date_year = primaryReleaseYear;
+  }
+
+  // Inject adult params for 18+ route
+  if (type === '18-plus') {
+    queryParams.include_adult = 'true';
+    queryParams.with_keywords = '10004,158529'; // TMDB keywords for erotica, sex
   }
 
   // Fetch data in parallel

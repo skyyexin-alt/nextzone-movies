@@ -50,7 +50,7 @@ export default function Navbar() {
     { icon: Home, label: 'Home', href: '/' },
     { icon: Film, label: 'Movies', href: '/movies' },
     { icon: Tv, label: 'TV', href: '/tv' },
-    { icon: Compass, label: 'Browse', href: '/trending' },
+    { icon: Flame, label: '18+', href: '/18-plus' },
     { icon: Heart, label: 'Watchlist', href: '/watchlist' },
   ];
 
