@@ -58,11 +58,39 @@ export default async function CatalogPage({
     queryParams.with_keywords = '10004,158529'; // TMDB keywords for erotica, sex
   }
 
-  // Fetch data in parallel
-  const [data, genresData] = await Promise.all([
-    isMovie ? getDiscoverMovies(queryParams) : getDiscoverTV(queryParams),
-    getGenres(isMovie ? 'movie' : 'tv')
-  ]);
+  let data;
+  let genresData;
+
+  if (type === '18-plus') {
+    const fs = require('fs');
+    const path = require('path');
+    const filePath = path.join(process.cwd(), 'src/data/adult_movies.json');
+    let allMovies = [];
+    try {
+      allMovies = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    } catch(e) {
+      console.error("Error reading adult_movies.json", e);
+    }
+    
+    const pageNum = parseInt(page, 10);
+    const limit = 24;
+    const startIndex = (pageNum - 1) * limit;
+    
+    data = {
+      results: allMovies.slice(startIndex, startIndex + limit),
+      total_pages: Math.ceil(allMovies.length / limit),
+      page: pageNum,
+      total_results: allMovies.length
+    };
+    genresData = await getGenres('movie');
+  } else {
+    const [fetchedData, fetchedGenres] = await Promise.all([
+      isMovie ? getDiscoverMovies(queryParams) : getDiscoverTV(queryParams),
+      getGenres(isMovie ? 'movie' : 'tv')
+    ]);
+    data = fetchedData;
+    genresData = fetchedGenres;
+  }
 
   const items = data?.results || [];
   const totalPages = data?.total_pages || 1;
