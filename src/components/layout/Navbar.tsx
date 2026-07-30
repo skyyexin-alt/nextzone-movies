@@ -239,16 +239,30 @@ export default function Navbar() {
                   key={tab.href}
                   href={tab.href}
                   className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all active:scale-90 ${
-                    isActive ? 'text-violet-400' : 'text-zinc-500 hover:text-zinc-300'
+                    tab.href === '/18-plus' 
+                      ? (isActive ? 'text-red-500' : 'text-red-500/80 hover:text-red-400')
+                      : (isActive ? 'text-violet-400' : 'text-zinc-500 hover:text-zinc-300')
                   }`}
                 >
                   <div className={`relative transition-all ${isActive ? 'scale-110' : ''}`}>
-                    <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
+                    <Icon 
+                      className={`w-5 h-5 ${tab.href === '/18-plus' ? 'drop-shadow-[0_0_8px_rgba(239,68,68,0.6)]' : ''}`} 
+                      strokeWidth={isActive ? 2.5 : 2} 
+                    />
+                    {tab.href === '/18-plus' && (
+                      <span className="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[8px] font-black w-3.5 h-3.5 flex items-center justify-center rounded-full shadow-[0_0_5px_rgba(239,68,68,0.8)] animate-pulse">
+                        +
+                      </span>
+                    )}
                     {isActive && (
-                      <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-violet-400" />
+                      <span className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full ${tab.href === '/18-plus' ? 'bg-red-500 shadow-[0_0_5px_rgba(239,68,68,0.8)]' : 'bg-violet-400'}`} />
                     )}
                   </div>
-                  <span className={`text-[10px] font-semibold leading-none ${isActive ? 'text-violet-400' : 'text-zinc-600'}`}>
+                  <span className={`text-[10px] leading-none ${
+                    tab.href === '/18-plus'
+                      ? 'font-black tracking-wider'
+                      : 'font-semibold'
+                  }`}>
                     {tab.label}
                   </span>
                 </Link>
