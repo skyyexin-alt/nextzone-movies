@@ -10,15 +10,17 @@ interface Genre {
 
 interface CatalogFiltersProps {
   genres: Genre[];
+  is18Plus?: boolean;
 }
 
-export default function CatalogFilters({ genres }: CatalogFiltersProps) {
+export default function CatalogFilters({ genres, is18Plus }: CatalogFiltersProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const currentSort = searchParams.get('sort_by') || 'popularity.desc';
   const currentGenre = searchParams.get('with_genres') || '';
+  const currentCountry = searchParams.get('with_country') || '';
   const currentYear = searchParams.get('primary_release_year') || '';
 
   const createQueryString = (name: string, value: string) => {
@@ -72,19 +74,39 @@ export default function CatalogFilters({ genres }: CatalogFiltersProps) {
 
       {/* Dropdowns */}
       <div className="flex gap-3 flex-wrap">
-        <div className="relative">
-          <select 
-            value={currentGenre}
-            onChange={(e) => handleFilterChange('with_genres', e.target.value)}
-            className="appearance-none bg-black/40 border border-white/10 rounded-lg pl-4 pr-10 py-2 text-sm text-white focus:outline-none focus:border-violet-500 min-w-[140px]"
-          >
-            <option value="" className="bg-[#1a1a3e] text-white">All Genres</option>
-            {genres.map(g => (
-              <option key={g.id} value={g.id.toString()} className="bg-[#1a1a3e] text-white">{g.name}</option>
-            ))}
-          </select>
-          <ChevronDown className="w-4 h-4 text-zinc-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-        </div>
+        {is18Plus ? (
+          <div className="relative">
+            <select 
+              value={currentCountry}
+              onChange={(e) => handleFilterChange('with_country', e.target.value)}
+              className="appearance-none bg-black/40 border border-white/10 rounded-lg pl-4 pr-10 py-2 text-sm text-white focus:outline-none focus:border-violet-500 min-w-[140px]"
+            >
+              <option value="" className="bg-[#1a1a3e] text-white">All Countries</option>
+              <option value="en" className="bg-[#1a1a3e] text-white">United States / UK</option>
+              <option value="fr" className="bg-[#1a1a3e] text-white">France</option>
+              <option value="es" className="bg-[#1a1a3e] text-white">Spain / Latin America</option>
+              <option value="ko" className="bg-[#1a1a3e] text-white">South Korea</option>
+              <option value="it" className="bg-[#1a1a3e] text-white">Italy</option>
+              <option value="ja" className="bg-[#1a1a3e] text-white">Japan</option>
+              <option value="pl" className="bg-[#1a1a3e] text-white">Poland</option>
+            </select>
+            <ChevronDown className="w-4 h-4 text-zinc-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
+        ) : (
+          <div className="relative">
+            <select 
+              value={currentGenre}
+              onChange={(e) => handleFilterChange('with_genres', e.target.value)}
+              className="appearance-none bg-black/40 border border-white/10 rounded-lg pl-4 pr-10 py-2 text-sm text-white focus:outline-none focus:border-violet-500 min-w-[140px]"
+            >
+              <option value="" className="bg-[#1a1a3e] text-white">All Genres</option>
+              {genres.map(g => (
+                <option key={g.id} value={g.id.toString()} className="bg-[#1a1a3e] text-white">{g.name}</option>
+              ))}
+            </select>
+            <ChevronDown className="w-4 h-4 text-zinc-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
+        )}
 
         <div className="relative">
           <select 

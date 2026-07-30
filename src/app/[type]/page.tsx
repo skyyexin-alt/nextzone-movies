@@ -30,7 +30,7 @@ export default async function CatalogPage({
     title = 'TV Shows';
   } else if (type === '18-plus') {
     isMovie = true;
-    title = '18+ Intimacy';
+    title = '18+ Intimacy 🍆💦🔥';
   } else {
     return notFound();
   }
@@ -39,6 +39,7 @@ export default async function CatalogPage({
   const page = typeof resolvedSearchParams.page === 'string' ? resolvedSearchParams.page : '1';
   const sortBy = typeof resolvedSearchParams.sort_by === 'string' ? resolvedSearchParams.sort_by : 'popularity.desc';
   const withGenres = typeof resolvedSearchParams.with_genres === 'string' ? resolvedSearchParams.with_genres : undefined;
+  const withCountry = typeof resolvedSearchParams.with_country === 'string' ? resolvedSearchParams.with_country : undefined;
   const primaryReleaseYear = typeof resolvedSearchParams.primary_release_year === 'string' ? resolvedSearchParams.primary_release_year : undefined;
 
   // Build the query object
@@ -70,6 +71,25 @@ export default async function CatalogPage({
       allMovies = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     } catch(e) {
       console.error("Error reading adult_movies.json", e);
+    }
+    
+    // Sort locally
+    if (sortBy === 'popularity.desc') {
+      allMovies.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+    } else if (sortBy === 'vote_average.desc') {
+      allMovies.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
+    } else if (sortBy === 'primary_release_date.desc') {
+      allMovies.sort((a, b) => new Date(b.release_date || 0).getTime() - new Date(a.release_date || 0).getTime());
+    }
+
+    // Filter by country (using original_language)
+    if (withCountry) {
+      allMovies = allMovies.filter((m: any) => m.original_language === withCountry);
+    }
+
+    // Filter by year
+    if (primaryReleaseYear) {
+      allMovies = allMovies.filter((m: any) => m.release_date && m.release_date.startsWith(primaryReleaseYear));
     }
     
     const pageNum = parseInt(page, 10);
@@ -106,7 +126,7 @@ export default async function CatalogPage({
         </div>
       </div>
 
-      <CatalogFilters genres={genres} />
+      <CatalogFilters genres={genres} is18Plus={type === '18-plus'} />
 
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-5">
         {items.map((item: any) => (
