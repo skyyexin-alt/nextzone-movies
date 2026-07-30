@@ -7,6 +7,7 @@ import BrowseMore from '@/components/ui/BrowseMore';
 import { Suspense } from 'react';
 import Container from '@/components/ui/Container';
 import { notFound } from 'next/navigation';
+import adultMoviesData from '@/data/adult_movies.json';
 
 export default async function CatalogPage({ 
   params,
@@ -63,23 +64,15 @@ export default async function CatalogPage({
   let genresData;
 
   if (type === '18-plus') {
-    const fs = require('fs');
-    const path = require('path');
-    const filePath = path.join(process.cwd(), 'src/data/adult_movies.json');
-    let allMovies = [];
-    try {
-      allMovies = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    } catch(e) {
-      console.error("Error reading adult_movies.json", e);
-    }
+    let allMovies: any[] = [...adultMoviesData];
     
     // Sort locally
     if (sortBy === 'popularity.desc') {
-      allMovies.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+      allMovies.sort((a: any, b: any) => (b.popularity || 0) - (a.popularity || 0));
     } else if (sortBy === 'vote_average.desc') {
-      allMovies.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
+      allMovies.sort((a: any, b: any) => (b.vote_average || 0) - (a.vote_average || 0));
     } else if (sortBy === 'primary_release_date.desc') {
-      allMovies.sort((a, b) => new Date(b.release_date || 0).getTime() - new Date(a.release_date || 0).getTime());
+      allMovies.sort((a: any, b: any) => new Date(b.release_date || 0).getTime() - new Date(a.release_date || 0).getTime());
     }
 
     // Filter by country (using original_language)
