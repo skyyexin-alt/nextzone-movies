@@ -6,7 +6,6 @@ import Footer from "@/components/layout/Footer";
 import { Providers } from "./Providers";
 import InstallAppButton from "@/components/ui/InstallAppButton";
 import StickySocialSidebar from "@/components/ui/StickySocialSidebar";
-import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -50,10 +49,6 @@ export default function RootLayout({
           <InstallAppButton />
           <StickySocialSidebar />
           <Footer />
-          <Script id="_waul11" strategy="afterInteractive">
-            {`var _wau = _wau || []; _wau.push(["dynamic", "wft2mup9o8", "l11", "c4302bffffff", "small"]);`}
-          </Script>
-          <Script src="//waust.at/d.js" strategy="afterInteractive" async />
         </Providers>
       </body>
     </html>
