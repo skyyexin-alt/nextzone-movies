@@ -9,7 +9,7 @@ import CastCarousel from '@/components/ui/CastCarousel';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 import GlobalBackButton from '@/components/ui/GlobalBackButton';
-
+import TelegramJoinPopup from '@/components/ui/TelegramJoinPopup';
 export default async function DetailPage({
   params,
 }: {
@@ -251,6 +251,8 @@ export default async function DetailPage({
           </div>
         </div>
       )}
+      {/* Telegram Popup */}
+      <TelegramJoinPopup />
     </Container>
   );
 }
