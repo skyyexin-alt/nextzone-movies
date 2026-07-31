@@ -100,6 +100,11 @@ export default async function DetailPage({
         seasons={data.seasons || []}
       />
 
+      {/* Under-Player Ad Banner */}
+      <div className="mt-6 mb-2">
+        <AdBanner src="/adbanner_player.html" />
+      </div>
+
       {/* ── Movie Details Section ── */}
       <div className="mt-8 space-y-6">
 
