@@ -43,6 +43,7 @@ export default function Navbar() {
     { name: 'Now Playing', href: '/now-playing', icon: PlayCircle },
     { name: 'Upcoming', href: '/upcoming', icon: Calendar },
     { name: 'Airing Today', href: '/airing-today', icon: Clock },
+    { name: '18+', href: '/18-plus', icon: Flame },
   ];
 
   // Bottom nav tabs for mobile
@@ -99,16 +100,30 @@ export default function Navbar() {
                 <button className="flex items-center gap-1 text-xs font-bold tracking-wider text-zinc-400 hover:text-white transition-colors py-2">
                   BROWSE <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover/browse:rotate-180" />
                 </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-[#0f0f23] rounded-xl shadow-2xl border border-white/5 opacity-0 invisible group-hover/browse:opacity-100 group-hover/browse:visible transition-all grid grid-cols-1 overflow-hidden">
-                  {browseLinks.map((link) => (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-[#0f0f23] rounded-xl shadow-2xl border border-white/5 opacity-0 invisible group-hover/browse:opacity-100 group-hover/browse:visible transition-all grid grid-cols-1 overflow-hidden py-1">
+                  {browseLinks.map((link) => {
+                    const Icon = link.icon;
+                    return (
                     <Link
                       key={link.name}
                       href={link.href}
-                      className="px-4 py-2.5 text-sm font-medium text-zinc-300 hover:bg-white/5 hover:text-white transition-colors"
+                      className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors ${
+                        link.href === '/18-plus' 
+                          ? 'text-red-500 hover:bg-red-500/10 hover:text-red-400' 
+                          : 'text-zinc-300 hover:bg-white/5 hover:text-white'
+                      }`}
                     >
+                      <div className="relative">
+                        <Icon className={`w-4 h-4 opacity-80 ${link.href === '/18-plus' ? 'drop-shadow-[0_0_8px_rgba(239,68,68,0.6)] text-red-500' : ''}`} />
+                        {link.href === '/18-plus' && (
+                          <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[6px] font-black w-2.5 h-2.5 flex items-center justify-center rounded-full shadow-[0_0_5px_rgba(239,68,68,0.8)] animate-pulse">
+                            +
+                          </span>
+                        )}
+                      </div>
                       {link.name}
                     </Link>
-                  ))}
+                  )})}
                 </div>
               </div>
 
