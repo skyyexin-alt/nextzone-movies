@@ -13,7 +13,7 @@ export default function TelegramJoinPopup() {
   if (!mounted || isDismissed) return null;
 
   return (
-    <div className="fixed bottom-[230px] lg:bottom-6 left-4 right-4 lg:right-auto lg:left-6 z-40 animate-in slide-in-from-bottom-5 fade-in duration-500 flex justify-center lg:block pointer-events-none">
+    <div className="fixed bottom-20 lg:bottom-6 left-4 right-4 lg:right-auto lg:left-6 z-40 animate-in slide-in-from-bottom-5 fade-in duration-500 flex justify-center lg:block pointer-events-none">
       <div className="relative overflow-hidden rounded-2xl p-4 w-full max-w-[320px] border border-[#2AABEE]/30 bg-[#0f0f23]/95 backdrop-blur-xl shadow-[0_8px_30px_rgba(42,171,238,0.2)] pointer-events-auto">
         {/* Background glow elements */}
         <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#2AABEE]/20 to-transparent pointer-events-none" />
