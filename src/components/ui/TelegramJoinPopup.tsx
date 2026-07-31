@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { X, Send } from "lucide-react";
+import { X, MessageCircle, ExternalLink } from "lucide-react";
 
 export default function TelegramJoinPopup() {
   const [isDismissed, setIsDismissed] = useState(false);
@@ -34,13 +34,13 @@ export default function TelegramJoinPopup() {
 
         <div className="relative z-10 flex flex-col gap-3">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-[12px] bg-gradient-to-br from-[#2AABEE] to-[#229ED9] flex items-center justify-center shrink-0 shadow-lg border border-white/10 relative">
-              <Send className="w-6 h-6 text-white ml-[-2px] mt-[2px]" />
+            <div className="w-12 h-12 rounded-[12px] bg-gradient-to-br from-[#1E88E5] to-[#1565C0] flex items-center justify-center shrink-0 shadow-lg border border-white/10 relative">
+              <MessageCircle className="w-6 h-6 text-white" />
             </div>
             <div className="pr-6">
-              <h3 className="font-bold text-white text-[15px] leading-tight">Join Our Telegram</h3>
+              <h3 className="font-bold text-white text-[15px] leading-tight">Join XFlix Telegram</h3>
               <p className="text-zinc-400 text-xs mt-1 line-clamp-2 leading-relaxed">
-                Get instant updates on new movies and exclusive content.
+                Get notified if the site moves. First to know about updates & new links.
               </p>
             </div>
           </div>
@@ -48,10 +48,10 @@ export default function TelegramJoinPopup() {
             href="https://t.me/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full mt-1 py-2.5 bg-gradient-to-r from-[#2AABEE] to-[#229ED9] hover:from-[#3BB8F5] hover:to-[#2FB2EC] active:scale-[0.98] transition-all text-white font-bold rounded-xl text-sm shadow-[0_0_20px_rgba(42,171,238,0.3)] flex items-center justify-center gap-2"
+            className="w-full mt-1 py-2.5 bg-[#1E88E5] hover:bg-[#1976D2] active:scale-[0.98] transition-all text-white font-bold rounded-xl text-sm shadow-[0_0_20px_rgba(30,136,229,0.3)] flex items-center justify-center gap-2"
           >
-            <Send className="w-4 h-4" />
-            Join Channel
+            <ExternalLink className="w-4 h-4" />
+            Join Group
           </a>
         </div>
       </div>
