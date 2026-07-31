@@ -7,9 +7,7 @@ const AD_WIDTH = 728;
 const AD_HEIGHT = 90;
 
 export default function AdBanner() {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [scale, setScale] = useState(1);
-  const loaded = useRef(false);
 
   // Responsive scale — shrinks the 728×90 to fit any screen
   useEffect(() => {
@@ -20,42 +18,6 @@ export default function AdBanner() {
     calcScale();
     window.addEventListener('resize', calcScale, { passive: true });
     return () => window.removeEventListener('resize', calcScale);
-  }, []);
-
-  // Load ad inside an iframe so document.write() works safely in React
-  useEffect(() => {
-    if (loaded.current || !iframeRef.current) return;
-    loaded.current = true;
-
-    const iframe = iframeRef.current;
-    const doc = iframe.contentDocument ?? iframe.contentWindow?.document;
-    if (!doc) return;
-
-    doc.open();
-    doc.write(`<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { overflow: hidden; background: transparent; }
-    </style>
-  </head>
-  <body>
-    <script type="text/javascript">
-      atOptions = {
-        'key'    : '${AD_KEY}',
-        'format' : 'iframe',
-        'height' : ${AD_HEIGHT},
-        'width'  : ${AD_WIDTH},
-        'params' : {}
-      };
-    <\/script>
-    <script type="text/javascript"
-      src="https://www.highperformanceformat.com/${AD_KEY}/invoke.js">
-    <\/script>
-  </body>
-</html>`);
-    doc.close();
   }, []);
 
   const containerHeight = Math.round(AD_HEIGHT * scale);
@@ -77,8 +39,8 @@ export default function AdBanner() {
         }}
       >
         <iframe
-          ref={iframeRef}
           title="Advertisement"
+          src="/adbanner.html"
           width={AD_WIDTH}
           height={AD_HEIGHT}
           frameBorder={0}

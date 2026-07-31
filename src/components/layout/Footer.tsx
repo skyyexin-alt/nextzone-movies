@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ListVideo } from 'lucide-react';
+import { ListVideo, Send } from 'lucide-react';
 import Container from '@/components/ui/Container';
 
 export default function Footer() {
@@ -22,9 +22,39 @@ export default function Footer() {
               </div>
               <span className="text-xl font-bold text-white tracking-wide">XFlix</span>
             </Link>
-            <p className="text-zinc-500 text-sm leading-relaxed max-w-sm">
+            <p className="text-zinc-500 text-sm leading-relaxed max-w-sm mb-6">
               Stream your favorite movies and TV shows in HD quality. Free, fast, and always updated. The best cinematic experience on any device.
             </p>
+
+            {/* Telegram Join Card */}
+            <div className="relative overflow-hidden rounded-2xl p-4 w-full max-w-[320px] border border-[#2AABEE]/30 bg-[#0f0f23]/95 backdrop-blur-xl shadow-[0_8px_30px_rgba(42,171,238,0.2)]">
+              {/* Background glow elements */}
+              <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#2AABEE]/20 to-transparent pointer-events-none" />
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-[#229ED9]/20 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="relative z-10 flex flex-col gap-3">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-[12px] bg-gradient-to-br from-[#2AABEE] to-[#229ED9] flex items-center justify-center shrink-0 shadow-lg border border-white/10 relative">
+                    <Send className="w-6 h-6 text-white ml-[-2px] mt-[2px]" />
+                  </div>
+                  <div className="pr-2">
+                    <h3 className="font-bold text-white text-[15px] leading-tight">Join Our Telegram</h3>
+                    <p className="text-zinc-400 text-xs mt-1 line-clamp-2 leading-relaxed">
+                      Get instant updates on new movies and exclusive content.
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href="https://t.me/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full mt-1 py-2.5 bg-gradient-to-r from-[#2AABEE] to-[#229ED9] hover:from-[#3BB8F5] hover:to-[#2FB2EC] active:scale-[0.98] transition-all text-white font-bold rounded-xl text-sm shadow-[0_0_20px_rgba(42,171,238,0.3)] flex items-center justify-center gap-2"
+                >
+                  <Send className="w-4 h-4" />
+                  Join Channel
+                </a>
+              </div>
+            </div>
           </div>
 
           <div>
