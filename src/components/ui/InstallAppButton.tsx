@@ -56,8 +56,8 @@ export default function InstallAppButton() {
 
   return (
     <>
-      <div className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-40 animate-in slide-in-from-bottom-5 fade-in duration-500">
-        <div className="relative overflow-hidden rounded-2xl p-4 w-[320px] max-w-[calc(100vw-2rem)] border border-violet-500/30 bg-[#0f0f23]/95 backdrop-blur-xl shadow-[0_8px_30px_rgb(139,92,246,0.3)]">
+      <div className="fixed bottom-20 lg:bottom-6 left-4 right-4 lg:left-auto lg:right-6 z-40 animate-in slide-in-from-bottom-5 fade-in duration-500 flex justify-center lg:block pointer-events-none">
+        <div className="relative overflow-hidden rounded-2xl p-4 w-full max-w-[320px] border border-violet-500/30 bg-[#0f0f23]/95 backdrop-blur-xl shadow-[0_8px_30px_rgb(139,92,246,0.3)] pointer-events-auto">
           {/* Background glow elements */}
           <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-violet-600/20 to-transparent pointer-events-none" />
           <div className="absolute -top-4 -right-4 w-24 h-24 bg-fuchsia-600/20 rounded-full blur-2xl pointer-events-none" />
