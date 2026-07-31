@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const AD_KEY = 'd092035ae89a38067d47dfdef5cf6b61';
+const AD_KEY = '282e852f5808b9dd01d12c1ed30bf5d2';
 const AD_WIDTH = 728;
 const AD_HEIGHT = 90;
 
