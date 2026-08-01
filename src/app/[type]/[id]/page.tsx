@@ -249,7 +249,7 @@ export default async function DetailPage({
               <p className="text-xs text-zinc-500 mt-0.5">Because you&apos;re watching {title}</p>
             </div>
           </div>
-          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4">
             {similar.slice(0, 18).map((item: any) => (
               <MovieCard key={item.id} item={item} className="w-full" />
             ))}

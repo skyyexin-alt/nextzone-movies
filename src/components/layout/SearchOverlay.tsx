@@ -88,7 +88,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
               <Loader2 className="w-10 h-10 animate-spin" />
             </div>
           ) : results.length > 0 ? (
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
               {results.map(item => {
                 const title = item.title || item.name;
                 const isMovie = item.media_type === 'movie';
