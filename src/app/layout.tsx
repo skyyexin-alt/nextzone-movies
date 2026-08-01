@@ -6,6 +6,8 @@ import Footer from "@/components/layout/Footer";
 import { Providers } from "./Providers";
 import InstallAppButton from "@/components/ui/InstallAppButton";
 import StickySocialSidebar from "@/components/ui/StickySocialSidebar";
+import Script from "next/script";
+import AdskeeperWidget from "@/components/ui/AdskeeperWidget";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -41,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
+        <Script src="https://jsc.adskeeper.com/site/1088959.js" strategy="afterInteractive" />
         <Providers>
           <Navbar />
           <main className="min-h-screen">
@@ -48,6 +51,7 @@ export default function RootLayout({
           </main>
           <InstallAppButton />
           <StickySocialSidebar />
+          <AdskeeperWidget />
           <Footer />
         </Providers>
       </body>
