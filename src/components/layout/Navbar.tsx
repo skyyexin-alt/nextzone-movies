@@ -243,8 +243,8 @@ export default function Navbar() {
       </div>
 
       {/* ── Mobile Bottom Navigation Bar ── */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden safe-bottom">
-        <div className="bg-[#0a0a1a]/98 backdrop-blur-xl border-t border-white/8 px-1 pt-2 pb-2">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 lg:hidden safe-bottom bg-[#0a0a1a]/98 backdrop-blur-xl border-t border-white/8">
+        <div className="px-1 pt-2 pb-2">
           <div className="flex items-center justify-around max-w-lg mx-auto">
             {bottomTabs.map((tab) => {
               const isActive = pathname === tab.href || (tab.href !== '/' && pathname.startsWith(tab.href));
