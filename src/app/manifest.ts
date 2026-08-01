@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'XFlix - Watch Free Movies & TV Shows',
-    short_name: 'XFlix Movies',
+    short_name: 'XFlix-Movies',
     description: 'Watch unlimited movies and TV shows online free in HD, 1080p, 4K quality.',
     start_url: '/',
     display: 'standalone',
