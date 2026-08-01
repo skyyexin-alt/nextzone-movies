@@ -63,7 +63,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
   return (
     <div className="fixed inset-0 z-[100] bg-[#1a1a3e]/95 backdrop-blur-xl animate-in fade-in duration-200">
-      <Container className="py-6 md:py-12 h-full flex flex-col">
+      <Container className={`py-6 md:py-12 h-full flex flex-col ${(!query && results.length === 0) ? 'justify-center md:justify-start' : 'justify-start'}`}>
         <div className="flex items-center gap-4 relative">
           <SearchIcon className="w-6 h-6 text-zinc-400 absolute left-4" />
           <input

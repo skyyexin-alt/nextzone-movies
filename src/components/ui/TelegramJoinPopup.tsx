@@ -45,7 +45,7 @@ export default function TelegramJoinPopup() {
             </div>
           </div>
           <a
-            href="https://t.me/"
+            href="https://t.me/XFlixhd"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full mt-1 py-2.5 bg-[#1E88E5] hover:bg-[#1976D2] active:scale-[0.98] transition-all text-white font-bold rounded-xl text-sm shadow-[0_0_20px_rgba(30,136,229,0.3)] flex items-center justify-center gap-2"
