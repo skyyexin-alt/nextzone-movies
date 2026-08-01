@@ -59,18 +59,18 @@ export default function ContinueWatchingSection() {
 
         <button
           onClick={scrollPrev}
-          className="absolute -left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 backdrop-blur border border-white/10 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex hover:bg-[#25d366] hover:border-[#25d366] z-10"
+          className="absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-12 md:h-12 bg-black/80 backdrop-blur border border-white/20 rounded-full flex items-center justify-center text-white md:opacity-0 md:group-hover:opacity-100 transition-opacity disabled:opacity-0 hover:bg-[#25d366] hover:border-[#25d366] z-10 shadow-lg"
           aria-label="Previous"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
         </button>
         
         <button
           onClick={scrollNext}
-          className="absolute -right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/60 backdrop-blur border border-white/10 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0 hidden md:flex hover:bg-[#25d366] hover:border-[#25d366] z-10"
+          className="absolute -right-2 md:-right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-12 md:h-12 bg-black/80 backdrop-blur border border-white/20 rounded-full flex items-center justify-center text-white md:opacity-0 md:group-hover:opacity-100 transition-opacity disabled:opacity-0 hover:bg-[#25d366] hover:border-[#25d366] z-10 shadow-lg"
           aria-label="Next"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
         </button>
       </div>
     </section>
