@@ -78,7 +78,7 @@ export default function ContentRail({ title, items, icon, viewAllLink }: Content
               {chunkedItems.map((chunk, idx) => (
                 <div
                   key={idx}
-                  className="flex-[0_0_33.333333%] pl-3 min-w-0 flex flex-col gap-4"
+                  className="flex-[0_0_45%] pl-3 min-w-0 flex flex-col gap-4"
                 >
                   {chunk.map(item => (
                     <MovieCard key={item.id} item={item} className="w-full" />
