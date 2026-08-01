@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TriangleAlert, Star, Play, ChevronDown, CheckCircle2 } from 'lucide-react';
+import CustomVideoPlayer from './CustomVideoPlayer';
 
 interface IntegratedPlayerProps {
   title: string;
@@ -20,6 +21,36 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
   const [activeSeason, setActiveSeason] = useState<number>(defaultSeason ? defaultSeason.season_number : 1);
   const [activeEpisode, setActiveEpisode] = useState<number>(1);
   const [isSeasonDropdownOpen, setIsSeasonDropdownOpen] = useState(false);
+  const [streamData, setStreamData] = useState<{ url: string, subs: any[] } | null>(null);
+  const [isStreamLoading, setIsStreamLoading] = useState(true);
+
+  // Fetch the direct stream URL from our API bridge
+  useEffect(() => {
+    async function fetchStream() {
+      setIsStreamLoading(true);
+      try {
+        const queryParams = type === 'tv' 
+          ? `?id=${tmdbId}&type=tv&s=${activeSeason}&e=${activeEpisode}`
+          : `?id=${tmdbId}&type=movie`;
+          
+        const res = await fetch(`/api/stream${queryParams}`);
+        const data = await res.json();
+        
+        if (data.streamUrl) {
+          setStreamData({ url: data.streamUrl, subs: data.subtitles || [] });
+        } else {
+          setStreamData(null); // No stream found by scraper, fallback to iframe
+        }
+      } catch (err) {
+        console.error("Failed to fetch stream data:", err);
+        setStreamData(null);
+      } finally {
+        setIsStreamLoading(false);
+      }
+    }
+    
+    fetchStream();
+  }, [tmdbId, type, activeSeason, activeEpisode]);
 
   const servers = [
     { name: 'vidsrc.mov', id: 'vidsrcmov', isRecommended: true },
@@ -96,16 +127,28 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
       <div className={`flex flex-col gap-6 ${type === 'tv' ? 'lg:w-3/4' : 'w-full'}`}>
         
         {/* Video Container */}
-        <div className="relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5">
-          <iframe
-            key={`${activeServer}-${activeSeason}-${activeEpisode}`}
-            className="w-full h-full absolute inset-0 bg-black"
-            src={getEmbedUrl()}
-            title={`${title} Player`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
+        {isStreamLoading ? (
+          <div className="relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5 flex items-center justify-center">
+            <div className="w-10 h-10 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        ) : streamData ? (
+          <CustomVideoPlayer 
+            src={streamData.url} 
+            poster={`https://image.tmdb.org/t/p/w1280${backdrop}`} 
+            subtitles={streamData.subs}
+          />
+        ) : (
+          <div className="relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5">
+            <iframe
+              key={`${activeServer}-${activeSeason}-${activeEpisode}`}
+              className="w-full h-full absolute inset-0 bg-black"
+              src={getEmbedUrl()}
+              title={`${title} Player`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
 
         {/* Server Selection Section */}
         <div className="bg-[#222255]/40 border border-white/5 rounded-xl p-4 md:p-6 flex flex-col gap-4">
