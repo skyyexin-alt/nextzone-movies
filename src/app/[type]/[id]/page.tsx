@@ -177,7 +177,7 @@ export default async function DetailPage({
                 <span className="text-zinc-500">Genre: </span>
                 {genres.map((g: any, i: number) => (
                   <span key={g.id}>
-                    <Link href={`/genre/${g.id}`} className="text-violet-400 hover:text-violet-300 transition-colors font-medium">{g.name}</Link>
+                    <Link href={`/movies?with_genres=${g.id}`} className="text-violet-400 hover:text-violet-300 transition-colors font-medium">{g.name}</Link>
                     {i < genres.length - 1 && <span className="text-zinc-600">, </span>}
                   </span>
                 ))}
