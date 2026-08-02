@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import Hero from '@/components/ui/Hero';
 import ContentRail from '@/components/ui/ContentRail';
-import TelegramBanner from '@/components/ui/TelegramBanner';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
 import Container from '@/components/ui/Container';
 import AdBanner from '@/components/ui/AdBanner';
@@ -51,7 +50,6 @@ export default async function Home() {
       
       <Container className="mt-4">
         <AdBanner />
-        <TelegramBanner />
         <ContinueWatchingSection />
       </Container>
       

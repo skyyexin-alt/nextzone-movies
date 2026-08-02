@@ -2,7 +2,6 @@ import { getDiscoverMovies, getDiscoverTV, getGenres } from '@/lib/tmdb';
 import MovieCard from '@/components/ui/MovieCard';
 import CatalogFilters from '@/components/ui/CatalogFilters';
 import Pagination from '@/components/ui/Pagination';
-import TelegramBanner from '@/components/ui/TelegramBanner';
 import BrowseMore from '@/components/ui/BrowseMore';
 import { Suspense } from 'react';
 import Container from '@/components/ui/Container';
@@ -134,8 +133,6 @@ export default async function CatalogPage({
       )}
 
       <Pagination currentPage={currentPage} totalPages={totalPages} />
-      
-      <TelegramBanner />
       
       <BrowseMore genres={genres} />
     </Container>

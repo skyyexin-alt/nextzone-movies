@@ -9,6 +9,18 @@ export default function InstallAppButton() {
   const [showIosInstructions, setShowIosInstructions] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [canShowPopup, setCanShowPopup] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('can_show_install_popup') === 'true') {
+        setCanShowPopup(true);
+      }
+      const handleTrigger = () => setCanShowPopup(true);
+      window.addEventListener('trigger-install-popup', handleTrigger);
+      return () => window.removeEventListener('trigger-install-popup', handleTrigger);
+    }
+  }, []);
 
   useEffect(() => {
     // Check if already in standalone mode (installed)
@@ -51,8 +63,8 @@ export default function InstallAppButton() {
     }
   };
 
-  // Don't render anything if it's already installed or explicitly dismissed
-  if (isInstalled || isDismissed) return null;
+  // Don't render anything at the beginning (wait for 5 mins watch/interact), or if already installed/dismissed
+  if (!canShowPopup || isInstalled || isDismissed) return null;
 
   return (
     <>

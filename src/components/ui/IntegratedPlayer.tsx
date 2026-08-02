@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { TriangleAlert, Star, Play, ChevronDown, CheckCircle2 } from 'lucide-react';
 import CustomVideoPlayer from './CustomVideoPlayer';
 
@@ -11,9 +11,30 @@ interface IntegratedPlayerProps {
   tmdbId: string;
   type: 'movie' | 'tv';
   seasons?: any[];
+  /** ISO 639-1 original language code, e.g. 'ko', 'ja', 'fr'. Pass 'en' for English originals. */
+  originalLanguage?: string;
 }
 
-export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, type, seasons = [] }: IntegratedPlayerProps) {
+/** Given a list of subtitles, marks the English track as default if the movie is non-English. */
+function applyDefaultSubtitle(subs: any[], originalLanguage?: string): any[] {
+  if (!subs || subs.length === 0) return subs;
+  const isNonEnglish = originalLanguage && originalLanguage !== 'en';
+  if (!isNonEnglish) return subs;
+
+  // Check if any subtitle already has default=true — if so, respect it
+  const hasExplicitDefault = subs.some((s) => s.default);
+  if (hasExplicitDefault) return subs;
+
+  // Find an English subtitle (en, en-US, en-GB …)
+  const engIndex = subs.findIndex(
+    (s) => s.srcLang?.toLowerCase().startsWith('en')
+  );
+  if (engIndex === -1) return subs; // No English track available
+
+  return subs.map((s, i) => ({ ...s, default: i === engIndex }));
+}
+
+export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, type, seasons = [], originalLanguage }: IntegratedPlayerProps) {
   const [activeServer, setActiveServer] = useState('vidsrc.mov');
   
   // Find a valid default season (prefer Season 1 over Season 0/Specials)
@@ -23,6 +44,8 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
   const [isSeasonDropdownOpen, setIsSeasonDropdownOpen] = useState(false);
   const [streamData, setStreamData] = useState<{ url: string, subs: any[] } | null>(null);
   const [isStreamLoading, setIsStreamLoading] = useState(true);
+  const [iframeOverlayVisible, setIframeOverlayVisible] = useState(true);
+  const iframeContainerRef = useRef<HTMLDivElement>(null);
 
   // Fetch the direct stream URL from our API bridge
   useEffect(() => {
@@ -37,7 +60,8 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
         const data = await res.json();
         
         if (data.streamUrl) {
-          setStreamData({ url: data.streamUrl, subs: data.subtitles || [] });
+          const processedSubs = applyDefaultSubtitle(data.subtitles || [], originalLanguage);
+          setStreamData({ url: data.streamUrl, subs: processedSubs });
         } else {
           setStreamData(null); // No stream found by scraper, fallback to iframe
         }
@@ -51,6 +75,43 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
     
     fetchStream();
   }, [tmdbId, type, activeSeason, activeEpisode]);
+
+  // Reset overlay whenever the server/episode changes so the overlay shows again
+  useEffect(() => {
+    setIframeOverlayVisible(true);
+  }, [activeServer, activeSeason, activeEpisode]);
+
+  // Track viewer watching & interacting duration; trigger install app popup after 5 minutes (300 seconds)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (localStorage.getItem('can_show_install_popup') === 'true') return;
+
+    const interval = setInterval(() => {
+      const currentSeconds = parseInt(localStorage.getItem('viewer_watch_time_seconds') || '0', 10);
+      const nextSeconds = currentSeconds + 1;
+      localStorage.setItem('viewer_watch_time_seconds', nextSeconds.toString());
+
+      if (nextSeconds >= 300) {
+        localStorage.setItem('can_show_install_popup', 'true');
+        window.dispatchEvent(new Event('trigger-install-popup'));
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleIframePlay = () => {
+    const container = iframeContainerRef.current;
+    if (container) {
+      if (container.requestFullscreen) {
+        container.requestFullscreen().catch(() => {});
+      } else if ((container as any).webkitRequestFullscreen) {
+        (container as any).webkitRequestFullscreen();
+      }
+    }
+    setIframeOverlayVisible(false);
+  };
 
   const servers = [
     { name: 'vidsrc.mov', id: 'vidsrcmov', isRecommended: true },
@@ -138,15 +199,27 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
             subtitles={streamData.subs}
           />
         ) : (
-          <div className="relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5">
+          <div ref={iframeContainerRef} className="relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5">
             <iframe
               key={`${activeServer}-${activeSeason}-${activeEpisode}`}
               className="w-full h-full absolute inset-0 bg-black"
               src={getEmbedUrl()}
               title={`${title} Player`}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
               allowFullScreen
             ></iframe>
+            {/* Play overlay — click to jump straight into the video fullscreen */}
+            {iframeOverlayVisible && (
+              <div
+                className="absolute inset-0 z-10 flex items-center justify-center cursor-pointer group"
+                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)' }}
+                onClick={handleIframePlay}
+              >
+                <div className="w-20 h-20 rounded-full bg-violet-600/90 flex items-center justify-center shadow-[0_0_40px_rgba(124,58,237,0.6)] group-hover:scale-110 group-hover:bg-violet-500 transition-all duration-200">
+                  <Play className="w-9 h-9 text-white fill-white ml-1" />
+                </div>
+              </div>
+            )}
           </div>
         )}
 
