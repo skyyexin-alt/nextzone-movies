@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import { useWatchlist } from '@/context/WatchlistContext';
 import MovieCard from '@/components/ui/MovieCard';
 import Container from '@/components/ui/Container';
@@ -7,6 +8,11 @@ import { ListVideo } from 'lucide-react';
 
 export default function WatchlistPage() {
   const { watchlist } = useWatchlist();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Container className="py-24 md:py-32 min-h-screen">
@@ -17,7 +23,11 @@ export default function WatchlistPage() {
         <h1 className="text-3xl md:text-4xl font-bold text-white">My Watchlist</h1>
       </div>
 
-      {watchlist.length > 0 ? (
+      {!mounted ? (
+        <div className="flex items-center justify-center py-20">
+          <div className="w-10 h-10 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      ) : watchlist.length > 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-5">
           {watchlist.map((item) => (
             <MovieCard key={item.id} item={item} className="w-full" />

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Play, Plus, Check, Star } from 'lucide-react';
 import { MediaItem } from '@/lib/tmdb';
@@ -13,6 +14,12 @@ interface MovieCardProps {
 
 export default function MovieCard({ item, className = '', progress }: MovieCardProps) {
   const { addToWatchlist, removeFromWatchlist, isInWatchlist, isLoaded } = useWatchlist();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const inList = isInWatchlist(item.id);
 
   const handleWatchlist = (e: React.MouseEvent) => {
@@ -60,14 +67,13 @@ export default function MovieCard({ item, className = '', progress }: MovieCardP
         {/* Watchlist Button — always visible on mobile (touch), hover on desktop */}
         <button 
           onClick={handleWatchlist}
-          suppressHydrationWarning
           className={`absolute top-1.5 left-1.5 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-white transition-all active:scale-90
-            ${inList && isLoaded
+            ${mounted && inList && isLoaded
               ? 'bg-violet-600 border-violet-500 opacity-100'
               : 'bg-black/60 backdrop-blur-md border border-white/20 opacity-100 sm:opacity-0 sm:group-hover/card:opacity-100 hover:bg-violet-600 hover:border-violet-500'
             }`}
         >
-          {isLoaded && inList ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+          {mounted && isLoaded && inList ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
         </button>
 
         {/* Rating badge (bottom-left on hover) */}
