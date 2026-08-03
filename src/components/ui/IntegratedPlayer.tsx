@@ -102,14 +102,6 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
   }, []);
 
   const handleIframePlay = () => {
-    const container = iframeContainerRef.current;
-    if (container) {
-      if (container.requestFullscreen) {
-        container.requestFullscreen().catch(() => {});
-      } else if ((container as any).webkitRequestFullscreen) {
-        (container as any).webkitRequestFullscreen();
-      }
-    }
     setIframeOverlayVisible(false);
   };
 

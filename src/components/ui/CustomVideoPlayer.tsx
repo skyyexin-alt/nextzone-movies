@@ -21,17 +21,7 @@ export default function CustomVideoPlayer({ src, poster, subtitles = [] }: Custo
   const videoRef = useRef<HTMLVideoElement>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handlePlay = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    // Enter fullscreen as soon as play is triggered
-    if (video.requestFullscreen) {
-      video.requestFullscreen().catch(() => {});
-    } else if ((video as any).webkitEnterFullscreen) {
-      // iOS Safari fallback
-      (video as any).webkitEnterFullscreen();
-    }
-  };
+
 
   useEffect(() => {
     const video = videoRef.current;
@@ -91,7 +81,6 @@ export default function CustomVideoPlayer({ src, poster, subtitles = [] }: Custo
           playsInline // CRITICAL for iOS: Prevents forced fullscreen on load
           poster={poster}
           crossOrigin="anonymous" // CRITICAL for VTT subtitles loaded from another domain
-          onPlay={handlePlay}
         >
           {subtitles.map((sub, index) => (
             <track
