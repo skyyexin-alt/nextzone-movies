@@ -20,7 +20,7 @@ export default function AdskeeperWidget() {
     <div className="w-full max-w-7xl mx-auto my-8 px-4 flex flex-col items-center overflow-hidden min-h-[100px]">
       <div className="text-xs text-white/30 text-center w-full mb-2">Advertisement</div>
       {/* The Ad Container */}
-      <div ref={widgetRef} data-type="_mgwidget" data-widget-id="2063749"></div>
+      <div ref={widgetRef} data-type="_mgwidget" data-widget-id="2063756"></div>
     </div>
   );
 }
