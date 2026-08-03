@@ -3,7 +3,6 @@ import Hero from '@/components/ui/Hero';
 import ContentRail from '@/components/ui/ContentRail';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
 import Container from '@/components/ui/Container';
-import AdBanner from '@/components/ui/AdBanner';
 import { 
   getTrending, 
   getPopularMovies, 
@@ -49,7 +48,6 @@ export default async function Home() {
       <Hero item={heroItem} />
       
       <Container className="mt-4">
-        <AdBanner />
         <ContinueWatchingSection />
       </Container>
       

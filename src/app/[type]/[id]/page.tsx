@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { Star, ChevronRight, Heart, Clock, Globe, Calendar, Users } from 'lucide-react';
 import MovieCard from '@/components/ui/MovieCard';
 import Container from '@/components/ui/Container';
-import AdBanner from '@/components/ui/AdBanner';
 import CastCarousel from '@/components/ui/CastCarousel';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
@@ -84,10 +83,7 @@ export default async function DetailPage({
         <span className="text-white truncate">{title}</span>
       </div>
 
-      {/* Ad Banner */}
-      <div className="mb-6">
-        <AdBanner />
-      </div>
+
 
       {/* Player */}
       <IntegratedPlayer
