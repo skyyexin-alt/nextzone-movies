@@ -7,7 +7,6 @@ import { Providers } from "./Providers";
 import InstallAppButton from "@/components/ui/InstallAppButton";
 import StickySocialSidebar from "@/components/ui/StickySocialSidebar";
 import Script from "next/script";
-import AdskeeperWidget from "@/components/ui/AdskeeperWidget";
 import AdskeeperNotification from "@/components/ui/AdskeeperNotification";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -52,7 +51,6 @@ export default function RootLayout({
           </main>
           <InstallAppButton />
           <StickySocialSidebar />
-          <AdskeeperWidget />
           <AdskeeperNotification />
           <Footer />
         </Providers>
