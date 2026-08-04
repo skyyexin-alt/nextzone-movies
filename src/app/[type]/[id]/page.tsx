@@ -45,11 +45,11 @@ export default async function DetailPage({
   const similar = data.similar?.results || [];
 
   return (
-    <Container className="py-4 sm:py-8 md:py-12 relative z-10">
+    <Container className="pt-6 pb-24 md:py-12 relative z-10">
       <GlobalBackButton />
 
-      {/* Hero Backdrop Banner */}
-      <div className="relative w-full h-[260px] sm:h-[380px] md:h-[480px] rounded-2xl sm:rounded-3xl overflow-hidden mb-6 sm:mb-8 border border-white/10 shadow-2xl bg-violet-950">
+      {/* Hero Backdrop Banner (With elegant top margin space!) */}
+      <div className="relative w-full h-[260px] sm:h-[380px] md:h-[480px] rounded-2xl sm:rounded-3xl overflow-hidden mt-3 sm:mt-6 mb-6 sm:mb-8 border border-white/10 shadow-2xl bg-violet-950">
         {backdropPath ? (
           <Image
             src={backdropPath}

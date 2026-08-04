@@ -193,12 +193,12 @@ export default function RecommendedReviewsList({ items, currentTitle }: { items:
           return (
             <div
               key={item.id}
-              className="bg-[#14142f] border border-white/8 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start gap-6 hover:border-violet-500/40 transition-all shadow-xl group"
+              className="bg-[#14142f] border border-white/8 rounded-xl sm:rounded-2xl p-3.5 sm:p-6 flex flex-row items-start gap-3.5 sm:gap-6 hover:border-violet-500/40 transition-all shadow-xl group"
             >
-              {/* HD Movie Poster Frame (Locked 2:3 ratio) */}
+              {/* HD Movie Poster Frame (Framed poster on mobile & desktop!) */}
               <Link
                 href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`}
-                className="relative w-full sm:w-52 md:w-60 h-72 sm:h-80 md:h-[350px] rounded-2xl overflow-hidden flex-shrink-0 self-start border border-white/10 group-hover:scale-102 transition-transform shadow-2xl bg-violet-950"
+                className="relative w-28 sm:w-52 md:w-60 h-36 sm:h-80 md:h-[350px] rounded-xl sm:rounded-2xl overflow-hidden flex-shrink-0 self-start border border-white/10 group-hover:scale-102 transition-transform shadow-2xl bg-violet-950"
               >
                 <Image
                   src={poster}
@@ -209,12 +209,12 @@ export default function RecommendedReviewsList({ items, currentTitle }: { items:
               </Link>
 
               {/* Details Column */}
-              <div className="flex-1 min-w-0 flex flex-col justify-between space-y-3 pr-2">
+              <div className="flex-1 min-w-0 flex flex-col justify-between space-y-2 sm:space-y-3">
                 <div>
                   {/* Title + Watchlist Add Button */}
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <Link href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`} className="block">
-                      <h3 className="text-xl font-black text-white group-hover:text-violet-300 transition-colors leading-snug line-clamp-1">
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <Link href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`} className="block flex-1 min-w-0">
+                      <h3 className="text-sm sm:text-xl font-extrabold sm:font-black text-white group-hover:text-violet-300 transition-colors leading-tight sm:leading-snug line-clamp-2">
                         {title}
                       </h3>
                     </Link>
@@ -234,37 +234,37 @@ export default function RecommendedReviewsList({ items, currentTitle }: { items:
                           genre_ids: item.genre_ids || [],
                         })
                       }
-                      className={`p-1.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-center ${
+                      className={`p-1 sm:p-1.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-center shrink-0 ${
                         entry
                           ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
                           : 'bg-violet-600/30 hover:bg-violet-600 text-violet-300 hover:text-white border-violet-500/40'
                       }`}
                       title={entry ? `Status: ${entry.status}` : 'Add to My List'}
                     >
-                      {entry ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                      {entry ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                     </button>
                   </div>
 
                   {/* Subtitle */}
-                  <p className="text-xs sm:text-sm font-bold text-violet-300 mb-2">
+                  <p className="text-[11px] sm:text-sm font-bold text-violet-300 mb-1.5">
                     {typeSubtitle}
                   </p>
 
                   {/* 5 Gold Stars + Score Badge */}
-                  <div className="flex items-center gap-2 mb-2.5">
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
                     <div className="flex items-center text-amber-400">
                       {[1, 2, 3, 4, 5].map((star) => (
-                        <Star key={star} className="w-4 h-4 fill-current" />
+                        <Star key={star} className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
                       ))}
                     </div>
-                    <span className="text-xs font-black text-amber-400 bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 rounded-lg">
+                    <span className="text-[10px] sm:text-xs font-black text-amber-400 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-md sm:rounded-lg">
                       {score} / 10
                     </span>
                   </div>
 
                   {/* Genre Pills */}
                   {genres.length > 0 && (
-                    <div className="flex items-center gap-1.5 mb-3 flex-wrap">
+                    <div className="hidden sm:flex items-center gap-1.5 mb-3 flex-wrap">
                       <Tag className="w-3.5 h-3.5 text-violet-400 mr-0.5" />
                       {genres.map((g: string) => (
                         <span key={g} className="bg-white/5 border border-white/8 text-zinc-300 text-xs font-bold px-2.5 py-1 rounded-md">
@@ -275,30 +275,31 @@ export default function RecommendedReviewsList({ items, currentTitle }: { items:
                   )}
 
                   {/* Un-bolded Description */}
-                  <p className="text-xs sm:text-sm text-zinc-300 font-normal leading-relaxed line-clamp-3 mb-3">
+                  <p className="text-xs sm:text-sm text-zinc-300 font-normal leading-relaxed line-clamp-2 sm:line-clamp-3 mb-2 hidden sm:block">
                     {item.overview || 'An outstanding cinematic experience with brilliant storytelling, gripping performances, and rich character development.'}
                   </p>
 
                   {/* Cast Carousel */}
-                  <MovieCastRow itemId={item.id} mediaType={isMovie ? 'movie' : 'tv'} />
+                  <div className="hidden sm:block">
+                    <MovieCastRow itemId={item.id} mediaType={isMovie ? 'movie' : 'tv'} />
+                  </div>
                 </div>
 
                 {/* Buttons Action Bar */}
-                <div className="flex items-center gap-3 pt-3 border-t border-white/8">
+                <div className="flex items-center gap-2 flex-wrap pt-2 sm:pt-3 border-t border-white/8">
                   <button
                     onClick={() => openTrailerModal(item)}
-                    className="px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-xs sm:text-sm font-extrabold text-white shadow-md shadow-violet-600/30 transition-all flex items-center gap-2 active:scale-95"
+                    className="px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-[11px] sm:text-sm font-extrabold text-white shadow-md shadow-violet-600/30 transition-all flex items-center gap-1.5 active:scale-95"
                   >
-                    <Play className="w-4 h-4 fill-current text-white" />
-                    <span>Watch Official Trailer</span>
+                    <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current text-white" />
+                    <span>Watch Trailer</span>
                   </button>
 
                   <Link
                     href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`}
-                    className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-bold text-zinc-300 hover:text-white transition-all flex items-center gap-1"
+                    className="px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] sm:text-sm font-bold text-zinc-300 hover:text-white transition-all flex items-center gap-1"
                   >
-                    <span>View Reviews & Details</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <span>View Details</span>
                   </Link>
                 </div>
               </div>
