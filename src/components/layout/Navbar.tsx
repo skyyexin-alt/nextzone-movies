@@ -6,8 +6,9 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Container from '@/components/ui/Container';
 import { 
-  Film, Search, Tv, Heart, Menu, X, ChevronDown, User
+  Film, Search, Tv, Heart, Menu, X, ChevronDown, ChevronRight, User, Sparkles, Star
 } from 'lucide-react';
+import MobileBottomNav from '@/components/layout/MobileBottomNav';
 import { useWatchlist } from '@/context/WatchlistContext';
 
 const defaultSpotlight = [
@@ -288,7 +289,102 @@ export default function Navbar() {
           </div>
 
         </Container>
+
+        {/* ── Mobile Hamburger Drawer Menu ── */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden bg-[#0e0e24]/98 border-t border-white/10 px-4 py-5 space-y-3.5 shadow-2xl backdrop-blur-xl animate-in slide-in-from-top-2 duration-300">
+            <Link
+              href="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-violet-600/30 text-sm font-extrabold text-white transition-all border border-white/8"
+            >
+              <span>HOME</span>
+              <ChevronRight className="w-4 h-4 text-violet-400" />
+            </Link>
+
+            <Link
+              href="/explore"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-violet-600/30 text-sm font-extrabold text-white transition-all border border-white/8"
+            >
+              <span className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-violet-400" />
+                EXPLORE DATABASE
+              </span>
+              <ChevronRight className="w-4 h-4 text-violet-400" />
+            </Link>
+
+            <Link
+              href="/explore?type=movie&sort=top_rated&cat=Top+100+Rated"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-sm font-extrabold text-amber-400 transition-all border border-amber-500/30"
+            >
+              <span className="flex items-center gap-2">
+                <Star className="w-4 h-4 fill-current text-amber-400" />
+                TOP 100 RATED
+              </span>
+              <ChevronRight className="w-4 h-4 text-amber-400" />
+            </Link>
+
+            <Link
+              href="/explore?type=movie&sort=popular&cat=Most+Popular+Movies"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-violet-600/30 text-sm font-extrabold text-white transition-all border border-white/8"
+            >
+              <span className="flex items-center gap-2">
+                <Film className="w-4 h-4 text-violet-400" />
+                MOVIES & BLOCKBUSTERS
+              </span>
+              <ChevronRight className="w-4 h-4 text-violet-400" />
+            </Link>
+
+            <Link
+              href="/explore?type=tv&sort=popular&cat=Top+TV+Dramas"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-violet-600/30 text-sm font-extrabold text-white transition-all border border-white/8"
+            >
+              <span className="flex items-center gap-2">
+                <Tv className="w-4 h-4 text-violet-400" />
+                TV SHOWS & DRAMAS
+              </span>
+              <ChevronRight className="w-4 h-4 text-violet-400" />
+            </Link>
+
+            <Link
+              href="/explore?cat=Top+Actors"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-violet-600/30 text-sm font-extrabold text-white transition-all border border-white/8"
+            >
+              <span className="flex items-center gap-2">
+                <User className="w-4 h-4 text-violet-400" />
+                PEOPLE & ACTORS
+              </span>
+              <ChevronRight className="w-4 h-4 text-violet-400" />
+            </Link>
+
+            <Link
+              href="/lists"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-violet-600/30 text-sm font-extrabold text-white transition-all border border-white/8"
+            >
+              <span>COMMUNITY LISTS</span>
+              <span className="bg-emerald-500 text-black text-[9px] font-black px-1.5 py-0.5 rounded uppercase">NEW</span>
+            </Link>
+
+            <Link
+              href="/upcoming"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-violet-600/30 text-sm font-extrabold text-white transition-all border border-white/8"
+            >
+              <span>CALENDAR & RELEASES</span>
+              <ChevronRight className="w-4 h-4 text-violet-400" />
+            </Link>
+          </div>
+        )}
       </header>
+
+      {/* ── Fixed Mobile Bottom Navigation Bar (Matching Screenshot 2!) ── */}
+      <MobileBottomNav onOpenSearch={() => setSearchOpen(true)} />
 
       {/* ── Search Overlay Modal ── */}
       {searchOpen && (
