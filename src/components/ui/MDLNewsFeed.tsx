@@ -235,10 +235,10 @@ export default function MDLNewsFeed({ popularMovies, nowPlaying, upcoming, topRa
               key={item.id}
               className="bg-[#14142f] border border-white/8 rounded-2xl p-5 flex flex-col sm:flex-row items-start gap-5 sm:gap-6 hover:border-violet-500/40 transition-all shadow-xl group"
             >
-              {/* Vertical Movie Poster Frame (Locked Proportions - Never Stretches!) */}
+              {/* Vertical Movie Poster Frame (Mobile centered 2:3 vertical framing!) */}
               <Link
                 href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`}
-                className="relative w-full sm:w-52 md:w-60 h-72 sm:h-80 md:h-[350px] rounded-2xl overflow-hidden flex-shrink-0 self-start border border-white/10 group-hover:scale-102 transition-transform shadow-2xl bg-violet-950"
+                className="relative w-48 sm:w-52 md:w-60 h-72 sm:h-80 md:h-[350px] rounded-2xl overflow-hidden flex-shrink-0 self-center sm:self-start border border-white/10 group-hover:scale-102 transition-transform shadow-2xl bg-violet-950 mx-auto sm:mx-0"
               >
                 <Image
                   src={imgUrl}
