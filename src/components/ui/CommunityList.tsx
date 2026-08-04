@@ -1,40 +1,34 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import useEmblaCarousel from 'embla-carousel-react';
-import { Star, ChevronRight, ChevronLeft, Heart, Play, Plus, Check, Tag, Users, X } from 'lucide-react';
+import { Star, Plus, Check, Play, Tag, X } from 'lucide-react';
 import { useWatchlist } from '@/context/WatchlistContext';
 import MDLAddToListModal from '@/components/ui/MDLAddToListModal';
 import MovieCastRow from '@/components/ui/MovieCastRow';
-import { MediaItem } from '@/lib/tmdb';
 
-const genreMap: Record<number, string> = {
-  28: 'Action', 12: 'Adventure', 16: 'Animation', 35: 'Comedy', 80: 'Crime', 99: 'Documentary', 
-  18: 'Drama', 10751: 'Family', 14: 'Fantasy', 36: 'History', 27: 'Horror', 10402: 'Music', 
-  9648: 'Mystery', 10749: 'Romance', 878: 'Sci-Fi', 10770: 'TV Movie', 53: 'Thriller', 
-  10752: 'War', 37: 'Western',
-  10759: 'Action & Adventure', 10762: 'Kids', 10763: 'News', 10764: 'Reality', 
-  10765: 'Sci-Fi & Fantasy', 10766: 'Soap', 10767: 'Talk', 10768: 'War & Politics'
-};
+interface CommunityListProps {
+  items: any[];
+  genreMap: Record<number, string>;
+}
 
-
-export default function RecommendedReviewsList({ items, currentTitle }: { items: any[]; currentTitle: string }) {
+export default function CommunityList({ items, genreMap }: CommunityListProps) {
   const { getEntry } = useWatchlist();
-  const [modalItem, setModalItem] = useState<MediaItem | null>(null);
+  const [modalItem, setModalItem] = useState<any | null>(null);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
-  const [trailerTitle, setTrailerTitle] = useState<string>('');
+  const [trailerTitle, setTrailerTitle] = useState<string | null>(null);
 
   const openTrailerModal = async (item: any) => {
+    setTrailerTitle(item.title || item.name || 'Trailer');
     const isMovie = item.media_type === 'movie' || !!item.title;
-    const itemTitle = item.title || item.name || 'Trailer';
-    setTrailerTitle(itemTitle);
-
+    
     try {
-      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '';
-      const url = `https://api.themoviedb.org/3/${isMovie ? 'movie' : 'tv'}/${item.id}/videos?api_key=${apiKey}`;
-      const res = await fetch(url);
+      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+      const tmdbId = item.id;
+      const type = isMovie ? 'movie' : 'tv';
+      const res = await fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}/videos?api_key=${apiKey}&language=en-US`);
+      
       if (res.ok) {
         const data = await res.json();
         const trailer = data.results?.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube') || data.results?.[0];
@@ -51,19 +45,8 @@ export default function RecommendedReviewsList({ items, currentTitle }: { items:
   if (!items || items.length === 0) return null;
 
   return (
-    <div className="mt-12 border-t border-white/8 pt-8 space-y-6">
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <span className="w-10 h-10 rounded-xl bg-violet-600/20 border border-violet-500/30 flex items-center justify-center shadow-inner">
-          <Heart className="w-5 h-5 text-violet-400" />
-        </span>
-        <div>
-          <h2 className="text-xl font-black text-white">Recommended Reviews</h2>
-          <p className="text-xs text-zinc-400 mt-0.5">Similar titles recommended for fans of {currentTitle}</p>
-        </div>
-      </div>
-
-      {/* Detailed Horizontal Cards List matching Pic 2! */}
+    <div className="space-y-6">
+      {/* Detailed Horizontal Cards List */}
       <div className="space-y-6">
         {items.map((item) => {
           const title = item.title || item.name || 'Untitled';
