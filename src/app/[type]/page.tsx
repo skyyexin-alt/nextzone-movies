@@ -3,9 +3,8 @@ import MovieCard from '@/components/ui/MovieCard';
 import CatalogFilters from '@/components/ui/CatalogFilters';
 import Pagination from '@/components/ui/Pagination';
 import BrowseMore from '@/components/ui/BrowseMore';
-import { Suspense } from 'react';
 import Container from '@/components/ui/Container';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import adultMoviesData from '@/data/adult_movies.json';
 
 export default async function CatalogPage({ 
@@ -18,22 +17,32 @@ export default async function CatalogPage({
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
   const type = resolvedParams.type;
-  let isMovie = true;
-  let title = 'Movies';
 
-  // Determine base type and title
-  if (['movies', 'trending', 'top-rated', 'new-releases', 'now-playing', 'upcoming', 'action'].includes(type)) {
-    isMovie = true;
-    title = 'Movies';
-  } else if (['tv', 'airing-today'].includes(type)) {
-    isMovie = false;
-    title = 'TV Shows';
-  } else if (type === '18-plus') {
-    isMovie = true;
-    title = '18+ Intimacy 🍆💦🔥';
-  } else {
-    return notFound();
+  // Redirect all catalog routes to /explore for rich horizontal card layout!
+  if (type === 'top-rated') {
+    redirect('/explore?type=movie&sort=top_rated&cat=Top+100+Rated');
   }
+  if (type === 'movies') {
+    redirect('/explore?type=movie&sort=popular&cat=Most+Popular+Movies');
+  }
+  if (type === 'trending') {
+    redirect('/explore?type=movie&sort=popular&cat=Trending+Movies');
+  }
+  if (type === 'new-releases') {
+    redirect('/explore?type=movie&sort=newest&cat=Newest+Blockbusters');
+  }
+  if (type === 'now-playing') {
+    redirect('/explore?type=movie&sort=popular&cat=In+Theaters+Now');
+  }
+  if (type === 'upcoming') {
+    redirect('/explore?type=movie&sort=upcoming&cat=Upcoming+Releases');
+  }
+  if (type === 'tv' || type === 'airing-today') {
+    redirect('/explore?type=tv&sort=popular&cat=Top+TV+Dramas');
+  }
+
+  const isMovie = type !== 'tv' && type !== 'airing-today';
+  const title = type === '18-plus' ? '18+ Intimacy 🍆💦🔥' : 'Movies';
 
   // Parse search params for TMDB discover endpoint
   const page = typeof resolvedSearchParams.page === 'string' ? resolvedSearchParams.page : '1';
