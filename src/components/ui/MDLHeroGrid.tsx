@@ -25,9 +25,9 @@ export default function MDLHeroGrid({ items }: MDLHeroGridProps) {
   const mainYear = (mainItem.release_date || mainItem.first_air_date || '').substring(0, 4);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 mb-6 sm:mb-8 items-stretch">
-      {/* Main Big Featured Article (Left - 7 cols) */}
-      <div className="lg:col-span-7 relative group rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#14142f] min-h-[300px] sm:min-h-[360px] lg:min-h-full flex flex-col justify-end">
+    <div className="grid grid-cols-12 gap-2 sm:gap-4 mb-6 sm:mb-8 items-stretch">
+      {/* Main Big Featured Article (Left - 7 cols on mobile & desktop!) */}
+      <div className="col-span-7 relative group rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#14142f] min-h-[240px] sm:min-h-[360px] lg:min-h-full flex flex-col justify-end">
         <Image
           src={getBackdrop(mainItem)}
           alt={mainTitle}
@@ -37,51 +37,45 @@ export default function MDLHeroGrid({ items }: MDLHeroGridProps) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d1f] via-[#0d0d1f]/60 to-transparent" />
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-7 space-y-2">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="bg-violet-600 text-white text-[10px] sm:text-xs font-black px-2.5 py-0.5 sm:py-1 rounded-lg uppercase tracking-wider flex items-center gap-1 shadow">
-              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-violet-300" />
-              HOT RELEASE
+        <div className="absolute bottom-0 left-0 right-0 p-2.5 sm:p-7 space-y-1 sm:space-y-2">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="bg-violet-600 text-white text-[9px] sm:text-xs font-black px-1.5 sm:px-3 py-0.5 sm:py-1 rounded-md sm:rounded-lg uppercase tracking-wider flex items-center gap-1 shadow">
+              <Sparkles className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-violet-300" />
+              HOT
             </span>
-            <span className="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-lg flex items-center gap-1">
-              <Star className="w-3 h-3 fill-current" /> {mainItem.vote_average ? mainItem.vote_average.toFixed(1) : '8.5'} / 10
+            <span className="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[9px] sm:text-xs font-black px-1.5 py-0.5 rounded-md sm:rounded-lg flex items-center gap-1">
+              <Star className="w-2.5 h-2.5 fill-current" /> {mainItem.vote_average ? mainItem.vote_average.toFixed(1) : '8.5'}
             </span>
-            {mainYear && (
-              <span className="text-[10px] sm:text-xs text-white font-extrabold bg-white/20 px-2 py-0.5 rounded-lg border border-white/10">
-                {mainYear}
-              </span>
-            )}
           </div>
 
           <Link href={`/${mainItem.title ? 'movie' : 'tv'}/${mainItem.id}`} className="block">
-            <h2 className="text-lg sm:text-3xl font-black text-white group-hover:text-violet-300 transition-colors leading-snug line-clamp-2">
+            <h2 className="text-xs sm:text-3xl font-black text-white group-hover:text-violet-300 transition-colors leading-tight sm:leading-snug line-clamp-2">
               Official Review & Details: {mainTitle}
             </h2>
           </Link>
 
-          <p className="text-xs sm:text-base text-zinc-200 font-medium line-clamp-2 leading-relaxed drop-shadow">
+          <p className="text-xs sm:text-base text-zinc-200 font-medium line-clamp-2 leading-relaxed drop-shadow hidden sm:block">
             {mainItem.overview || 'Everything you need to know about the latest premiere, cast ratings, and plot details.'}
           </p>
 
-          <div className="flex items-center gap-3 text-xs sm:text-sm text-violet-300 font-extrabold pt-0.5">
-            <span className="flex items-center gap-1.5">
-              <Film className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-violet-400" />
+          <div className="flex items-center gap-3 text-[10px] sm:text-sm text-violet-300 font-extrabold pt-0.5">
+            <span className="flex items-center gap-1">
+              <Film className="w-3 h-3 sm:w-4 sm:h-4 text-violet-400" />
               {mainItem.title ? 'Featured Movie' : 'Featured Series'}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Side Stacked Articles on Desktop | 2 Side-by-Side Cards on Mobile! (Matches MyDramaList Screenshot!) */}
-      <div className="lg:col-span-5 grid grid-cols-2 lg:grid-cols-1 gap-2.5 sm:gap-4">
+      {/* 2 Side Stacked Cards (Right - 5 cols on mobile & desktop!) - Matches MyDramaList Screenshot! */}
+      <div className="col-span-5 flex flex-col gap-2 sm:gap-4 justify-between">
         {sideItems.map((item, idx) => {
           const itemTitle = item.title || item.name || 'Upcoming Release';
-          const itemYear = (item.release_date || item.first_air_date || '').substring(0, 4);
 
           return (
             <div
               key={item.id}
-              className="relative group rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-[#14142f] h-36 sm:h-48 lg:h-auto lg:aspect-[16/7] flex flex-col justify-end"
+              className="relative group rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-[#14142f] h-[115px] sm:h-44 lg:h-[180px] flex flex-col justify-end flex-1"
             >
               <Image
                 src={getBackdrop(item)}
@@ -91,19 +85,19 @@ export default function MDLHeroGrid({ items }: MDLHeroGridProps) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d1f] via-[#0d0d1f]/60 to-transparent" />
 
-              <div className="absolute bottom-0 left-0 right-0 p-2.5 sm:p-5 space-y-1">
+              <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 space-y-0.5 sm:space-y-1">
                 <div className="flex items-center gap-1 flex-wrap">
-                  <span className="bg-violet-600 text-white text-[9px] sm:text-xs font-black px-1.5 py-0.5 rounded-md uppercase tracking-wide shadow">
-                    {idx === 0 ? 'TRENDING NEWS' : 'LATEST PREMIERE'}
+                  <span className="bg-violet-600 text-white text-[8px] sm:text-xs font-black px-1 py-0.5 rounded uppercase tracking-wide shadow">
+                    {idx === 0 ? 'TRENDING' : 'LATEST'}
                   </span>
-                  <span className="bg-amber-500/20 text-amber-400 text-[9px] sm:text-xs font-black px-1.5 py-0.5 rounded-md flex items-center gap-0.5 border border-amber-500/30">
-                    <Star className="w-2.5 h-2.5 fill-current" /> {item.vote_average ? item.vote_average.toFixed(1) : '8.0'}
+                  <span className="bg-amber-500/20 text-amber-400 text-[8px] sm:text-xs font-black px-1 py-0.5 rounded flex items-center gap-0.5 border border-amber-500/30">
+                    <Star className="w-2 h-2 fill-current" /> {item.vote_average ? item.vote_average.toFixed(1) : '8.0'}
                   </span>
                 </div>
 
                 <Link href={`/${item.title ? 'movie' : 'tv'}/${item.id}`} className="block">
-                  <h3 className="text-xs sm:text-lg font-black text-white group-hover:text-violet-300 transition-colors line-clamp-2 leading-tight">
-                    {itemTitle} {itemYear ? `(${itemYear})` : ''} - Plot & Cast Overview
+                  <h3 className="text-[11px] sm:text-lg font-extrabold sm:font-black text-white group-hover:text-violet-300 transition-colors line-clamp-2 leading-tight">
+                    {itemTitle}
                   </h3>
                 </Link>
               </div>

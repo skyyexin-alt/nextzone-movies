@@ -233,12 +233,12 @@ export default function MDLNewsFeed({ popularMovies, nowPlaying, upcoming, topRa
           return (
             <div
               key={item.id}
-              className="bg-[#14142f] border border-white/8 rounded-2xl p-5 flex flex-col sm:flex-row items-start gap-5 sm:gap-6 hover:border-violet-500/40 transition-all shadow-xl group"
+              className="bg-[#14142f] border border-white/8 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 flex flex-row items-start gap-3.5 sm:gap-6 hover:border-violet-500/40 transition-all shadow-xl group"
             >
-              {/* Vertical Movie Poster Frame (Mobile centered 2:3 vertical framing!) */}
+              {/* Poster Thumbnail Image (Left side on mobile & desktop - Matches MyDramaList Screenshot!) */}
               <Link
                 href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`}
-                className="relative w-48 sm:w-52 md:w-60 h-72 sm:h-80 md:h-[350px] rounded-2xl overflow-hidden flex-shrink-0 self-center sm:self-start border border-white/10 group-hover:scale-102 transition-transform shadow-2xl bg-violet-950 mx-auto sm:mx-0"
+                className="relative w-28 sm:w-52 md:w-60 h-36 sm:h-80 md:h-[350px] rounded-xl sm:rounded-2xl overflow-hidden flex-shrink-0 self-start border border-white/10 group-hover:scale-102 transition-transform shadow-2xl bg-violet-950"
               >
                 <Image
                   src={imgUrl}
@@ -246,58 +246,58 @@ export default function MDLNewsFeed({ popularMovies, nowPlaying, upcoming, topRa
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <span className="absolute top-2.5 left-2.5 bg-violet-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-md uppercase backdrop-blur-sm shadow border border-white/10">
+                <span className="absolute top-2 left-2 bg-violet-600 text-white text-[9px] sm:text-[10px] font-black px-2 py-0.5 rounded-md uppercase backdrop-blur-sm shadow border border-white/10">
                   {badge}
                 </span>
-                <span className="absolute bottom-2.5 right-2.5 bg-amber-500 text-white text-xs font-black px-2 py-0.5 rounded-md flex items-center gap-1 shadow border border-amber-400/30">
-                  <Star className="w-3 h-3 fill-current" /> {score}
+                <span className="absolute bottom-2 right-2 bg-amber-500 text-white text-[10px] sm:text-xs font-black px-1.5 sm:px-2 py-0.5 rounded-md flex items-center gap-0.5 sm:gap-1 shadow border border-amber-400/30">
+                  <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current" /> {score}
                 </span>
               </Link>
 
-              {/* Post details matching user screenshot! */}
-              <div className="flex-1 min-w-0 flex flex-col justify-between space-y-3">
+              {/* Post Details Column (Right of Poster - Matches MyDramaList Screenshot!) */}
+              <div className="flex-1 min-w-0 flex flex-col justify-between space-y-2 sm:space-y-3">
                 <div>
                   {/* Title + Add to List Button */}
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <Link href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`} className="block">
-                      <h3 className="text-xl font-black text-white group-hover:text-violet-300 transition-colors leading-snug line-clamp-1">
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <Link href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`} className="block flex-1 min-w-0">
+                      <h3 className="text-sm sm:text-xl font-extrabold sm:font-black text-white group-hover:text-violet-300 transition-colors leading-tight sm:leading-snug line-clamp-2">
                         {title}
                       </h3>
                     </Link>
 
                     <button
                       onClick={() => setModalItem(item)}
-                      className={`p-1 rounded-xl border text-xs font-bold transition-all flex items-center justify-center ${
+                      className={`p-1 sm:p-1.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-center shrink-0 ${
                         entry
                           ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
                           : 'bg-violet-600/30 hover:bg-violet-600 text-violet-300 hover:text-white border-violet-500/40'
                       }`}
                       title={entry ? `Status: ${entry.status}` : 'Add to My List'}
                     >
-                      {entry ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                      {entry ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                     </button>
                   </div>
 
                   {/* Subtitle: Movie - 2026, 2h 15m */}
-                  <p className="text-xs sm:text-sm font-bold text-violet-300 mb-2">
+                  <p className="text-[11px] sm:text-sm font-bold text-violet-300 mb-1.5">
                     {typeSubtitle}
                   </p>
 
                   {/* 5 Gold Stars + Score Badge: 8.0 / 10 */}
-                  <div className="flex items-center gap-2 mb-2.5">
+                  <div className="flex items-center gap-1.5 sm:gap-2 mb-2">
                     <div className="flex items-center text-amber-400">
                       {[1, 2, 3, 4, 5].map((star) => (
-                        <Star key={star} className="w-4 h-4 fill-current" />
+                        <Star key={star} className="w-3 h-3 sm:w-4 sm:h-4 fill-current" />
                       ))}
                     </div>
-                    <span className="text-xs font-black text-amber-400 bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 rounded-lg">
+                    <span className="text-[10px] sm:text-xs font-black text-amber-400 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-md sm:rounded-lg">
                       {score} / 10
                     </span>
                   </div>
 
-                  {/* Genre Pills: Tag icon + Sci-Fi, Action, Adventure */}
+                  {/* Genre Pills: Tag icon + Sci-Fi, Action, Adventure (Desktop / Tablet) */}
                   {genres.length > 0 && (
-                    <div className="flex items-center gap-1.5 mb-3 flex-wrap">
+                    <div className="hidden sm:flex items-center gap-1.5 mb-3 flex-wrap">
                       <Tag className="w-3.5 h-3.5 text-violet-400 mr-0.5" />
                       {genres.map((g: string) => (
                         <span key={g} className="bg-white/5 border border-white/8 text-zinc-300 text-xs font-bold px-2.5 py-1 rounded-md">
@@ -308,12 +308,14 @@ export default function MDLNewsFeed({ popularMovies, nowPlaying, upcoming, topRa
                   )}
 
                   {/* Un-bolded Description Text */}
-                  <p className="text-xs sm:text-sm text-zinc-300 font-normal leading-relaxed line-clamp-3 mb-2">
+                  <p className="text-xs sm:text-sm text-zinc-300 font-normal leading-relaxed line-clamp-2 sm:line-clamp-3 mb-2 hidden sm:block">
                     {item.overview || 'Explore complete movie ratings, cast lists, plot details, and community reviews.'}
                   </p>
 
                   {/* Cast Carousel with Arrow Controls */}
-                  <MovieCastRow itemId={item.id} mediaType={isMovie ? 'movie' : 'tv'} />
+                  <div className="hidden sm:block">
+                    <MovieCastRow itemId={item.id} mediaType={isMovie ? 'movie' : 'tv'} />
+                  </div>
                 </div>
 
                 {/* Footer Action */}
