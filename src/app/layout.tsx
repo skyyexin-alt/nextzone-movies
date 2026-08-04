@@ -42,8 +42,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <script src="https://jsc.adskeeper.com/site/1106781.js" async />
+      </head>
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
-        <Script src="https://jsc.adskeeper.com/site/1106781.js" strategy="afterInteractive" />
         <Providers>
           <Navbar />
           <main className="min-h-screen">

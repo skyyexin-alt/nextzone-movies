@@ -26,7 +26,7 @@ export default async function ListsPage() {
           </span>
           <h1 className="text-3xl md:text-4xl font-bold text-white">Movies Review</h1>
         </div>
-        <p className="text-zinc-400 text-sm">Top rated & trending movie reviews</p>
+        <p className="text-zinc-400 text-sm">Top rated & trending movies review</p>
       </div>
 
       <div className="mt-8">

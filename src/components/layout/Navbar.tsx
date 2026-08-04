@@ -213,7 +213,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* COMMUNITY Link with green NEW badge */}
+              {/* MOVIES REVIEW Link with green NEW badge */}
               <Link
                 href="/lists"
                 className={`transition-colors py-2 flex items-center gap-2 ${
