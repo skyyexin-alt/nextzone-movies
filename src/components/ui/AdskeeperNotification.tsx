@@ -1,27 +1,26 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 
 export default function AdskeeperNotification() {
-  const pathname = usePathname();
-
   useEffect(() => {
     if (typeof window !== "undefined") {
-      try {
-        const w = window as any;
-        const q = "_mgq";
-        w[q] = w[q] || [];
-        w[q].push(["_mgc.load"]);
-      } catch (e) {
-        console.error("Adskeeper load error:", e);
-      }
+      const w = window as any;
+      const q = "_mgq";
+      w[q] = w[q] || [];
+      w[q].push(["_mgc.load"]);
     }
-  }, [pathname]);
+  }, []);
 
   return (
-    <div className="adskeeper-notification-container">
+    <div className="adskeeper-notification-wrapper">
+      {/* Adskeeper In-site Notification Widget */}
       <div data-type="_mgwidget" data-widget-id="2063785"></div>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(w,q){w[q]=w[q]||[];w[q].push(["_mgc.load"])})(window,"_mgq");`,
+        }}
+      />
     </div>
   );
 }

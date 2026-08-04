@@ -213,7 +213,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              {/* MOVIES REVIEW Link with green NEW badge */}
+              {/* COMMUNITY Link with green NEW badge */}
               <Link
                 href="/lists"
                 className={`transition-colors py-2 flex items-center gap-2 ${
@@ -368,7 +368,7 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-violet-600/30 text-sm font-extrabold text-white transition-all border border-white/8"
             >
-              <span>MOVIES REVIEW LISTS</span>
+              <span>MOVIES REVIEW</span>
               <span className="bg-emerald-500 text-black text-[9px] font-black px-1.5 py-0.5 rounded uppercase">NEW</span>
             </Link>
 
