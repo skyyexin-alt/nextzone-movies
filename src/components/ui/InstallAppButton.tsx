@@ -92,18 +92,18 @@ export default function InstallAppButton() {
                 <Image src="/icon-192.png" alt="XFlix App Icon" width={48} height={48} className="w-full h-full object-cover" />
               </div>
               <div className="pr-6">
-                <h3 className="font-bold text-white text-[15px] leading-tight">Install XFlix App Now</h3>
-                <p className="text-zinc-400 text-xs mt-1 line-clamp-2 leading-relaxed">
-                  Watch movies smoothly in full screen without interruptions.
+                <h3 className="font-extrabold text-white text-[15px] leading-tight">XFlix Movies Reviewers</h3>
+                <p className="text-zinc-300 text-xs mt-1 line-clamp-2 leading-relaxed font-medium">
+                  Explore, review, and track top blockbusters & dramas smoothly without interruptions.
                 </p>
               </div>
             </div>
             <button
               onClick={handleInstallClick}
-              className="w-full mt-1 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 active:scale-[0.98] transition-all text-white font-bold rounded-xl text-sm shadow-[0_0_20px_rgba(139,92,246,0.4)] flex items-center justify-center gap-2"
+              className="w-full mt-1 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 active:scale-[0.98] transition-all text-white font-extrabold rounded-xl text-sm shadow-[0_0_20px_rgba(139,92,246,0.4)] flex items-center justify-center gap-2"
             >
               <Download className="w-4 h-4" />
-              Install App
+              Install XFlix App
             </button>
           </div>
         </div>
