@@ -9,6 +9,7 @@ import {
   Film, Search, Tv, Heart, Menu, X, ChevronDown, ChevronRight, User, Sparkles, Star
 } from 'lucide-react';
 import MobileBottomNav from '@/components/layout/MobileBottomNav';
+import ExploreCategoriesModal from '@/components/layout/ExploreCategoriesModal';
 import { useWatchlist } from '@/context/WatchlistContext';
 
 const defaultSpotlight = [
@@ -21,8 +22,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const { watchlist } = useWatchlist();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
+  const [exploreModalOpen, setExploreModalOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [spotlightActors, setSpotlightActors] = useState(defaultSpotlight);
 
@@ -106,15 +108,14 @@ export default function Navbar() {
                 onMouseEnter={() => setExploreOpen(true)}
                 onMouseLeave={() => setExploreOpen(false)}
               >
-                <Link 
-                  href="/explore"
-                  onClick={closeExplore}
+                <button 
+                  onClick={() => setExploreModalOpen(true)}
                   className={`flex items-center gap-1.5 transition-colors py-2 ${
                     pathname.startsWith('/explore') ? 'text-violet-300 font-black' : 'text-zinc-300 hover:text-white'
                   }`}
                 >
                   EXPLORE <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${exploreOpen ? 'rotate-180 text-violet-400' : ''}`} />
-                </Link>
+                </button>
 
                 {/* ── 4-COLUMN MEGA DROPDOWN MENU ── */}
                 <div 
@@ -383,8 +384,18 @@ export default function Navbar() {
         )}
       </header>
 
-      {/* ── Fixed Mobile Bottom Navigation Bar (Matching Screenshot 2!) ── */}
-      <MobileBottomNav onOpenSearch={() => setSearchOpen(true)} />
+      {/* ── Fixed Mobile Bottom Navigation Bar (Matching Screenshot!) ── */}
+      <MobileBottomNav
+        onOpenSearch={() => setSearchOpen(true)}
+        onOpenExplore={() => setExploreModalOpen(true)}
+      />
+
+      {/* ── Explore Categories Pop-up Modal ── */}
+      <ExploreCategoriesModal
+        isOpen={exploreModalOpen}
+        onClose={() => setExploreModalOpen(false)}
+        spotlightActors={spotlightActors}
+      />
 
       {/* ── Search Overlay Modal ── */}
       {searchOpen && (

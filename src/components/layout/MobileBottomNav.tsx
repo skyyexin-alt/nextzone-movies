@@ -7,9 +7,10 @@ import { useWatchlist } from '@/context/WatchlistContext';
 
 interface MobileBottomNavProps {
   onOpenSearch: () => void;
+  onOpenExplore: () => void;
 }
 
-export default function MobileBottomNav({ onOpenSearch }: MobileBottomNavProps) {
+export default function MobileBottomNav({ onOpenSearch, onOpenExplore }: MobileBottomNavProps) {
   const pathname = usePathname();
   const { watchlist } = useWatchlist();
 
@@ -22,7 +23,7 @@ export default function MobileBottomNav({ onOpenSearch }: MobileBottomNavProps) 
     },
     {
       label: 'EXPLORE',
-      href: '/explore',
+      onClick: onOpenExplore,
       icon: Sparkles,
       isActive: pathname.startsWith('/explore'),
     },
@@ -52,10 +53,31 @@ export default function MobileBottomNav({ onOpenSearch }: MobileBottomNavProps) 
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0c0c1d]/98 backdrop-blur-xl border-t border-white/10 px-1 py-1.5 flex items-center justify-around shadow-2xl">
       {navItems.map((item) => {
         const Icon = item.icon;
+        const isButton = !!item.onClick;
+
+        if (isButton) {
+          return (
+            <button
+              key={item.label}
+              onClick={item.onClick}
+              className={`relative flex flex-col items-center justify-center min-w-[54px] py-1 rounded-xl transition-all ${
+                item.isActive
+                  ? 'text-violet-400 font-black'
+                  : 'text-zinc-400 hover:text-white font-bold'
+              }`}
+            >
+              <div className="relative">
+                <Icon className={`w-5 h-5 ${item.isActive ? 'text-violet-400 fill-violet-500/20' : ''}`} />
+              </div>
+              <span className="text-[9px] mt-0.5 tracking-tight font-black uppercase">{item.label}</span>
+            </button>
+          );
+        }
+
         return (
           <Link
             key={item.label}
-            href={item.href}
+            href={item.href || '#'}
             className={`relative flex flex-col items-center justify-center min-w-[54px] py-1 rounded-xl transition-all ${
               item.isActive
                 ? 'text-violet-400 font-black'
