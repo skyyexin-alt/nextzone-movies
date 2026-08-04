@@ -37,8 +37,8 @@ export default async function Home() {
   return (
     <div className="pt-24 pb-20 min-h-screen bg-[#161633]">
       <Container>
-        {/* ── Top Quick Database Chips (Matching User Screenshot!) ── */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-6 scrollbar-hide">
+        {/* ── Top Quick Database Chips (Touch-scrollable on mobile!) ── */}
+        <div className="touch-scroll flex items-center gap-2 pb-4 max-w-full select-none">
           <Link 
             href="/explore" 
             className="flex items-center gap-1.5 bg-violet-600 hover:bg-violet-500 text-white font-extrabold text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-violet-600/30 transition-all flex-shrink-0"

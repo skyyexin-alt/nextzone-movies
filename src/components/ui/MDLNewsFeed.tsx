@@ -181,7 +181,7 @@ export default function MDLNewsFeed({ popularMovies, nowPlaying, upcoming, topRa
     <div className="space-y-6">
       {/* MDL Feed Navigation Tabs */}
       <div className="bg-[#14142f] border border-white/8 rounded-2xl p-2.5 flex items-center justify-between flex-wrap gap-2 shadow-lg">
-        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
+        <div className="touch-scroll flex items-center gap-1.5 max-w-full select-none py-1">
           {[
             { id: 'featured', label: 'Featured Movies' },
             { id: 'now_playing', label: 'In Theaters Now' },
