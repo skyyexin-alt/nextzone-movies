@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Sparkles, Layers, Calendar, Heart, Search } from 'lucide-react';
+import { Home, Sparkles, Layers, Smartphone, Heart, Search } from 'lucide-react';
 import { useWatchlist } from '@/context/WatchlistContext';
 
 interface MobileBottomNavProps {
@@ -13,6 +13,12 @@ interface MobileBottomNavProps {
 export default function MobileBottomNav({ onOpenSearch, onOpenExplore }: MobileBottomNavProps) {
   const pathname = usePathname();
   const { watchlist } = useWatchlist();
+
+  const handleOpenAppInstall = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('trigger-install-popup'));
+    }
+  };
 
   const navItems = [
     {
@@ -35,10 +41,10 @@ export default function MobileBottomNav({ onOpenSearch, onOpenExplore }: MobileB
       isNew: true,
     },
     {
-      label: 'CALENDAR',
-      href: '/upcoming',
-      icon: Calendar,
-      isActive: pathname === '/upcoming',
+      label: 'APP',
+      onClick: handleOpenAppInstall,
+      icon: Smartphone,
+      isHot: true,
     },
     {
       label: 'WATCHLIST',
@@ -68,6 +74,11 @@ export default function MobileBottomNav({ onOpenSearch, onOpenExplore }: MobileB
             >
               <div className="relative">
                 <Icon className={`w-5 h-5 ${item.isActive ? 'text-violet-400 fill-violet-500/20' : ''}`} />
+                {item.isHot && (
+                  <span className="absolute -top-1 -right-2 bg-rose-600 text-white text-[7px] font-black px-1 rounded uppercase tracking-tighter shadow animate-pulse">
+                    HOT
+                  </span>
+                )}
               </div>
               <span className="text-[9px] mt-0.5 tracking-tight font-black uppercase">{item.label}</span>
             </button>

@@ -16,9 +16,24 @@ export default function InstallAppButton() {
       if (localStorage.getItem('can_show_install_popup') === 'true') {
         setCanShowPopup(true);
       }
-      const handleTrigger = () => setCanShowPopup(true);
+
+      // Wait for 6 minutes (360,000 ms) after user visits the site before showing popup automatically!
+      const timer = setTimeout(() => {
+        setCanShowPopup(true);
+        localStorage.setItem('can_show_install_popup', 'true');
+      }, 360000);
+
+      const handleTrigger = () => {
+        setCanShowPopup(true);
+        setIsDismissed(false); // Re-open popup when user taps APP button
+        localStorage.setItem('can_show_install_popup', 'true');
+      };
+
       window.addEventListener('trigger-install-popup', handleTrigger);
-      return () => window.removeEventListener('trigger-install-popup', handleTrigger);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('trigger-install-popup', handleTrigger);
+      };
     }
   }, []);
 
@@ -63,7 +78,7 @@ export default function InstallAppButton() {
     }
   };
 
-  // Don't render anything at the beginning (wait for 5 mins watch/interact), or if already installed/dismissed
+  // Don't render if not allowed, or if already installed/dismissed
   if (!canShowPopup || isInstalled || isDismissed) return null;
 
   return (
