@@ -58,7 +58,7 @@ export default async function Home() {
             className="flex items-center gap-1.5 bg-[#14142f] hover:bg-white/10 text-violet-300 border border-white/10 font-bold text-xs px-4 py-2.5 rounded-xl transition-all flex-shrink-0"
           >
             <Layers className="w-4 h-4 text-violet-400" />
-            <span>Community Lists</span>
+            <span>Movies Review Lists</span>
           </Link>
           <Link 
             href="/watchlist" 

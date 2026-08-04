@@ -1,24 +1,27 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function AdskeeperNotification() {
-  const widgetRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Only run if the window object exists (client-side)
     if (typeof window !== "undefined") {
-      // Trigger the Adskeeper load function
-      const w = window as any;
-      const q = "_mgq";
-      w[q] = w[q] || [];
-      w[q].push(["_mgc.load"]);
+      try {
+        const w = window as any;
+        const q = "_mgq";
+        w[q] = w[q] || [];
+        w[q].push(["_mgc.load"]);
+      } catch (e) {
+        console.error("Adskeeper load error:", e);
+      }
     }
-  }, []);
+  }, [pathname]);
 
   return (
-    <div className="adskeeper-notification-wrapper">
-      <div ref={widgetRef} data-type="_mgwidget" data-widget-id="2063785"></div>
+    <div className="adskeeper-notification-container">
+      <div data-type="_mgwidget" data-widget-id="2063785"></div>
     </div>
   );
 }

@@ -24,9 +24,9 @@ export default async function ListsPage() {
           <span className="w-10 h-10 rounded-xl bg-violet-600/20 border border-violet-500/30 flex items-center justify-center shadow-inner">
             <span className="text-xl">🔥</span>
           </span>
-          <h1 className="text-3xl md:text-4xl font-bold text-white">Community Lists</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">Movies Review Lists</h1>
         </div>
-        <p className="text-zinc-400 text-sm">Top rated & trending among our community</p>
+        <p className="text-zinc-400 text-sm">Top rated & trending movie reviews</p>
       </div>
 
       <div className="mt-8">

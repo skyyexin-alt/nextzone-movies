@@ -34,7 +34,7 @@ export default function MobileBottomNav({ onOpenSearch, onOpenExplore }: MobileB
       isActive: pathname.startsWith('/explore'),
     },
     {
-      label: 'COMMUNITY',
+      label: 'MOVIES REVIEW',
       href: '/lists',
       icon: Layers,
       isActive: pathname === '/lists',
