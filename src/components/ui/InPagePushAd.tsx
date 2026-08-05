@@ -36,9 +36,17 @@ export default function InPagePushAd({ zoneId = "5995178" }: InPagePushAdProps) 
       script.src = "https://a.magsrv.com/ad-provider.js";
       script.onload = () => renderAd();
       document.head.appendChild(script);
-    } else {
+    } else if ((window as any).AdProvider) {
       renderAd();
+    } else {
+      script.addEventListener("load", renderAd);
     }
+
+    return () => {
+      if (script) {
+        script.removeEventListener("load", renderAd);
+      }
+    };
   }, [zoneId]);
 
   return <div ref={containerRef} className="fixed z-50 pointer-events-auto" />;
