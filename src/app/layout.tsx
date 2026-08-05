@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "XFlix",
     images: [
       {
-        url: "/icon-512.png",
+        url: "https://xflix.ink/icon-512.png",
         width: 512,
         height: 512,
         alt: "XFlix Logo",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "XFlix - Watch Free Movies & TV Shows Online in HD",
     description: "XFlix is a free online streaming platform offering thousands of movies and TV shows in HD and 4K quality. Watch instantly without registration or ads.",
-    images: ["/icon-512.png"],
+    images: ["https://xflix.ink/icon-512.png"],
   },
   appleWebApp: {
     capable: true,
@@ -70,6 +70,18 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
+        <meta property="og:site_name" content="XFlix" />
+        <meta property="og:title" content="XFlix - Watch Free Movies & TV Shows Online in HD" />
+        <meta property="og:description" content="XFlix is a free online streaming platform offering thousands of movies and TV shows in HD and 4K quality. Watch instantly without registration or ads." />
+        <meta property="og:image" content="https://xflix.ink/icon-512.png" />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://xflix.ink" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="XFlix - Watch Free Movies & TV Shows Online in HD" />
+        <meta name="twitter:description" content="XFlix is a free online streaming platform offering thousands of movies and TV shows in HD and 4K quality. Watch instantly without registration or ads." />
+        <meta name="twitter:image" content="https://xflix.ink/icon-512.png" />
         <script src="https://jsc.adskeeper.com/site/1106781.js" async />
       </head>
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
