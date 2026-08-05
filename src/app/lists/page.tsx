@@ -1,7 +1,25 @@
+import { Metadata } from 'next';
 import { getDiscoverMovies, getGenres } from '@/lib/tmdb';
 import Container from '@/components/ui/Container';
 import CommunityList from '@/components/ui/CommunityList';
 import GlobalBackButton from '@/components/ui/GlobalBackButton';
+
+export const metadata: Metadata = {
+  title: 'Movies Review & Ratings - XFlix',
+  description: 'Explore community ratings, movie reviews, and top trending Asian dramas and blockbusters on XFlix.',
+  openGraph: {
+    title: 'Movies Review & Ratings - XFlix',
+    description: 'Explore community ratings, movie reviews, and top trending Asian dramas and blockbusters on XFlix.',
+    url: 'https://xflix.ink/lists',
+    siteName: 'XFlix',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Movies Review & Ratings - XFlix',
+    description: 'Explore community ratings, movie reviews, and top trending Asian dramas and blockbusters on XFlix.',
+  },
+};
 
 export default async function ListsPage() {
   const [data, genresData] = await Promise.all([

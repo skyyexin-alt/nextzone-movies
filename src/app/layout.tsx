@@ -12,14 +12,41 @@ import AdskeeperNotification from "@/components/ui/AdskeeperNotification";
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "XFlix - Watch Free Movies & TV Shows Online in HD",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://xflix.ink"),
+  title: {
+    default: "XFlix - Watch Free Movies & TV Shows Online in HD",
+    template: "%s | XFlix",
+  },
   description: "XFlix is a free online streaming platform offering thousands of movies and TV shows in HD and 4K quality. Watch instantly without registration or ads.",
+  keywords: ["XFlix", "xflix.ink", "free movies", "watch movies online", "TV shows", "HD streaming", "movie reviews", "K-Dramas", "drama list"],
+  authors: [{ name: "XFlix" }],
+  creator: "XFlix",
+  publisher: "XFlix",
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "XFlix",
-    description: "XFlix - Watch unlimited movies and TV shows online free in HD, 1080p, 4K quality.",
-    type: "website",
-    locale: "en_US",
+    title: "XFlix - Watch Free Movies & TV Shows Online in HD",
+    description: "XFlix is a free online streaming platform offering thousands of movies and TV shows in HD and 4K quality. Watch instantly without registration or ads.",
+    url: "https://xflix.ink",
     siteName: "XFlix",
+    images: [
+      {
+        url: "/icon-512.png",
+        width: 512,
+        height: 512,
+        alt: "XFlix Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "XFlix - Watch Free Movies & TV Shows Online in HD",
+    description: "XFlix is a free online streaming platform offering thousands of movies and TV shows in HD and 4K quality. Watch instantly without registration or ads.",
+    images: ["/icon-512.png"],
   },
   appleWebApp: {
     capable: true,

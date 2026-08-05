@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { getDetails } from '@/lib/tmdb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -9,6 +10,64 @@ import GlobalBackButton from '@/components/ui/GlobalBackButton';
 import MDLReviewSection from '@/components/ui/MDLReviewSection';
 import RecommendedReviewsList from '@/components/ui/RecommendedReviewsList';
 import DetailTrailerButton from '@/components/ui/DetailTrailerButton';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ type: 'movie' | 'tv'; id: string }>;
+}): Promise<Metadata> {
+  const { type, id } = await params;
+  if (type !== 'movie' && type !== 'tv') {
+    return { title: 'Title Not Found - XFlix' };
+  }
+
+  try {
+    const data = await getDetails(type, id);
+    const title = data.title || data.name || 'Untitled';
+    const overview = data.overview || 'Watch movies and TV shows online free in HD quality on XFlix.';
+    const year = (data.release_date || data.first_air_date || '').substring(0, 4);
+    const displayTitle = year ? `${title} (${year}) - Watch Free on XFlix` : `${title} - Watch Free on XFlix`;
+
+    const imageUrl = data.backdrop_path
+      ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
+      : data.poster_path
+      ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+      : 'https://xflix.ink/icon-512.png';
+
+    const pageUrl = `https://xflix.ink/${type}/${id}`;
+
+    return {
+      title: displayTitle,
+      description: overview,
+      openGraph: {
+        title: displayTitle,
+        description: overview,
+        url: pageUrl,
+        siteName: 'XFlix',
+        type: type === 'movie' ? 'video.movie' : 'video.tv_show',
+        images: [
+          {
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+            alt: title,
+          },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: displayTitle,
+        description: overview,
+        images: [imageUrl],
+      },
+    };
+  } catch {
+    return {
+      title: 'Watch Free Movies & TV Shows - XFlix',
+      description: 'Stream movies and TV shows online for free in HD quality on XFlix.',
+    };
+  }
+}
 
 export default async function DetailPage({
   params,
