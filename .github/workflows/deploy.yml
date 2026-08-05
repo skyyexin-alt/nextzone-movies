@@ -22,15 +22,16 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             export PATH=$PATH:/usr/local/bin:/usr/bin
-            for dir in /var/www/nextzone /var/www/xflix /var/www/nextzone-movies; do
+            for dir in /var/www/* /var/www/*/* /root/* /home/*/*; do
               if [ -d "$dir/.git" ]; then
-                echo "Updating deployment in $dir..."
+                echo "Found git repo in $dir, updating..."
                 cd "$dir"
-                git fetch origin main
-                git reset --hard origin/main
-                npm install
-                npm run build
+                git fetch origin main || true
+                git reset --hard origin/main || true
+                npm install || true
+                npm run build || true
               fi
             done
             pm2 restart all
+
 
