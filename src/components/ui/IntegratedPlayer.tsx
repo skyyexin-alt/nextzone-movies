@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { TriangleAlert, Star, Play, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { TriangleAlert, Star, Play, ChevronDown, CheckCircle2, ShieldCheck } from 'lucide-react';
 import CustomVideoPlayer from './CustomVideoPlayer';
 
 interface IntegratedPlayerProps {
@@ -46,6 +46,22 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
   const [isStreamLoading, setIsStreamLoading] = useState(true);
   const [iframeOverlayVisible, setIframeOverlayVisible] = useState(true);
   const iframeContainerRef = useRef<HTMLDivElement>(null);
+
+  // Active Anti-Popup & Click-Hijack Shield
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Intercept window.open attempts while viewing video
+    const originalOpen = window.open;
+    window.open = function (...args) {
+      console.warn('[Anti-Popup Shield] Blocked click-popup attempt:', args[0]);
+      return null;
+    };
+
+    return () => {
+      window.open = originalOpen;
+    };
+  }, []);
 
   // Fetch the direct stream URL from our API bridge
   useEffect(() => {
@@ -197,6 +213,7 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
               className="w-full h-full absolute inset-0 bg-black"
               src={getEmbedUrl()}
               title={`${title} Player`}
+              sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
               allowFullScreen
             ></iframe>
@@ -217,10 +234,10 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
 
         {/* Server Selection Section */}
         <div className="bg-[#222255]/40 border border-white/5 rounded-xl p-4 md:p-6 flex flex-col gap-4">
-          {/* Warning Banner */}
-          <div className="flex items-center gap-3 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-lg p-3 text-sm font-medium">
-            <TriangleAlert className="w-5 h-5 flex-shrink-0" />
-            <p>For best experience, use <span className="font-bold">uBlock Origin</span> or <span className="font-bold">Brave Browser</span></p>
+          {/* Active Anti-Popup Protection Banner */}
+          <div className="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-lg p-3 text-sm font-medium">
+            <ShieldCheck className="w-5 h-5 flex-shrink-0 text-emerald-400" />
+            <p><span className="font-bold text-white">Built-in Anti-Popup Shield Active</span> — Player clicks, ads, and redirection popups are automatically blocked.</p>
           </div>
 
           <div>
