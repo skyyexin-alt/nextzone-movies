@@ -39,9 +39,17 @@ export default function HomepageBannerAd({ zoneId = "5995032" }: HomepageBannerA
       script.src = "https://a.magsrv.com/ad-provider.js";
       script.onload = () => renderAd();
       document.head.appendChild(script);
-    } else {
+    } else if ((window as any).AdProvider) {
       renderAd();
+    } else {
+      script.addEventListener("load", renderAd);
     }
+
+    return () => {
+      if (script) {
+        script.removeEventListener("load", renderAd);
+      }
+    };
   }, [zoneId]);
 
   useEffect(() => {
