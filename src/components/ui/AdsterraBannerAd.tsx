@@ -9,7 +9,7 @@ interface AdsterraBannerAdProps {
 
 export default function AdsterraBannerAd({
   adKey = "d092035ae89a38067d47dfdef5cf6b61",
-  scriptHost = "yearlybeak.com",
+  scriptHost = "racketgutter.com",
 }: AdsterraBannerAdProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
