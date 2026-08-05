@@ -81,9 +81,6 @@ export default function Footer() {
 
         {/* Mobile bottom nav spacer */}
         <div className="h-16 lg:hidden" />
-
-        {/* Tracker */}
-        <div className="mt-8 flex justify-center pb-8" dangerouslySetInnerHTML={{ __html: `<script id="_waul11">var _wau = _wau || []; _wau.push(["dynamic", "wft2mup9o8", "l11", "c4302bffffff", "small"]);</script><script async src="//waust.at/d.js"></script>` }} />
       </Container>
     </footer>
   );
