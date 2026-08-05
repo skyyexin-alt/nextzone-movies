@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { TriangleAlert, Star, Play, ChevronDown, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { TriangleAlert, Star, Play, ChevronDown, CheckCircle2, ShieldCheck, Maximize, Minimize } from 'lucide-react';
 import CustomVideoPlayer from './CustomVideoPlayer';
 
 interface IntegratedPlayerProps {
@@ -187,7 +187,18 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
   const episodeCount = currentSeasonData?.episode_count || 0;
   
   // Generate a fake array of episodes based on the episode count since we only have the count from getDetails
-  const episodeList = Array.from({ length: episodeCount }, (_, i) => i + 1);
+  const toggleFullscreen = () => {
+    if (!iframeContainerRef.current) return;
+    if (!document.fullscreenElement) {
+      iframeContainerRef.current.requestFullscreen().catch((err) => {
+        console.error("Fullscreen error:", err);
+      });
+    } else {
+      document.exitFullscreen().catch((err) => {
+        console.error("Exit fullscreen error:", err);
+      });
+    }
+  };
 
   return (
     <div className={`w-full flex flex-col gap-6 ${type === 'tv' ? 'lg:flex-row' : ''}`}>
@@ -207,16 +218,26 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
             subtitles={streamData.subs}
           />
         ) : (
-          <div ref={iframeContainerRef} className="relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5">
+          <div ref={iframeContainerRef} className="relative w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/5 group">
             <iframe
               key={`${activeServer}-${activeSeason}-${activeEpisode}`}
               className="w-full h-full absolute inset-0 bg-black"
               src={getEmbedUrl()}
               title={`${title} Player`}
-              sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-              allowFullScreen
+              sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-presentation"
+              allow="accelerometer *; autoplay *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *; fullscreen *; display-capture *"
+              allowFullScreen={true}
             ></iframe>
+            
+            {/* Native Fullscreen Hover Button */}
+            <button
+              onClick={toggleFullscreen}
+              className="absolute top-3 right-3 z-20 bg-black/70 hover:bg-violet-600 text-white p-2 rounded-lg backdrop-blur-md opacity-80 hover:opacity-100 transition-all border border-white/10 shadow-lg cursor-pointer"
+              title="Expand to Fullscreen"
+            >
+              <Maximize className="w-5 h-5" />
+            </button>
+
             {/* Play overlay — click to jump straight into the video fullscreen */}
             {iframeOverlayVisible && (
               <div
@@ -241,8 +262,15 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
           </div>
 
           <div>
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center justify-between gap-2 mb-3">
               <span className="text-zinc-400 text-sm">Select Server (<Star className="w-3.5 h-3.5 inline fill-amber-500 text-amber-500 -mt-0.5" /> = Recommended):</span>
+              <button
+                onClick={toggleFullscreen}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-violet-600/40 hover:bg-violet-600 border border-violet-500/50 text-white text-xs font-bold rounded-lg transition-all cursor-pointer shadow-md"
+              >
+                <Maximize className="w-4 h-4 text-violet-300" />
+                <span>Full Screen (PC)</span>
+              </button>
             </div>
 
             <div className="flex flex-wrap gap-2">
