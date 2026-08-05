@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Providers } from "./Providers";
-import InPagePushAd from "@/components/ui/InPagePushAd";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -72,7 +71,6 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-          <InPagePushAd />
         </Providers>
       </body>
     </html>
