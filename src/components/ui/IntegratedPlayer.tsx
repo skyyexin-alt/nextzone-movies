@@ -187,6 +187,8 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
   const episodeCount = currentSeasonData?.episode_count || 0;
   
   // Generate a fake array of episodes based on the episode count since we only have the count from getDetails
+  const episodeList = Array.from({ length: episodeCount }, (_, i) => i + 1);
+
   const toggleFullscreen = () => {
     if (!iframeContainerRef.current) return;
     if (!document.fullscreenElement) {
