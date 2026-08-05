@@ -3,7 +3,7 @@ import Hero from '@/components/ui/Hero';
 import ContentRail from '@/components/ui/ContentRail';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
 import Container from '@/components/ui/Container';
-import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
+import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 import { 
   getTrending, 
   getPopularMovies, 
@@ -49,8 +49,8 @@ export default async function Home() {
       <Hero item={heroItem} />
       
       <Container className="mt-4">
-        {/* Adskeeper Widget 2064406 */}
-        <AdskeeperBannerAd widgetId="2064406" />
+        {/* Adsterra 728x90 Banner Ad */}
+        <AdsterraBannerAd adKey="282e852f5808b9dd01d12c1ed30bf5d2" />
         <ContinueWatchingSection />
       </Container>
       

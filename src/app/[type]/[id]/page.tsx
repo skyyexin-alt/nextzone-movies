@@ -8,7 +8,7 @@ import CastCarousel from '@/components/ui/CastCarousel';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 import GlobalBackButton from '@/components/ui/GlobalBackButton';
-import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
+import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 export default async function DetailPage({
   params,
 }: {
@@ -84,8 +84,8 @@ export default async function DetailPage({
         <span className="text-white truncate">{title}</span>
       </div>
 
-      {/* Adskeeper Banner Ad above Player */}
-      <AdskeeperBannerAd widgetId="2064406" />
+      {/* Adsterra Banner Ad above Player */}
+      <AdsterraBannerAd adKey="282e852f5808b9dd01d12c1ed30bf5d2" />
 
       {/* Player */}
       <IntegratedPlayer
