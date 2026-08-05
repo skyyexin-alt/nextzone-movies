@@ -3,6 +3,7 @@ import Hero from '@/components/ui/Hero';
 import ContentRail from '@/components/ui/ContentRail';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
 import Container from '@/components/ui/Container';
+import ExoClickBanner from '@/components/ui/ExoClickBanner';
 import { 
   getTrending, 
   getPopularMovies, 
@@ -48,6 +49,7 @@ export default async function Home() {
       <Hero item={heroItem} />
       
       <Container className="mt-4">
+        <ExoClickBanner zoneId="5994968" />
         <ContinueWatchingSection />
       </Container>
       
