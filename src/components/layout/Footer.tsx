@@ -1,96 +1,140 @@
+"use client";
+
 import Link from 'next/link';
-import Script from 'next/script';
-import { ListVideo } from 'lucide-react';
 import Container from '@/components/ui/Container';
+import { Film, Moon, Sun, Play, Apple } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-16 pt-14 bg-[#070714] border-t border-white/5 overflow-hidden">
-      {/* Decorative glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-violet-600/8 blur-[100px] rounded-full pointer-events-none" />
+    <footer className="relative mt-16 sm:mt-20 bg-[#0b0b1a] border-t border-violet-500/30 text-white pt-10 sm:pt-14 pb-24 sm:pb-14 overflow-hidden">
+      {/* Decorative top glow bar */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
 
       <Container className="relative z-10">
-        {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
-          {/* Brand — full width on mobile */}
-          <div className="col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/25">
-                <ListVideo className="w-4.5 h-4.5 text-white" />
+        {/* Organized Multi-Column Footer Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-start">
+
+          {/* Column 1: Brand Logo, Copyright, Social Pills, App Store Badges (Full Width on Mobile) */}
+          <div className="col-span-2 lg:col-span-5 space-y-4 border-b sm:border-b-0 border-white/10 pb-6 sm:pb-0">
+            {/* Brand Logo with v2.0 Badge */}
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 via-indigo-600 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-600/30 border border-violet-400/30">
+                <Film className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-white tracking-wide">XFlix</span>
+              <div className="flex items-center gap-2">
+                <div className="flex flex-col leading-none">
+                  <span className="text-xl font-black text-white tracking-tight">XFlix</span>
+                  <span className="text-[10px] font-black text-violet-400 uppercase tracking-widest">REVIEWS</span>
+                </div>
+                <span className="bg-rose-600 text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow">
+                  v2.0
+                </span>
+              </div>
             </Link>
-            <p className="text-zinc-500 text-sm leading-relaxed max-w-sm">
-              Stream your favorite movies and TV shows in HD quality. Free, fast, and always updated. The best cinematic experience on any device.
+
+            {/* Copyright text */}
+            <p className="text-xs text-zinc-400 font-semibold">
+              © Copyright {currentYear} XFlix Reviews. All rights reserved.
             </p>
-          </div>
 
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-4">Browse</h4>
-            <ul className="flex flex-col gap-2.5">
-              {[
-                ['Movies', '/movies'],
-                ['TV Shows', '/tv'],
-                ['Trending', '/trending'],
-                ['Top Rated', '/top-rated'],
-              ].map(([label, href]) => (
-                <li key={href}>
-                  <Link href={href} className="text-sm text-zinc-500 hover:text-white transition-colors">{label}</Link>
-                </li>
+            {/* Social Circle Icons */}
+            <div className="flex items-center gap-2 flex-wrap pt-1">
+              {['f', 'X', 'ig', 'yt', 'tt', 'rss'].map((soc) => (
+                <a
+                  key={soc}
+                  href="#"
+                  className="w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-violet-600 hover:border-violet-500 text-zinc-300 hover:text-white flex items-center justify-center text-xs font-black transition-all shadow hover:scale-105"
+                >
+                  {soc}
+                </a>
               ))}
-            </ul>
-          </div>
+            </div>
 
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-4">Discover</h4>
-            <ul className="flex flex-col gap-2.5">
-              {[
-                ['Now Playing', '/now-playing'],
-                ['Upcoming', '/upcoming'],
-                ['Airing Today', '/airing-today'],
-                ['Networks', '/networks'],
-              ].map(([label, href]) => (
-                <li key={href}>
-                  <Link href={href} className="text-sm text-zinc-500 hover:text-white transition-colors">{label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            {/* App Store & Google Play Download Side-by-Side Pills */}
+            <div className="flex items-center gap-2.5 flex-wrap pt-2">
+              <a
+                href="#"
+                className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all shadow hover:border-violet-500/40"
+              >
+                <Apple className="w-4 h-4 text-zinc-200" />
+                <div className="flex flex-col text-left leading-tight">
+                  <span className="text-[8px] text-zinc-400 font-bold uppercase">Download on</span>
+                  <span className="text-[11px] font-black text-white">App Store</span>
+                </div>
+              </a>
 
-        {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-6 border-t border-white/5 gap-4 pb-6 md:pb-8">
-          <div className="flex flex-col gap-2">
-            <p className="text-xs text-zinc-600 leading-relaxed">
-              © {currentYear} XFlix. All rights reserved. This site does not store any files on its server.
-            </p>
-            {/* Whos.amung.us Visitor Counter Widget */}
-            <div className="flex items-center gap-2">
-              <Script id="_waubac" strategy="afterInteractive">
-                {`var _wau = _wau || []; _wau.push(["dynamic", "8uvlmhw0qn", "bac", "c4302bffffff", "small"]);`}
-              </Script>
-              <Script src="https://waust.at/d.js" strategy="afterInteractive" />
+              <a
+                href="#"
+                className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all shadow hover:border-violet-500/40"
+              >
+                <Play className="w-4 h-4 text-emerald-400 fill-current" />
+                <div className="flex flex-col text-left leading-tight">
+                  <span className="text-[8px] text-zinc-400 font-bold uppercase">Get it on</span>
+                  <span className="text-[11px] font-black text-white">Google Play</span>
+                </div>
+              </a>
             </div>
           </div>
-          <div className="flex items-center flex-wrap gap-x-5 gap-y-2">
-            {[
-              ['DMCA', '/dmca'],
-              ['Privacy', '/privacy-policy'],
-              ['Terms', '/terms'],
-              ['Contact', '/contact'],
-            ].map(([label, href]) => (
-              <Link key={href} href={href} className="text-xs text-zinc-600 hover:text-white transition-colors">
-                {label}
-              </Link>
-            ))}
-          </div>
-        </div>
 
-        {/* Mobile bottom nav spacer */}
-        <div className="h-16 lg:hidden" />
+          {/* Column 2: ABOUT */}
+          <div className="col-span-1 lg:col-span-2 space-y-3">
+            <h4 className="text-xs font-black text-violet-400 uppercase tracking-widest border-b border-white/10 pb-2">
+              ABOUT
+            </h4>
+            <ul className="space-y-2 text-xs font-extrabold text-zinc-300">
+              <li><Link href="/explore" className="hover:text-white transition-colors">FAQ</Link></li>
+              <li><Link href="/explore" className="hover:text-white transition-colors">About Us</Link></li>
+              <li><Link href="/explore" className="hover:text-white transition-colors">Contact</Link></li>
+              <li><Link href="/explore" className="hover:text-white transition-colors">Terms</Link></li>
+              <li><Link href="/explore" className="hover:text-white transition-colors">Privacy</Link></li>
+              <li><Link href="/explore" className="hover:text-white transition-colors">Support Us</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 3: RECOMMENDED */}
+          <div className="col-span-1 lg:col-span-3 space-y-3">
+            <h4 className="text-xs font-black text-violet-400 uppercase tracking-widest border-b border-white/10 pb-2">
+              RECOMMENDED
+            </h4>
+            <ul className="space-y-2 text-xs font-extrabold text-zinc-300">
+              <li><Link href="/upcoming" className="hover:text-white transition-colors">Dramas & Movie Calendar</Link></li>
+              <li><Link href="/explore?sort=top_rated&type=movie" className="hover:text-white transition-colors">Top 100 Movies</Link></li>
+              <li><Link href="/explore?sort=top_rated&type=tv" className="hover:text-white transition-colors">Top 100 Dramas & Series</Link></li>
+              <li><Link href="/explore?cat=Variety+Shows" className="hover:text-white transition-colors">Top Variety Shows</Link></li>
+              <li><Link href="/explore?cat=Top+Actors" className="hover:text-white transition-colors">Top Actors & Actresses</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 4: WORK WITH US & DARK MODE */}
+          <div className="col-span-2 sm:col-span-1 lg:col-span-2 space-y-5">
+            <div className="space-y-2">
+              <h4 className="text-xs font-black text-violet-400 uppercase tracking-widest border-b border-white/10 pb-2">
+                WORK WITH US
+              </h4>
+              <ul className="space-y-1.5 text-xs font-extrabold text-zinc-300">
+                <li><Link href="/explore" className="hover:text-white transition-colors">Advertise</Link></li>
+                <li><Link href="/explore" className="hover:text-white transition-colors">API</Link></li>
+              </ul>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text-xs font-black text-violet-400 uppercase tracking-widest border-b border-white/10 pb-2">
+                THEME
+              </h4>
+              <div className="flex items-center gap-2 pt-1">
+                <button className="w-8 h-8 rounded-xl bg-violet-600 text-white flex items-center justify-center shadow border border-violet-400/40" title="Dark Mode Active">
+                  <Moon className="w-3.5 h-3.5 fill-current" />
+                </button>
+                <button className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white flex items-center justify-center border border-white/10 transition-colors" title="Light Mode">
+                  <Sun className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </Container>
     </footer>
   );

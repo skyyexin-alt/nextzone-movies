@@ -9,12 +9,45 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   try {
     const { id } = await params;
     const person = await getPersonDetails(id);
+    const title = `${person.name} - Movies & TV Shows | XFlix`;
+    const description = person.biography
+      ? (person.biography.length > 200 ? `${person.biography.substring(0, 200)}...` : person.biography)
+      : `Explore filmography and movies starring ${person.name} on XFlix.`;
+
+    const profileUrl = person.profile_path
+      ? `https://image.tmdb.org/t/p/w500${person.profile_path}`
+      : 'https://xflix.ink/icon-512.png';
+
     return {
-      title: `${person.name} - Movies & TV Shows | XFlix`,
-      description: person.biography?.substring(0, 160) || `Watch movies and TV shows starring ${person.name}.`,
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        url: `https://xflix.ink/person/${id}`,
+        siteName: 'XFlix',
+        type: 'profile',
+        images: [
+          {
+            url: profileUrl,
+            width: 500,
+            height: 750,
+            alt: person.name,
+          },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [profileUrl],
+      },
     };
-  } catch (error) {
-    return { title: 'Actor Profile | XFlix' };
+  } catch {
+    return {
+      title: 'Actor Profile | XFlix',
+      description: 'Explore filmography and cast details on XFlix.',
+    };
   }
 }
 

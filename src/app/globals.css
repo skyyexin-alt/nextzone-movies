@@ -21,7 +21,7 @@
 }
 
 :root {
-  background-color: #0f0f23;
+  background-color: #181835;
   color: var(--color-text-main);
 }
 
@@ -52,6 +52,19 @@ button, a, [role="button"] {
 /* Mobile nav spacer */
 .mobile-nav-spacer {
   height: 64px;
+}
+
+/* Touch-friendly horizontal scrollbar styling */
+.touch-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.touch-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 /* Scrollbar styling — thin and refined */

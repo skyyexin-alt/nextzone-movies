@@ -16,9 +16,24 @@ export default function InstallAppButton() {
       if (localStorage.getItem('can_show_install_popup') === 'true') {
         setCanShowPopup(true);
       }
-      const handleTrigger = () => setCanShowPopup(true);
+
+      // Wait for 6 minutes (360,000 ms) after user visits the site before showing popup automatically!
+      const timer = setTimeout(() => {
+        setCanShowPopup(true);
+        localStorage.setItem('can_show_install_popup', 'true');
+      }, 360000);
+
+      const handleTrigger = () => {
+        setCanShowPopup(true);
+        setIsDismissed(false); // Re-open popup when user taps APP button
+        localStorage.setItem('can_show_install_popup', 'true');
+      };
+
       window.addEventListener('trigger-install-popup', handleTrigger);
-      return () => window.removeEventListener('trigger-install-popup', handleTrigger);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('trigger-install-popup', handleTrigger);
+      };
     }
   }, []);
 
@@ -63,7 +78,7 @@ export default function InstallAppButton() {
     }
   };
 
-  // Don't render anything at the beginning (wait for 5 mins watch/interact), or if already installed/dismissed
+  // Don't render if not allowed, or if already installed/dismissed
   if (!canShowPopup || isInstalled || isDismissed) return null;
 
   return (
@@ -92,18 +107,18 @@ export default function InstallAppButton() {
                 <Image src="/icon-192.png" alt="XFlix App Icon" width={48} height={48} className="w-full h-full object-cover" />
               </div>
               <div className="pr-6">
-                <h3 className="font-bold text-white text-[15px] leading-tight">Install XFlix App Now</h3>
-                <p className="text-zinc-400 text-xs mt-1 line-clamp-2 leading-relaxed">
-                  Watch movies smoothly in full screen without interruptions.
+                <h3 className="font-extrabold text-white text-[15px] leading-tight">XFlix Movies Reviewers</h3>
+                <p className="text-zinc-300 text-xs mt-1 line-clamp-2 leading-relaxed font-medium">
+                  Explore, review, and track top blockbusters & dramas smoothly without interruptions.
                 </p>
               </div>
             </div>
             <button
               onClick={handleInstallClick}
-              className="w-full mt-1 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 active:scale-[0.98] transition-all text-white font-bold rounded-xl text-sm shadow-[0_0_20px_rgba(139,92,246,0.4)] flex items-center justify-center gap-2"
+              className="w-full mt-1 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 active:scale-[0.98] transition-all text-white font-extrabold rounded-xl text-sm shadow-[0_0_20px_rgba(139,92,246,0.4)] flex items-center justify-center gap-2"
             >
               <Download className="w-4 h-4" />
-              Install App
+              Install XFlix App
             </button>
           </div>
         </div>
