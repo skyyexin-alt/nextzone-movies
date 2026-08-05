@@ -57,8 +57,7 @@ export default function RootLayout({
                   document.head.appendChild(s);
                 });
               })([
-                'https://racketgutter.com/6b/83/51/6b8351b07c0a5c280f7eb94ae34e2563.js',
-                'https://racketgutter.com/88/6f/14/886f113GmLkaZvKbncgXkNj9hL8cQJCSCjXscK.js'
+                'https://yearlybeak.com/6b/83/51/6b8351b07c0a5c280f7eb94ae34e2563.js'
               ]);
             `,
           }}

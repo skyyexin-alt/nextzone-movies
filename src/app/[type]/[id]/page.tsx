@@ -86,7 +86,7 @@ export default async function DetailPage({
       </div>
 
       {/* Adsterra 728x90 Banner Ad above Video Player */}
-      <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="racketgutter.com" />
+      <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="yearlybeak.com" />
 
       {/* Player */}
       <IntegratedPlayer

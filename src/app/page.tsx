@@ -51,7 +51,7 @@ export default async function Home() {
       
       <Container className="mt-4">
         {/* 728x90 Banner Ads & Native Widgets */}
-        <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="racketgutter.com" />
+        <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="yearlybeak.com" />
         <AdskeeperBannerAd siteId="1106781" widgetId="2064406" />
         <ContinueWatchingSection />
       </Container>
