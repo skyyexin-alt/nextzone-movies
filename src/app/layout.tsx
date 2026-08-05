@@ -38,6 +38,12 @@ export const metadata: Metadata = {
         height: 630,
         alt: "XFlix - Free Movies, TV Shows & Asian Dramas Platform",
       },
+      {
+        url: "https://xflix.ink/icon-512.png",
+        width: 512,
+        height: 512,
+        alt: "XFlix Logo",
+      },
     ],
     locale: "en_US",
     type: "website",
@@ -46,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "XFlix - Watch Free Movies, TV Shows & Asian Dramas in HD",
     description: "XFlix is a free online streaming & movie discovery platform. Explore trending blockbusters, top 100 rated films, K-Dramas, audience reviews, trailers, and personal watchlist tracking in HD.",
-    images: ["https://xflix.ink/opengraph-image"],
+    images: ["https://xflix.ink/opengraph-image", "https://xflix.ink/icon-512.png"],
   },
   appleWebApp: {
     capable: true,
@@ -74,6 +80,7 @@ export default function RootLayout({
         <meta property="og:title" content="XFlix - Watch Free Movies, TV Shows & Asian Dramas in HD" />
         <meta property="og:description" content="XFlix is a free online streaming & movie discovery platform. Explore trending blockbusters, top 100 rated films, K-Dramas, audience reviews, trailers, and personal watchlist tracking in HD." />
         <meta property="og:image" content="https://xflix.ink/opengraph-image" />
+        <meta property="og:image:secure_url" content="https://xflix.ink/icon-512.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:type" content="website" />
