@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-export const alt = 'XFlix - Free Movies, TV Shows & Asian Dramas Discovery Platform';
+export const alt = 'XFlix - Movies Review, Ratings, K-Dramas & Recommendations';
 export const size = {
   width: 1200,
   height: 630,
@@ -20,139 +20,160 @@ export default async function Image() {
           flexDirection: 'column',
           alignItems: 'flex-start',
           justifyContent: 'space-between',
-          backgroundColor: '#0f0f23',
+          backgroundColor: '#0b0b1a',
           backgroundImage:
-            'radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.35) 0%, transparent 55%), radial-gradient(circle at 85% 85%, rgba(79, 70, 229, 0.25) 0%, transparent 50%)',
-          padding: '60px',
-          fontFamily: 'system-ui, sans-serif',
+            'radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.45) 0%, transparent 50%), radial-gradient(circle at 85% 80%, rgba(217, 70, 239, 0.35) 0%, transparent 55%)',
+          padding: '56px 64px',
+          fontFamily: 'system-ui, -apple-system, sans-serif',
           color: 'white',
         }}
       >
-        {/* Top Header / Branding */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        {/* Top Header / Branding Bar */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div
+              style={{
+                width: '56px',
+                height: '56px',
+                borderRadius: '16px',
+                background: 'linear-gradient(135deg, #7c3aed, #d946ef)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '32px',
+                boxShadow: '0 10px 30px rgba(124, 58, 237, 0.6)',
+              }}
+            >
+              🍿
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span
+                style={{
+                  fontSize: '38px',
+                  fontWeight: '900',
+                  letterSpacing: '-1px',
+                  color: '#ffffff',
+                }}
+              >
+                XFlix <span style={{ color: '#c4b5fd', fontWeight: '800' }}>Movies Review</span>
+              </span>
+              <span style={{ fontSize: '13px', color: '#a1a1aa', fontWeight: '700', letterSpacing: '0.5px' }}>
+                XFLIX.INK • MOVIE RATINGS & REVIEWS DATABASE
+              </span>
+            </div>
+          </div>
+
           <div
             style={{
-              width: '56px',
-              height: '56px',
-              borderRadius: '16px',
-              background: 'linear-gradient(135deg, #7c3aed, #4f46e5)',
+              backgroundColor: 'rgba(245, 158, 11, 0.15)',
+              border: '1px solid rgba(245, 158, 11, 0.4)',
+              color: '#fbbf24',
+              fontSize: '15px',
+              fontWeight: '800',
+              padding: '8px 20px',
+              borderRadius: '24px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '30px',
-              boxShadow: '0 10px 25px rgba(124, 58, 237, 0.5)',
+              gap: '8px',
             }}
           >
-            🎬
+            ⭐ 8.9 / 10 Average Review Score
           </div>
-          <span
-            style={{
-              fontSize: '40px',
-              fontWeight: '900',
-              letterSpacing: '-1px',
-              color: '#ffffff',
-            }}
-          >
-            XFlix
-          </span>
-          <span
-            style={{
-              backgroundColor: 'rgba(124, 58, 237, 0.25)',
-              border: '1px solid rgba(167, 139, 250, 0.4)',
-              color: '#c4b5fd',
-              fontSize: '14px',
-              fontWeight: '800',
-              padding: '6px 16px',
-              borderRadius: '20px',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-            }}
-          >
-            xflix.ink
-          </span>
         </div>
 
-        {/* Hero Title & Description */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', marginTop: '30px', maxWidth: '960px' }}>
+        {/* Hero Headline Section */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '980px', marginTop: '20px' }}>
           <h1
             style={{
-              fontSize: '54px',
+              fontSize: '52px',
               fontWeight: '900',
               lineHeight: 1.15,
               margin: 0,
               color: '#ffffff',
             }}
           >
-            Watch Free Movies, TV Shows & Asian Dramas in HD
+            Honest Movie Reviews, Film Ratings & K-Drama Database
           </h1>
           <p
             style={{
               fontSize: '22px',
-              color: '#d4d4d8',
+              color: '#e4e4e7',
               margin: 0,
               lineHeight: 1.45,
             }}
           >
-            Explore trending blockbusters, top-rated K-dramas, user reviews, plot summaries, trailer previews, and personal watchlist tracking.
+            Explore top rated blockbusters, audience reviews, actor filmographies, plot summaries, trailers, and personal watchlist tracking on XFlix.
           </p>
         </div>
 
-        {/* Feature Badges Grid at Bottom */}
+        {/* Feature Cards Grid */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: '16px',
-            marginTop: '30px',
+            width: '100%',
+            marginTop: '24px',
           }}
         >
           <div
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.08)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: '16px',
-              padding: '14px 22px',
+              flex: 1,
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: '20px',
+              padding: '16px 20px',
               display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              fontSize: '17px',
-              fontWeight: '800',
-              color: '#fbbf24',
+              flexDirection: 'column',
+              gap: '6px',
             }}
           >
-            ⭐ Top 100 Rated Movies
+            <span style={{ fontSize: '13px', color: '#fbbf24', fontWeight: '800', textTransform: 'uppercase' }}>
+              ⭐ TOP RATED
+            </span>
+            <span style={{ fontSize: '18px', fontWeight: '800', color: '#ffffff' }}>
+              Top 100 Movies Review
+            </span>
           </div>
+
           <div
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.08)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: '16px',
-              padding: '14px 22px',
+              flex: 1,
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: '20px',
+              padding: '16px 20px',
               display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              fontSize: '17px',
-              fontWeight: '800',
-              color: '#34d399',
+              flexDirection: 'column',
+              gap: '6px',
             }}
           >
-            🔥 Trending & Airing Dramas
+            <span style={{ fontSize: '13px', color: '#34d399', fontWeight: '800', textTransform: 'uppercase' }}>
+              🔥 TRENDING
+            </span>
+            <span style={{ fontSize: '18px', fontWeight: '800', color: '#ffffff' }}>
+              Asian & K-Dramas Review
+            </span>
           </div>
+
           <div
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.08)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
-              borderRadius: '16px',
-              padding: '14px 22px',
+              flex: 1,
+              backgroundColor: 'rgba(255, 255, 255, 0.06)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: '20px',
+              padding: '16px 20px',
               display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              fontSize: '17px',
-              fontWeight: '800',
-              color: '#c4b5fd',
+              flexDirection: 'column',
+              gap: '6px',
             }}
           >
-            💬 Audience Reviews & Watchlist
+            <span style={{ fontSize: '13px', color: '#c4b5fd', fontWeight: '800', textTransform: 'uppercase' }}>
+              💬 COMMUNITY
+            </span>
+            <span style={{ fontSize: '18px', fontWeight: '800', color: '#ffffff' }}>
+              Audience Reviews & Watchlist
+            </span>
           </div>
         </div>
       </div>
@@ -162,3 +183,4 @@ export default async function Image() {
     }
   );
 }
+
