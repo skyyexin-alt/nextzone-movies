@@ -14,28 +14,34 @@ export default function HomepageBannerAd({ zoneId = "5995032" }: HomepageBannerA
     // Client-side execution check
     if (typeof window === "undefined" || !containerRef.current) return;
 
-    containerRef.current.innerHTML = "";
+    const renderAd = () => {
+      if (!containerRef.current) return;
+      containerRef.current.innerHTML = "";
 
-    // Load async ad script safely on client side
-    if (!document.querySelector('script[src="https://a.magsrv.com/ad-provider.js"]')) {
-      const script = document.createElement("script");
+      const ins = document.createElement("ins");
+      ins.className = "eas6a97888e2";
+      ins.setAttribute("data-zoneid", zoneId);
+      ins.style.display = "inline-block";
+
+      const pushScript = document.createElement("script");
+      pushScript.text = '(window.AdProvider = window.AdProvider || []).push({"serve": {}});';
+
+      containerRef.current.appendChild(ins);
+      containerRef.current.appendChild(pushScript);
+    };
+
+    let script = document.querySelector('script[src="https://a.magsrv.com/ad-provider.js"]') as HTMLScriptElement;
+
+    if (!script) {
+      script = document.createElement("script");
       script.async = true;
       script.type = "application/javascript";
       script.src = "https://a.magsrv.com/ad-provider.js";
+      script.onload = () => renderAd();
       document.head.appendChild(script);
+    } else {
+      renderAd();
     }
-
-    // Create ExoClick ins element
-    const ins = document.createElement("ins");
-    ins.className = "eas6a97888e2";
-    ins.setAttribute("data-zoneid", zoneId);
-
-    // Create push script to serve ad
-    const pushScript = document.createElement("script");
-    pushScript.text = '(window.AdProvider = window.AdProvider || []).push({"serve": {}});';
-
-    containerRef.current.appendChild(ins);
-    containerRef.current.appendChild(pushScript);
   }, [zoneId]);
 
   useEffect(() => {
