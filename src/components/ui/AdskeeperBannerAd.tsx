@@ -9,12 +9,18 @@ interface AdskeeperBannerAdProps {
 export default function AdskeeperBannerAd({ widgetId = "2064406" }: AdskeeperBannerAdProps) {
   useEffect(() => {
     if (typeof window === "undefined") return;
-    try {
-      // @ts-ignore
-      (window._mgq = window._mgq || []).push(["_mgc.load"]);
-    } catch (e) {
-      // ignore
-    }
+    const triggerLoad = () => {
+      try {
+        // @ts-ignore
+        (window._mgq = window._mgq || []).push(["_mgc.load"]);
+      } catch (e) {
+        // ignore
+      }
+    };
+
+    triggerLoad();
+    const timer = setTimeout(triggerLoad, 1000);
+    return () => clearTimeout(timer);
   }, [widgetId]);
 
   return (
@@ -27,3 +33,4 @@ export default function AdskeeperBannerAd({ widgetId = "2064406" }: AdskeeperBan
     </div>
   );
 }
+

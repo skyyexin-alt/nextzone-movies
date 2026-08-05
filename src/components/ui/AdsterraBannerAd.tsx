@@ -10,27 +10,39 @@ export default function AdsterraBannerAd({ adKey = "282e852f5808b9dd01d12c1ed30b
   const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined" || !containerRef.current) return;
-
-    containerRef.current.innerHTML = "";
-
-    const optsScript = document.createElement("script");
-    optsScript.text = `atOptions = ${JSON.stringify({
-      key: adKey,
-      format: "iframe",
-      height: 90,
-      width: 728,
-      params: {},
-    })};`;
-
-    const invokeScript = document.createElement("script");
-    invokeScript.src = `https://www.highperformanceformat.com/${adKey}/invoke.js`;
-    invokeScript.async = true;
-
-    containerRef.current.appendChild(optsScript);
-    containerRef.current.appendChild(invokeScript);
-  }, [adKey]);
+  const iframeContent = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <style>
+          html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        </style>
+      </head>
+      <body>
+        <script type="text/javascript">
+          atOptions = {
+            'key': '${adKey}',
+            'format': 'iframe',
+            'height': 90,
+            'width': 728,
+            'params': {}
+          };
+        </script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/${adKey}/invoke.js"></script>
+      </body>
+    </html>
+  `;
 
   useEffect(() => {
     const handleResize = () => {
@@ -70,8 +82,18 @@ export default function AdsterraBannerAd({ adKey = "282e852f5808b9dd01d12c1ed30b
     >
       <div
         ref={containerRef}
-        className="w-[728px] shrink-0 flex justify-center items-center overflow-hidden min-h-[90px] bg-transparent mx-auto"
-      />
+        className="w-[728px] h-[90px] shrink-0 flex justify-center items-center overflow-hidden bg-transparent mx-auto"
+      >
+        <iframe
+          srcDoc={iframeContent}
+          title="Advertisement"
+          width={728}
+          height={90}
+          style={{ border: "none", overflow: "hidden", background: "transparent" }}
+          scrolling="no"
+        />
+      </div>
     </div>
   );
 }
+
