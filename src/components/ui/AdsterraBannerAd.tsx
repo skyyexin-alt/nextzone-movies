@@ -59,8 +59,17 @@ export default function AdsterraBannerAd({
                 'width': 728,
                 'params': {}
               };
+              var s = document.createElement("script");
+              s.type = "text/javascript";
+              s.src = "https://${scriptHost}/${adKey}/invoke.js";
+              s.onerror = function() {
+                var ps = document.createElement("script");
+                ps.type = "text/javascript";
+                ps.src = "/api/ad-proxy?url=" + encodeURIComponent("https://${scriptHost}/${adKey}/invoke.js");
+                document.body.appendChild(ps);
+              };
+              document.body.appendChild(s);
             </script>
-            <script type="text/javascript" src="https://${scriptHost}/${adKey}/invoke.js"></script>
           </body>
         </html>
       `);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { loadScriptWithAntiAdblock } from "@/lib/antiAdblock";
 
 interface HomepageBannerAdProps {
   zoneId?: string;
@@ -30,26 +31,13 @@ export default function HomepageBannerAd({ zoneId = "5995032" }: HomepageBannerA
       containerRef.current.appendChild(pushScript);
     };
 
-    let script = document.querySelector('script[src="https://a.magsrv.com/ad-provider.js"]') as HTMLScriptElement;
-
-    if (!script) {
-      script = document.createElement("script");
-      script.async = true;
-      script.type = "application/javascript";
-      script.src = "https://a.magsrv.com/ad-provider.js";
-      script.onload = () => renderAd();
-      document.head.appendChild(script);
-    } else if ((window as any).AdProvider) {
-      renderAd();
-    } else {
-      script.addEventListener("load", renderAd);
-    }
-
-    return () => {
-      if (script) {
-        script.removeEventListener("load", renderAd);
-      }
-    };
+    loadScriptWithAntiAdblock("https://a.magsrv.com/ad-provider.js")
+      .then(() => {
+        renderAd();
+      })
+      .catch(() => {
+        renderAd();
+      });
   }, [zoneId]);
 
   useEffect(() => {
