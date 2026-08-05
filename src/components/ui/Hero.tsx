@@ -41,7 +41,7 @@ export default function Hero({ item }: HeroProps) {
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0f0f23]/90 via-[#0f0f23]/50 to-transparent hidden sm:block" />
 
       {/* Content — natural flow height */}
-      <Container className="relative z-20 pt-28 pb-6 sm:pt-36 sm:pb-12 w-full">
+      <Container className="relative z-20 pt-4 pb-6 sm:pt-6 sm:pb-12 w-full">
         <div className="max-w-xl">
           {/* Badges */}
           <div className="flex items-center gap-2 mb-3 flex-wrap">

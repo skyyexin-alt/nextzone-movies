@@ -66,7 +66,7 @@ export default async function DetailPage({
   const duration = runtime ? fmtRuntime(runtime) : seasons ? `${seasons} Season${seasons > 1 ? 's' : ''}` : null;
 
   return (
-    <Container className="py-8 min-h-screen pt-24">
+    <Container className="pb-8 min-h-screen pt-2">
       <HistoryTracker item={data} />
 
       <div className="mb-6">

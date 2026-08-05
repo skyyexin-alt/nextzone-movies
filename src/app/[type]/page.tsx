@@ -110,7 +110,7 @@ export default async function CatalogPage({
   const genres = genresData?.genres || [];
 
   return (
-    <Container className="py-24 min-h-screen">
+    <Container className="pb-24 pt-4 min-h-screen">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{title}</h1>

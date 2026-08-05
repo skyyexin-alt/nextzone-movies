@@ -36,7 +36,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
       : null;
 
     return (
-      <main className="min-h-screen bg-[#0f0f23] pt-24 pb-16">
+      <main className="min-h-screen bg-[#0f0f23] pt-4 pb-16">
         <Container>
           <div className="mb-6">
             <GlobalBackButton />
