@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Script from 'next/script';
 import { ListVideo } from 'lucide-react';
 import Container from '@/components/ui/Container';
 
@@ -62,9 +63,18 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-6 border-t border-white/5 gap-4 pb-6 md:pb-8">
-          <p className="text-xs text-zinc-600 leading-relaxed">
-            © {currentYear} XFlix. All rights reserved. This site does not store any files on its server.
-          </p>
+          <div className="flex flex-col gap-2">
+            <p className="text-xs text-zinc-600 leading-relaxed">
+              © {currentYear} XFlix. All rights reserved. This site does not store any files on its server.
+            </p>
+            {/* Whos.amung.us Visitor Counter Widget */}
+            <div className="flex items-center gap-2">
+              <Script id="_waubac" strategy="afterInteractive">
+                {`var _wau = _wau || []; _wau.push(["dynamic", "8uvlmhw0qn", "bac", "c4302bffffff", "small"]);`}
+              </Script>
+              <Script src="https://waust.at/d.js" strategy="afterInteractive" />
+            </div>
+          </div>
           <div className="flex items-center flex-wrap gap-x-5 gap-y-2">
             {[
               ['DMCA', '/dmca'],
