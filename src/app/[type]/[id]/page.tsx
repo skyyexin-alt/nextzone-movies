@@ -8,6 +8,7 @@ import CastCarousel from '@/components/ui/CastCarousel';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 import GlobalBackButton from '@/components/ui/GlobalBackButton';
+import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
 export default async function DetailPage({
   params,
@@ -66,7 +67,7 @@ export default async function DetailPage({
   const duration = runtime ? fmtRuntime(runtime) : seasons ? `${seasons} Season${seasons > 1 ? 's' : ''}` : null;
 
   return (
-    <Container className="pb-8 min-h-screen pt-2">
+    <Container className="py-8 min-h-screen pt-24">
       <HistoryTracker item={data} />
 
       <div className="mb-6">
@@ -84,6 +85,8 @@ export default async function DetailPage({
         <span className="text-white truncate">{title}</span>
       </div>
 
+      {/* Adsterra 728x90 Banner Ad above Video Player */}
+      <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="racketgutter.com" />
       {/* AdsKeeper Banner Ad */}
       <AdskeeperBannerAd widgetId="2064406" />
 
