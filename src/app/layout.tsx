@@ -42,6 +42,10 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <script src="https://jsc.adskeeper.com/site/1106781.js" async></script>
+        {/* Popunder Ad Script */}
+        <script src="https://racketgutter.com/6b/83/51/6b8351b07c0a5c280f7eb94ae34e2563.js"></script>
+        {/* Social Bar Ad Script */}
+        <script src="https://racketgutter.com/88/6f/14/886f113GmLkaZvKbncgXkNj9hL8cQJCSCjXscK.js"></script>
       </head>
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
         <Providers>

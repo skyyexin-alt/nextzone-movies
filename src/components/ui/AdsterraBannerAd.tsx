@@ -4,9 +4,13 @@ import { useEffect, useRef } from "react";
 
 interface AdsterraBannerAdProps {
   adKey?: string;
+  scriptHost?: string;
 }
 
-export default function AdsterraBannerAd({ adKey = "282e852f5808b9dd01d12c1ed30bf5d2" }: AdsterraBannerAdProps) {
+export default function AdsterraBannerAd({
+  adKey = "d092035ae89a38067d47dfdef5cf6b61",
+  scriptHost = "racketgutter.com",
+}: AdsterraBannerAdProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -56,13 +60,13 @@ export default function AdsterraBannerAd({ adKey = "282e852f5808b9dd01d12c1ed30b
                 'params': {}
               };
             </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/${adKey}/invoke.js"></script>
+            <script type="text/javascript" src="https://${scriptHost}/${adKey}/invoke.js"></script>
           </body>
         </html>
       `);
       doc.close();
     }
-  }, [adKey]);
+  }, [adKey, scriptHost]);
 
   useEffect(() => {
     const handleResize = () => {
