@@ -2,8 +2,6 @@ import { Suspense } from 'react';
 import Hero from '@/components/ui/Hero';
 import ContentRail from '@/components/ui/ContentRail';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
-import Container from '@/components/ui/Container';
-import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
 import { 
   getTrending, 
@@ -50,8 +48,7 @@ export default async function Home() {
       <Hero item={heroItem} />
       
       <Container className="mt-4">
-        {/* 728x90 Banner Ads & Native Widgets */}
-        <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="yearlybeak.com" />
+        {/* Native Widgets */}
         <AdskeeperBannerAd siteId="1106781" widgetId="2064406" />
         <ContinueWatchingSection />
       </Container>

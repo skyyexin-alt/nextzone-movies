@@ -8,7 +8,6 @@ import CastCarousel from '@/components/ui/CastCarousel';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 import GlobalBackButton from '@/components/ui/GlobalBackButton';
-import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
 export default async function DetailPage({
   params,
@@ -84,9 +83,6 @@ export default async function DetailPage({
         <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
         <span className="text-white truncate">{title}</span>
       </div>
-
-      {/* Adsterra 728x90 Banner Ad above Video Player */}
-      <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="yearlybeak.com" />
 
       {/* Player */}
       <IntegratedPlayer

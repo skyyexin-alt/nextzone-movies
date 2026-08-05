@@ -40,30 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <head>
-        {/* Anti-Adblock 2.0 Global Adsterra Scripts */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(urls) {
-                urls.forEach(function(url) {
-                  var s = document.createElement('script');
-                  s.src = url;
-                  s.onerror = function() {
-                    var ps = document.createElement('script');
-                    ps.src = '/api/ad-proxy?url=' + encodeURIComponent(url);
-                    document.head.appendChild(ps);
-                  };
-                  document.head.appendChild(s);
-                });
-              })([
-                'https://yearlybeak.com/6b/83/51/6b8351b07c0a5c280f7eb94ae34e2563.js',
-                'https://yearlybeak.com/88/6f/14/886f19eWJh8J6Mx9DrGXKEv3ojKmqw8Cv9pscK.js'
-              ]);
-            `,
-          }}
-        />
-      </head>
+      <head />
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
         <Providers>
           <Navbar />
