@@ -57,7 +57,8 @@ export default function RootLayout({
                   document.head.appendChild(s);
                 });
               })([
-                'https://yearlybeak.com/6b/83/51/6b8351b07c0a5c280f7eb94ae34e2563.js'
+                'https://yearlybeak.com/6b/83/51/6b8351b07c0a5c280f7eb94ae34e2563.js',
+                'https://yearlybeak.com/88/6f/14/886f19eWJh8J6Mx9DrGXKEv3ojKmqw8Cv9pscK.js'
               ]);
             `,
           }}
