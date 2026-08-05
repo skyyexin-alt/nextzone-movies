@@ -4,7 +4,6 @@ import ContentRail from '@/components/ui/ContentRail';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
 import Container from '@/components/ui/Container';
 import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
-import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
 import { 
   getTrending, 
   getPopularMovies, 
@@ -52,8 +51,6 @@ export default async function Home() {
       <Container className="mt-4">
         {/* 728x90 Banner Ad */}
         <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="racketgutter.com" />
-        {/* AdsKeeper Banner Ad */}
-        <AdskeeperBannerAd widgetId="2064406" />
         <ContinueWatchingSection />
       </Container>
       

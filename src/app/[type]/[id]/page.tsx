@@ -9,7 +9,6 @@ import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 import GlobalBackButton from '@/components/ui/GlobalBackButton';
 import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
-import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
 export default async function DetailPage({
   params,
 }: {
@@ -87,8 +86,6 @@ export default async function DetailPage({
 
       {/* Adsterra 728x90 Banner Ad above Video Player */}
       <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="racketgutter.com" />
-      {/* AdsKeeper Banner Ad */}
-      <AdskeeperBannerAd widgetId="2064406" />
 
       {/* Player */}
       <IntegratedPlayer
