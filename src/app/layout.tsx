@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Providers } from "./Providers";
+import InPagePushAd from "@/components/ui/InPagePushAd";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -48,6 +49,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
         <Providers>
+          <InPagePushAd zoneId="5995178" />
           <Navbar />
           <main className="min-h-screen">
             {children}
