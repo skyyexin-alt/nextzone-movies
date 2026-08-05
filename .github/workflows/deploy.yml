@@ -22,16 +22,21 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             export PATH=$PATH:/usr/local/bin:/usr/bin
-            for dir in /var/www/* /var/www/*/* /root/* /home/*/*; do
-              if [ -d "$dir/.git" ]; then
-                echo "Found git repo in $dir, updating..."
-                cd "$dir"
-                git fetch origin main || true
-                git reset --hard origin/main || true
-                npm install || true
-                npm run build || true
+            echo "Searching for nextzone-movies git repos..."
+            find /var/www /root /home /opt -name ".git" 2>/dev/null | while read -r gitdir; do
+              repo_dir=$(dirname "$gitdir")
+              echo "Checking repo in: $repo_dir"
+              cd "$repo_dir" || continue
+              if git remote get-url origin 2>/dev/null | grep -q "nextzone-movies"; then
+                echo "FOUND MATCHING REPO in $repo_dir! Updating..."
+                git fetch origin main
+                git reset --hard origin/main
+                npm install
+                npm run build
+                echo "Successfully built in $repo_dir"
               fi
             done
             pm2 restart all
+
 
 
