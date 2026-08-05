@@ -16,7 +16,7 @@ export default function AdskeeperNotification() {
 
   return (
     <div className="adskeeper-notification-wrapper">
-      <div data-type="_mgwidget" data-widget-id="2063785"></div>
+      <div data-type="_mgwidget" data-widget-id="2064406"></div>
       <script
         dangerouslySetInnerHTML={{
           __html: `(function(w,q){w[q]=w[q]||[];w[q].push(["_mgc.load"])})(window,"_mgq");`,
