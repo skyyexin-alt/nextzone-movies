@@ -3,7 +3,7 @@ import Hero from '@/components/ui/Hero';
 import ContentRail from '@/components/ui/ContentRail';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
 import Container from '@/components/ui/Container';
-import HomepageBannerAd from '@/components/ui/HomepageBannerAd';
+import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
 import { 
   getTrending, 
   getPopularMovies, 
@@ -49,8 +49,8 @@ export default async function Home() {
       <Hero item={heroItem} />
       
       <Container className="mt-4">
-        {/* Homepage Below Hero 728x90 Banner */}
-        <HomepageBannerAd zoneId="5995032" />
+        {/* Adskeeper Widget 2064406 */}
+        <AdskeeperBannerAd widgetId="2064406" />
         <ContinueWatchingSection />
       </Container>
       
