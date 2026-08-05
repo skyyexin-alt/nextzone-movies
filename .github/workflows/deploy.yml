@@ -28,15 +28,17 @@ jobs:
               echo "Checking repo in: $repo_dir"
               cd "$repo_dir" || continue
               if git remote get-url origin 2>/dev/null | grep -q "nextzone-movies"; then
-                echo "FOUND MATCHING REPO in $repo_dir! Updating..."
+                echo "FOUND MATCHING REPO in $repo_dir! Cleaning cache and updating..."
                 git fetch origin main
                 git reset --hard origin/main
                 npm install
+                rm -rf .next
                 npm run build
                 echo "Successfully built in $repo_dir"
               fi
             done
             pm2 restart all
+
 
 
 
