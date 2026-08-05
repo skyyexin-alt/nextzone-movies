@@ -24,7 +24,7 @@ export default function HomepageBannerAd({ zoneId = "5995032" }: HomepageBannerA
       ins.style.display = "inline-block";
 
       const pushScript = document.createElement("script");
-      pushScript.text = '(window.AdProvider = window.AdProvider || []).push({"serve": {}});';
+      pushScript.text = '(AdProvider = window.AdProvider || []).push({"serve": {}});';
 
       containerRef.current.appendChild(ins);
       containerRef.current.appendChild(pushScript);
