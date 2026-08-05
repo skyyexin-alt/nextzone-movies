@@ -7,6 +7,7 @@ interface HomepageBannerAdProps {
 }
 
 export default function HomepageBannerAd({ zoneId = "5995032" }: HomepageBannerAdProps) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isLoadedRef = useRef(false);
 
@@ -42,12 +43,47 @@ export default function HomepageBannerAd({ zoneId = "5995032" }: HomepageBannerA
     containerRef.current.appendChild(pushScript);
   }, [zoneId]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (!wrapperRef.current || !containerRef.current) return;
+      const availableWidth = wrapperRef.current.clientWidth;
+      const adWidth = 728;
+      const adHeight = 90;
+
+      if (availableWidth > 0 && availableWidth < adWidth) {
+        const scale = availableWidth / adWidth;
+        containerRef.current.style.transform = `scale(${scale})`;
+        containerRef.current.style.transformOrigin = "center center";
+        wrapperRef.current.style.height = `${adHeight * scale}px`;
+      } else {
+        containerRef.current.style.transform = "none";
+        wrapperRef.current.style.height = "90px";
+      }
+    };
+
+    handleResize();
+    const observer = new ResizeObserver(handleResize);
+    if (wrapperRef.current) {
+      observer.observe(wrapperRef.current);
+    }
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div className="w-full flex justify-center items-center mt-[20px] mb-[28px] min-h-[90px] overflow-hidden bg-transparent border-none p-0">
+    <div
+      ref={wrapperRef}
+      className="w-full flex justify-center items-center my-4 min-h-[90px] overflow-hidden bg-transparent border-none p-0 relative transition-[height] duration-200"
+    >
       <div
         ref={containerRef}
-        className="w-full max-w-full flex justify-center items-center overflow-hidden min-h-[90px] bg-transparent"
+        className="w-[728px] shrink-0 flex justify-center items-center overflow-hidden min-h-[90px] bg-transparent mx-auto"
       />
     </div>
   );
 }
+
