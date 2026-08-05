@@ -13,11 +13,13 @@ import AdskeeperNotification from "@/components/ui/AdskeeperNotification";
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://xflix.ink"),
   title: "XFlix - Watch Free Movies & TV Shows Online in HD",
   description: "XFlix is a free online streaming platform offering thousands of movies and TV shows in HD and 4K quality. Watch instantly without registration or ads.",
   openGraph: {
     title: "XFlix",
     description: "XFlix - Watch unlimited movies and TV shows online free in HD, 1080p, 4K quality.",
+    url: "https://xflix.ink",
     type: "website",
     locale: "en_US",
     siteName: "XFlix",
