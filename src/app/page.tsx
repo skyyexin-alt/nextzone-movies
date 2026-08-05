@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Hero from '@/components/ui/Hero';
 import ContentRail from '@/components/ui/ContentRail';
 import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
+import Container from '@/components/ui/Container';
 import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
 import { 
   getTrending, 
