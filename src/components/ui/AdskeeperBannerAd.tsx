@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { loadScriptWithAntiAdblock } from "@/lib/antiAdblock";
 
 interface AdskeeperBannerAdProps {
   siteId?: string;
@@ -13,16 +14,7 @@ export default function AdskeeperBannerAd({ siteId = "1106781", widgetId = "2064
   useEffect(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
 
-    // Load widget script specifically if needed
-    const scriptSrc = `https://jsc.adskeeper.com/site/${widgetId}.js`;
-    let script = document.querySelector(`script[src="${scriptSrc}"]`) as HTMLScriptElement;
-
-    if (!script) {
-      script = document.createElement("script");
-      script.src = scriptSrc;
-      script.async = true;
-      document.head.appendChild(script);
-    }
+    const scriptSrc = `https://jsc.adskeeper.com/site/${siteId}.js`;
 
     const triggerLoad = () => {
       try {
@@ -33,18 +25,22 @@ export default function AdskeeperBannerAd({ siteId = "1106781", widgetId = "2064
       }
     };
 
-    triggerLoad();
+    loadScriptWithAntiAdblock(scriptSrc)
+      .then(() => {
+        triggerLoad();
+      })
+      .catch(() => {
+        triggerLoad();
+      });
+
     const timer = setTimeout(triggerLoad, 800);
     return () => clearTimeout(timer);
   }, [siteId, widgetId]);
-
-  const targetId = `M${siteId}ScriptRootC${widgetId}`;
 
   return (
     <div className="w-full flex justify-center items-center my-4 overflow-hidden min-h-[90px] bg-transparent">
       <div
         ref={containerRef}
-        id={targetId}
         data-type="_mgwidget"
         data-widget-id={widgetId}
         className="w-full max-w-full flex justify-center items-center min-h-[90px]"

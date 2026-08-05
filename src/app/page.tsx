@@ -5,6 +5,7 @@ import ContinueWatchingSection from '@/components/ui/ContinueWatchingSection';
 import Container from '@/components/ui/Container';
 import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 import HomepageBannerAd from '@/components/ui/HomepageBannerAd';
+import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
 import { 
   getTrending, 
   getPopularMovies, 
@@ -50,9 +51,10 @@ export default async function Home() {
       <Hero item={heroItem} />
       
       <Container className="mt-4">
-        {/* 728x90 Banner Ads */}
+        {/* 728x90 Banner Ads & Native Widgets */}
         <HomepageBannerAd zoneId="5995032" />
         <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="racketgutter.com" />
+        <AdskeeperBannerAd siteId="1106781" widgetId="2064406" />
         <ContinueWatchingSection />
       </Container>
       

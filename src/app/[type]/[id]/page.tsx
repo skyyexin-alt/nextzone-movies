@@ -9,6 +9,7 @@ import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 import GlobalBackButton from '@/components/ui/GlobalBackButton';
 import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
+import AdskeeperBannerAd from '@/components/ui/AdskeeperBannerAd';
 export default async function DetailPage({
   params,
 }: {
@@ -97,6 +98,9 @@ export default async function DetailPage({
         seasons={data.seasons || []}
         originalLanguage={data.original_language}
       />
+
+      {/* AdsKeeper Native/Banner Widget */}
+      <AdskeeperBannerAd siteId="1106781" widgetId="2064406" />
 
       {/* ── Movie Details Section ── */}
       <div className="mt-8 space-y-6">
