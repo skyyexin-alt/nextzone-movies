@@ -19,12 +19,21 @@ export async function GET(request: NextRequest) {
       return new NextResponse("Forbidden target host", { status: 403 });
     }
 
+    const clientIp = request.headers.get("x-forwarded-for") || request.headers.get("cf-connecting-ip") || request.headers.get("x-real-ip") || "";
+
+    const headers: Record<string, string> = {
+      "User-Agent": request.headers.get("user-agent") || "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+      "Accept": "*/*",
+      "Accept-Language": request.headers.get("accept-language") || "en-US,en;q=0.9",
+    };
+
+    if (clientIp) {
+      headers["X-Forwarded-For"] = clientIp;
+      headers["X-Real-IP"] = clientIp.split(",")[0].trim();
+    }
+
     const res = await fetch(targetUrl, {
-      headers: {
-        "User-Agent": request.headers.get("user-agent") || "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-        "Accept": "*/*",
-        "Accept-Language": request.headers.get("accept-language") || "en-US,en;q=0.9",
-      },
+      headers,
       cache: "no-store",
     });
 
