@@ -83,8 +83,6 @@ export default async function DetailPage({
         <span className="text-white truncate">{title}</span>
       </div>
 
-
-
       {/* Player */}
       <IntegratedPlayer
         title={title}
@@ -95,8 +93,6 @@ export default async function DetailPage({
         seasons={data.seasons || []}
         originalLanguage={data.original_language}
       />
-
-
 
       {/* ── Movie Details Section ── */}
       <div className="mt-8 space-y-6">
