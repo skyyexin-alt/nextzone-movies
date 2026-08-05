@@ -8,6 +8,7 @@ import CastCarousel from '@/components/ui/CastCarousel';
 import IntegratedPlayer from '@/components/ui/IntegratedPlayer';
 import HistoryTracker from '@/components/ui/HistoryTracker';
 import GlobalBackButton from '@/components/ui/GlobalBackButton';
+import HomepageBannerAd from '@/components/ui/HomepageBannerAd';
 export default async function DetailPage({
   params,
 }: {
@@ -82,6 +83,9 @@ export default async function DetailPage({
         <ChevronRight className="w-3.5 h-3.5 text-zinc-600" />
         <span className="text-white truncate">{title}</span>
       </div>
+
+      {/* Banner Ad above Player */}
+      <HomepageBannerAd zoneId="5995032" />
 
       {/* Player */}
       <IntegratedPlayer
