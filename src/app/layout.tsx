@@ -4,8 +4,6 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Providers } from "./Providers";
-import InstallAppButton from "@/components/ui/InstallAppButton";
-import StickySocialSidebar from "@/components/ui/StickySocialSidebar";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -48,8 +46,6 @@ export default function RootLayout({
           <main className="min-h-screen">
             {children}
           </main>
-          <InstallAppButton />
-          <StickySocialSidebar />
           <Footer />
         </Providers>
       </body>
