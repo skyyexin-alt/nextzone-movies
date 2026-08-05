@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Providers } from "./Providers";
+import AdsterraBannerAd from "@/components/ui/AdsterraBannerAd";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -50,7 +51,9 @@ export default function RootLayout({
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
         <Providers>
           <Navbar />
-          <main className="min-h-screen">
+          <main className="min-h-screen pt-20">
+            {/* Top Banner Ad right after header */}
+            <AdsterraBannerAd adKey="d092035ae89a38067d47dfdef5cf6b61" scriptHost="racketgutter.com" />
             {children}
           </main>
           <Footer />
@@ -59,4 +62,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 
