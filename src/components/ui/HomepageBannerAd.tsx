@@ -9,15 +9,10 @@ interface HomepageBannerAdProps {
 export default function HomepageBannerAd({ zoneId = "5995032" }: HomepageBannerAdProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isLoadedRef = useRef(false);
 
   useEffect(() => {
     // Client-side execution check
     if (typeof window === "undefined" || !containerRef.current) return;
-
-    // Prevent duplicate insertion during rerenders or navigation
-    if (isLoadedRef.current) return;
-    isLoadedRef.current = true;
 
     containerRef.current.innerHTML = "";
 
@@ -37,7 +32,7 @@ export default function HomepageBannerAd({ zoneId = "5995032" }: HomepageBannerA
 
     // Create push script to serve ad
     const pushScript = document.createElement("script");
-    pushScript.text = '(AdProvider = window.AdProvider || []).push({"serve": {}});';
+    pushScript.text = '(window.AdProvider = window.AdProvider || []).push({"serve": {}});';
 
     containerRef.current.appendChild(ins);
     containerRef.current.appendChild(pushScript);
