@@ -14,6 +14,7 @@ When the user requests any changes to the NextZone website, follow this exact wo
 
 # Server & Hosting Preferences
 - The website is hosted on **Hetzner**.
+- The exact project directory path on Hetzner is **`/var/www/nextzone`**.
 - The user accesses the Hetzner server using **password authentication** (not SSH keys).
-- When providing server update instructions, provide simple terminal commands (`git pull`, `npm run build`, `pm2 restart all`) that the user can execute after logging into their Hetzner terminal with password.
+- When providing server update instructions, provide simple terminal commands (`cd /var/www/nextzone`, `git pull`, `npm run build`, `pm2 restart all`) that the user can execute after logging into their Hetzner terminal with password.
 
