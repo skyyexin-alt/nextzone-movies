@@ -3,13 +3,14 @@ import { getDetails } from '@/lib/tmdb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, Clock, Globe, Calendar, Users, Play, Sparkles } from 'lucide-react';
+import { Star, Clock, Globe, Calendar, Users, Play, Sparkles, BookOpen } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import CastCarousel from '@/components/ui/CastCarousel';
 import GlobalBackButton from '@/components/ui/GlobalBackButton';
 import MDLReviewSection from '@/components/ui/MDLReviewSection';
 import RecommendedReviewsList from '@/components/ui/RecommendedReviewsList';
 import DetailTrailerButton from '@/components/ui/DetailTrailerButton';
+import StorylineSection from '@/components/ui/StorylineSection';
 
 export async function generateMetadata({
   params,
@@ -97,12 +98,53 @@ export default async function DetailPage({
   const tagLine = data.tagline || null;
   const status = data.status || 'Released';
 
+  const sceneImages = (data.images?.backdrops || [])
+    .filter((img: any) => img.file_path)
+    .slice(0, 6)
+    .map((img: any) => `https://image.tmdb.org/t/p/w1280${img.file_path}`);
+
   const cast = data.credits?.cast || [];
   const crew = data.credits?.crew || [];
   const directors = crew.filter((c: any) => c.job === 'Director').map((d: any) => d.name);
 
   const trailer = data.videos?.results?.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube') || data.videos?.results?.[0];
-  const similar = data.similar?.results || [];
+  
+  // Extract and combine recommendations + similar items
+  const rawRecommendations = [
+    ...(data.recommendations?.results || []),
+    ...(data.similar?.results || [])
+  ];
+
+  // Deduplicate items by ID
+  const uniqueItemsMap = new Map();
+  rawRecommendations.forEach((item: any) => {
+    if (item && item.id && !uniqueItemsMap.has(item.id) && String(item.id) !== String(data.id)) {
+      uniqueItemsMap.set(item.id, item);
+    }
+  });
+  const allUnique = Array.from(uniqueItemsMap.values());
+
+  // Filter for recent, modern (2015+) & cool movies, sorted by newest release date & highest rating first
+  const recentCoolItems = allUnique
+    .filter((item: any) => {
+      const year = parseInt((item.release_date || item.first_air_date || '0').substring(0, 4), 10);
+      return year >= 2015 && (item.vote_average || 0) >= 5.0;
+    })
+    .sort((a: any, b: any) => {
+      const yearA = parseInt((a.release_date || a.first_air_date || '0').substring(0, 4), 10);
+      const yearB = parseInt((b.release_date || b.first_air_date || '0').substring(0, 4), 10);
+      if (yearB !== yearA) return yearB - yearA; // Newest first!
+      return (b.vote_average || 0) - (a.vote_average || 0); // Highest score first!
+    });
+
+  // Fallback: If less than 4 modern items, sort allUnique by newest year
+  const finalRecommended = recentCoolItems.length >= 4 
+    ? recentCoolItems 
+    : allUnique.sort((a: any, b: any) => {
+        const yearA = parseInt((a.release_date || a.first_air_date || '0').substring(0, 4), 10);
+        const yearB = parseInt((b.release_date || b.first_air_date || '0').substring(0, 4), 10);
+        return yearB - yearA;
+      });
 
   return (
     <Container className="pt-6 pb-24 md:py-12 relative z-10">
@@ -196,13 +238,18 @@ export default async function DetailPage({
             </div>
           )}
 
-          {/* Synopsis Plot */}
-          <div className="bg-[#14142f] border border-white/8 rounded-2xl p-4 sm:p-6 space-y-2.5 sm:space-y-3 shadow-xl">
-            <h3 className="text-base sm:text-lg font-black text-white">Storyline & Plot Summary</h3>
-            <p className="text-xs sm:text-base text-zinc-200 leading-relaxed font-normal">
-              {overview}
-            </p>
-          </div>
+          {/* Storyline & Detailed Plot Breakdown (Minimized by Default + 10x Extended Content + Scene Stills + Trailer Video) */}
+          <StorylineSection 
+            title={title} 
+            overview={overview} 
+            tagline={tagLine} 
+            genres={genres} 
+            releaseDate={releaseDate} 
+            status={status} 
+            backdropPath={backdropPath}
+            sceneImages={sceneImages}
+            videoKey={trailer?.key}
+          />
 
           {/* Key Details Card */}
           <div className="bg-[#14142f] border border-white/8 rounded-2xl p-4 sm:p-6 space-y-3 sm:space-y-4 shadow-xl">
@@ -249,7 +296,7 @@ export default async function DetailPage({
       </div>
 
       {/* Recommended Reviews Section */}
-      <RecommendedReviewsList items={similar.slice(0, 6)} currentTitle={title} />
+      <RecommendedReviewsList items={finalRecommended.slice(0, 6)} currentTitle={title} />
     </Container>
   );
 }

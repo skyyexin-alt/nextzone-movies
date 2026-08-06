@@ -100,16 +100,16 @@ export default function MDLReviewSection({ mediaId, mediaTitle }: MDLReviewSecti
     <div className={`bg-[#14142f] border border-white/8 rounded-3xl p-6 md:p-8 shadow-2xl transition-all duration-300 ${isExpanded ? 'space-y-6' : ''}`}>
       <div 
         onClick={() => setIsExpanded(!isExpanded)}
-        className={`flex items-center justify-between cursor-pointer select-none group ${isExpanded ? 'border-b border-white/8 pb-4' : ''}`}
+        className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer select-none group ${isExpanded ? 'border-b border-white/8 pb-4' : ''}`}
       >
         <div>
-          <h2 className="text-xl font-black text-white flex items-center gap-2 group-hover:text-violet-300 transition-colors">
-            <MessageSquare className="w-5 h-5 text-violet-400" />
-            Audience Reviews & Detailed Breakdown
+          <h2 className="text-base sm:text-lg md:text-xl font-black text-white flex items-center gap-2 group-hover:text-violet-300 transition-colors">
+            <MessageSquare className="w-5 h-5 text-violet-400 shrink-0" />
+            <span>Audience Reviews & Breakdown</span>
           </h2>
-          <p className="text-xs text-zinc-400 mt-0.5">Read and share community scores for {mediaTitle}</p>
+          <p className="text-[11px] sm:text-xs text-zinc-400 mt-0.5">Read and share community scores for {mediaTitle}</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 self-start sm:self-auto shrink-0">
           <span className="text-xs font-bold text-violet-300 bg-violet-600/20 border border-violet-500/30 px-3 py-1 rounded-full">
             {reviews.length} Reviews
           </span>

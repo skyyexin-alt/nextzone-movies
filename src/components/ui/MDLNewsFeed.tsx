@@ -149,6 +149,32 @@ export default function MDLNewsFeed({ popularMovies, nowPlaying, upcoming, topRa
   const [activeTab, setActiveTab] = useState<'featured' | 'now_playing' | 'upcoming' | 'top_rated'>('featured');
   const [modalItem, setModalItem] = useState<MediaItem | null>(null);
 
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = typeof window !== 'undefined' ? window.location.hash : '';
+      if (hash === '#top-rated-section' || hash === '#top-100-rated' || hash === '#top-rated') {
+        setActiveTab('top_rated');
+      } else if (hash === '#movies-review-section' || hash === '#movies-review') {
+        setActiveTab('featured');
+      }
+    };
+
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    window.addEventListener('popstate', handleHash);
+    
+    const handleCustomTab = (e: any) => {
+      if (e.detail) setActiveTab(e.detail);
+    };
+    window.addEventListener('set-newsfeed-tab', handleCustomTab);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHash);
+      window.removeEventListener('popstate', handleHash);
+      window.removeEventListener('set-newsfeed-tab', handleCustomTab);
+    };
+  }, []);
+
   const getActiveList = () => {
     switch (activeTab) {
       case 'now_playing':

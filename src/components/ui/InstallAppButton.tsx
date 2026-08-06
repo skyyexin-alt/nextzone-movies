@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { X, Share, Download } from "lucide-react";
+import { X, Share, Download, Film } from "lucide-react";
 
 export default function InstallAppButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -94,8 +94,8 @@ export default function InstallAppButton() {
 
           <div className="relative z-10 flex flex-col gap-3">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-[12px] overflow-hidden shrink-0 shadow-lg border border-white/10 relative">
-                <Image src="/icon-192.png" alt="XFlix App Icon" width={48} height={48} className="w-full h-full object-cover" />
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-600 via-indigo-600 to-fuchsia-600 flex items-center justify-center shrink-0 shadow-lg shadow-violet-600/40 border border-violet-400/40">
+                <Film className="w-6 h-6 text-white" />
               </div>
               <div className="pr-6">
                 <h3 className="font-extrabold text-white text-[15px] leading-tight">XFlix Movies Reviewers</h3>
@@ -125,8 +125,8 @@ export default function InstallAppButton() {
             >
               <X className="w-4 h-4" />
             </button>
-            <div className="w-20 h-20 mx-auto rounded-2xl overflow-hidden shadow-lg mb-6">
-              <Image src="/icon-192.png" alt="XFlix App Icon" width={80} height={80} className="w-full h-full object-cover" />
+            <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-violet-600 via-indigo-600 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-600/40 border border-violet-400/40 mb-6">
+              <Film className="w-10 h-10 text-white" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2">Install XFlix App</h3>
             <p className="text-zinc-300 text-sm mb-6 leading-relaxed">

@@ -5,13 +5,14 @@ import { useSearchParams } from 'next/navigation';
 import Container from '@/components/ui/Container';
 import useEmblaCarousel from 'embla-carousel-react';
 import { 
-  Star, Search, Film, Tv, Play, Plus, Check, ChevronRight, ChevronLeft, User, 
+  Star, Search, Film, Tv, Play, Plus, Check, ChevronRight, ChevronLeft, ChevronDown, User, 
   Filter, Award, Sparkles, X, Tag, Users, DollarSign, Flame, Ticket
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useWatchlist } from '@/context/WatchlistContext';
 import MDLAddToListModal from '@/components/ui/MDLAddToListModal';
+import QuickFilterTabs from '@/components/ui/QuickFilterTabs';
 import { MediaItem } from '@/lib/tmdb';
 
 const defaultSpotlight = [
@@ -284,6 +285,12 @@ function ExploreContent() {
   const [loading, setLoading] = useState(true);
 
   const [mediaType, setMediaType] = useState<'all' | 'movie' | 'tv'>(paramType || 'all');
+  const [currentSort, setCurrentSort] = useState<string>(paramSort || 'popular');
+  const [currentGenre, setCurrentGenre] = useState<string>(paramGenre || '');
+  const [currentYear, setCurrentYear] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(500);
+
   const [searchQuery, setSearchQuery] = useState('');
   
   const [modalItem, setModalItem] = useState<MediaItem | null>(null);
@@ -294,6 +301,11 @@ function ExploreContent() {
   const isDirectorsCategory = paramCat?.toLowerCase().includes('director') || 
                               paramCat?.toLowerCase().includes('screenwriter') || 
                               paramCat?.toLowerCase().includes('filmography');
+
+  useEffect(() => {
+    if (paramSort) setCurrentSort(paramSort);
+    if (paramGenre) setCurrentGenre(paramGenre);
+  }, [paramSort, paramGenre]);
 
   // Always load live verified TMDB profile photos for the right sidebar spotlight!
   useEffect(() => {
@@ -360,43 +372,54 @@ function ExploreContent() {
         }
 
         if (isDirectorsCategory) {
-          const res = await fetch(`https://api.themoviedb.org/3/person/popular?api_key=${apiKey}&page=1`);
+          const res = await fetch(`https://api.themoviedb.org/3/person/popular?api_key=${apiKey}&page=${page}`);
           if (res.ok) {
             const data = await res.json();
             setPeopleItems(data.results || []);
+            setTotalPages(Math.min(data.total_pages || 500, 500));
           }
           return;
         }
 
         // Fetch Movies / TV Shows
-        let endpoint = '/discover/movie';
         const targetType = paramType || (mediaType !== 'all' ? mediaType : 'movie');
         const isTv = targetType === 'tv';
+        let endpoint = isTv ? '/discover/tv' : '/discover/movie';
 
-        if (paramSort === 'top_rated') {
+        if (currentSort === 'top_rated') {
           endpoint = isTv ? '/tv/top_rated' : '/movie/top_rated';
-        } else if (paramSort === 'popular') {
+        } else if (currentSort === 'popular') {
           endpoint = isTv ? '/tv/popular' : '/movie/popular';
-        } else if (paramSort === 'upcoming') {
+        } else if (currentSort === 'upcoming') {
           endpoint = isTv ? '/tv/on_the_air' : '/movie/upcoming';
-        } else {
-          endpoint = isTv ? '/discover/tv' : '/discover/movie';
         }
 
         const url = new URL(`https://api.themoviedb.org/3${endpoint}`);
         url.searchParams.append('api_key', apiKey);
-        if (!paramSort || paramSort === 'newest') {
-          url.searchParams.append('sort_by', paramSort === 'newest' ? (isTv ? 'first_air_date.desc' : 'primary_release_date.desc') : 'vote_average.desc');
-          url.searchParams.append('vote_count.gte', '30');
+        url.searchParams.append('page', page.toString());
+
+        if (currentSort === 'newest') {
+          url.searchParams.append('sort_by', isTv ? 'first_air_date.desc' : 'primary_release_date.desc');
+          url.searchParams.append('vote_count.gte', '10');
         }
-        if (paramGenre) {
-          url.searchParams.append('with_genres', paramGenre);
+
+        if (currentGenre) {
+          url.searchParams.append('with_genres', currentGenre);
+        }
+
+        if (currentYear) {
+          if (isTv) {
+            url.searchParams.append('first_air_date_year', currentYear);
+          } else {
+            url.searchParams.append('primary_release_year', currentYear);
+          }
         }
 
         const res = await fetch(url.toString());
         if (res.ok) {
           const data = await res.json();
           setItems(data.results || []);
+          setTotalPages(Math.min(data.total_pages || 500, 500));
         }
       } catch (err) {
         console.error(err);
@@ -405,12 +428,18 @@ function ExploreContent() {
       }
     }
     loadExploreData();
-  }, [paramType, paramSort, paramGenre, paramCat, mediaType, isTopActorsCategory, isDirectorsCategory]);
+  }, [paramType, paramCat, mediaType, isTopActorsCategory, isDirectorsCategory, currentSort, currentGenre, currentYear, page]);
 
   const filteredTitles = items.filter((it) => {
-    if (!searchQuery.trim()) return true;
-    const title = (it.title || it.name || '').toLowerCase();
-    return title.includes(searchQuery.toLowerCase());
+    if (searchQuery.trim()) {
+      const title = (it.title || it.name || '').toLowerCase();
+      if (!title.includes(searchQuery.toLowerCase())) return false;
+    }
+    if (currentYear) {
+      const releaseDate = it.release_date || it.first_air_date || '';
+      if (releaseDate && !releaseDate.startsWith(currentYear)) return false;
+    }
+    return true;
   });
 
   const filteredPeople = peopleItems.filter((p) => {
@@ -447,7 +476,10 @@ function ExploreContent() {
   };
 
   return (
-    <Container className="py-24 md:py-32 min-h-screen">
+    <Container className="pt-24 pb-32 md:pt-28 md:pb-36 min-h-screen">
+      {/* ── Top 4-Tab Quick Navigation Bar (Persistent with Active Indicator!) ── */}
+      <QuickFilterTabs />
+
       {/* ── Page Header Banner ── */}
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/8">
         <div>
@@ -473,6 +505,130 @@ function ExploreContent() {
         
         {/* ── Left Main Column (8 cols) ── */}
         <div className="lg:col-span-8 space-y-6">
+          
+          {/* ── Highlighted Filter & Navigation Bar (Matching Reference Screenshot!) ── */}
+          <div className="bg-[#12122b] border border-white/10 rounded-2xl p-4 shadow-2xl space-y-3">
+            {/* Title & Page Info Row */}
+            <div className="flex items-center justify-between px-1">
+              <div>
+                <h2 className="text-xl md:text-2xl font-black text-white tracking-wide flex items-center gap-2">
+                  <Film className="w-5 h-5 text-violet-400" />
+                  {paramType === 'tv' ? 'TV Shows & Dramas' : 'Movies'}
+                </h2>
+                <p className="text-xs font-semibold text-zinc-400 mt-0.5">
+                  Page {page} of {totalPages}
+                </p>
+              </div>
+              
+              {/* Pagination Controls */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page <= 1}
+                  className="p-1.5 rounded-xl bg-white/5 hover:bg-violet-600 disabled:opacity-30 disabled:hover:bg-white/5 border border-white/10 text-zinc-300 hover:text-white transition-all text-xs font-bold"
+                  title="Previous Page"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-black text-violet-300 bg-violet-600/20 border border-violet-500/30 px-3 py-1 rounded-lg">
+                  {page} / {totalPages}
+                </span>
+                <button
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page >= totalPages}
+                  className="p-1.5 rounded-xl bg-white/5 hover:bg-violet-600 disabled:opacity-30 disabled:hover:bg-white/5 border border-white/10 text-zinc-300 hover:text-white transition-all text-xs font-bold"
+                  title="Next Page"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Filter Toolbar: Sort Pills on Left, Genre/Year Selectors on Right */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/6">
+              {/* Left Side: Sort Pills */}
+              <div className="flex items-center gap-1.5 bg-[#0a0a1a] p-1 rounded-xl border border-white/8">
+                <button
+                  onClick={() => { setCurrentSort('popular'); setPage(1); }}
+                  className={`px-4 py-2 rounded-lg text-xs font-extrabold transition-all ${
+                    currentSort === 'popular'
+                      ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/40'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  Popular
+                </button>
+                <button
+                  onClick={() => { setCurrentSort('top_rated'); setPage(1); }}
+                  className={`px-4 py-2 rounded-lg text-xs font-extrabold transition-all ${
+                    currentSort === 'top_rated'
+                      ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/40'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  Top Rated
+                </button>
+                <button
+                  onClick={() => { setCurrentSort('newest'); setPage(1); }}
+                  className={`px-4 py-2 rounded-lg text-xs font-extrabold transition-all ${
+                    currentSort === 'newest'
+                      ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/40'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  Newest
+                </button>
+              </div>
+
+              {/* Right Side: Dropdown Selectors (All Genres & All Years) */}
+              <div className="flex items-center gap-2.5 flex-wrap">
+                {/* All Genres Dropdown */}
+                <div className="relative">
+                  <select
+                    value={currentGenre}
+                    onChange={(e) => { setCurrentGenre(e.target.value); setPage(1); }}
+                    className="appearance-none bg-[#0a0a1a] border border-white/10 hover:border-violet-500/50 text-white font-extrabold text-xs pl-3.5 pr-8 py-2 rounded-xl focus:outline-none focus:border-violet-500 transition-all cursor-pointer shadow-inner"
+                  >
+                    <option value="">All Genres</option>
+                    <option value="28">Action</option>
+                    <option value="12">Adventure</option>
+                    <option value="16">Animation</option>
+                    <option value="35">Comedy</option>
+                    <option value="80">Crime</option>
+                    <option value="99">Documentary</option>
+                    <option value="18">Drama</option>
+                    <option value="10751">Family</option>
+                    <option value="14">Fantasy</option>
+                    <option value="36">History</option>
+                    <option value="27">Horror</option>
+                    <option value="10402">Music</option>
+                    <option value="9648">Mystery</option>
+                    <option value="10749">Romance</option>
+                    <option value="878">Sci-Fi</option>
+                    <option value="53">Thriller</option>
+                    <option value="10752">War</option>
+                    <option value="37">Western</option>
+                  </select>
+                  <ChevronDown className="w-3.5 h-3.5 text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
+
+                {/* All Years Dropdown */}
+                <div className="relative">
+                  <select
+                    value={currentYear}
+                    onChange={(e) => { setCurrentYear(e.target.value); setPage(1); }}
+                    className="appearance-none bg-[#0a0a1a] border border-white/10 hover:border-violet-500/50 text-white font-extrabold text-xs pl-3.5 pr-8 py-2 rounded-xl focus:outline-none focus:border-violet-500 transition-all cursor-pointer shadow-inner"
+                  >
+                    <option value="">All Years</option>
+                    {[2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015].map((y) => (
+                      <option key={y} value={y}>{y}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="w-3.5 h-3.5 text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
+              </div>
+            </div>
+          </div>
           {loading ? (
             <div className="flex items-center justify-center py-24">
               <div className="w-10 h-10 border-4 border-violet-500 border-t-transparent rounded-full animate-spin"></div>
@@ -498,8 +654,8 @@ function ExploreContent() {
                     key={person.id || idx}
                     className="relative bg-[#14142f] border border-white/8 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row gap-6 hover:border-violet-500/40 transition-all shadow-xl group"
                   >
-                    {/* Rank Badge */}
-                    <span className="absolute top-4 right-5 text-xs font-black text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 rounded-lg">
+                    {/* Actor Rank Badge - Matching purple glassmorphism style */}
+                    <span className="absolute top-4 right-5 bg-violet-600/30 border border-violet-500/40 text-violet-300 font-extrabold text-xs px-3 py-1 rounded-xl z-20 flex items-center gap-1">
                       Rank #{idx + 1}
                     </span>
 
@@ -601,11 +757,6 @@ function ExploreContent() {
                     key={item.id}
                     className="relative bg-[#14142f] border border-white/8 rounded-xl sm:rounded-2xl p-3.5 sm:p-5 flex flex-row items-start gap-3.5 sm:gap-6 hover:border-violet-500/40 transition-all shadow-xl group overflow-hidden"
                   >
-                    {/* Rank Badge */}
-                    <span className="hidden sm:block absolute top-4 right-5 text-xs font-black text-violet-300 bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-lg z-10">
-                      #{idx + 1}
-                    </span>
-
                     {/* HD Poster Image (Framed poster on mobile & desktop!) */}
                     <Link 
                       href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`} 
@@ -625,35 +776,39 @@ function ExploreContent() {
                         <div className="flex items-start justify-between gap-2 mb-1">
                           <Link 
                             href={`/${isMovie ? 'movie' : 'tv'}/${item.id}`}
-                            className="text-sm sm:text-xl font-extrabold sm:font-black text-white hover:text-violet-300 transition-colors leading-tight sm:leading-snug line-clamp-2"
+                            className="text-sm sm:text-xl font-extrabold sm:font-black text-white hover:text-violet-300 transition-colors leading-tight sm:leading-snug flex items-center gap-2 flex-wrap min-w-0"
                           >
-                            {title}
+                            <span className="bg-violet-600/30 border border-violet-500/40 text-violet-300 font-extrabold text-xs sm:text-sm px-2.5 py-0.5 rounded-lg shrink-0 inline-flex items-center">
+                              #{idx + 1}
+                            </span>
+                            <span className="line-clamp-2">{title}</span>
                           </Link>
                           
+                          {/* Add to Watchlist (+) Button */}
                           <button
-                            onClick={() =>
-                              setModalItem({
-                                id: item.id,
-                                title: item.title,
-                                name: item.name,
-                                overview: item.overview,
-                                poster_path: item.poster_path,
-                                backdrop_path: item.backdrop_path,
-                                media_type: isMovie ? 'movie' : 'tv',
-                                release_date: item.release_date || item.first_air_date,
-                                vote_average: item.vote_average,
-                                genre_ids: item.genre_ids || [],
-                              })
-                            }
-                            className={`p-1 sm:p-1.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-center shrink-0 ${
-                              entry
-                                ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
-                                : 'bg-violet-600/30 hover:bg-violet-600 text-violet-300 hover:text-white border-violet-500/40'
-                            }`}
-                            title={entry ? `Status: ${entry.status}` : 'Add to My List'}
-                          >
-                            {entry ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
-                          </button>
+                              onClick={() =>
+                                setModalItem({
+                                  id: item.id,
+                                  title: item.title,
+                                  name: item.name,
+                                  overview: item.overview,
+                                  poster_path: item.poster_path,
+                                  backdrop_path: item.backdrop_path,
+                                  media_type: isMovie ? 'movie' : 'tv',
+                                  release_date: item.release_date || item.first_air_date,
+                                  vote_average: item.vote_average,
+                                  genre_ids: item.genre_ids || [],
+                                })
+                              }
+                              className={`p-1.5 sm:p-2 rounded-xl border text-xs font-bold transition-all flex items-center justify-center shrink-0 ${
+                                entry
+                                  ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                                  : 'bg-violet-600/30 hover:bg-violet-600 text-violet-300 hover:text-white border-violet-500/40'
+                              }`}
+                              title={entry ? `Status: ${entry.status}` : 'Add to My List'}
+                            >
+                              {entry ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
+                            </button>
                         </div>
 
                         <p className="text-[11px] sm:text-sm font-bold text-violet-300 mb-1.5">

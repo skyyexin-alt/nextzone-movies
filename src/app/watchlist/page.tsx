@@ -8,6 +8,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import MDLAddToListModal from '@/components/ui/MDLAddToListModal';
 
+import QuickFilterTabs from '@/components/ui/QuickFilterTabs';
+
 export default function WatchlistPage() {
   const { watchlist, getStats, isLoaded } = useWatchlist();
   const [mounted, setMounted] = useState(false);
@@ -41,7 +43,10 @@ export default function WatchlistPage() {
   };
 
   return (
-    <Container className="py-24 md:py-32 min-h-screen">
+    <Container className="pt-24 pb-32 md:pt-28 md:pb-36 min-h-screen">
+      {/* ── Top 4-Tab Quick Navigation Bar (Persistent with Active Indicator!) ── */}
+      <QuickFilterTabs />
+
       {/* MDL User Profile Header Banner */}
       <div className="bg-[#14142f] border border-white/8 rounded-3xl p-6 md:p-8 mb-8 shadow-2xl backdrop-blur-xl">
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 mb-8">

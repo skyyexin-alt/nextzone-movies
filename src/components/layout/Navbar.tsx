@@ -6,10 +6,12 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Container from '@/components/ui/Container';
 import { 
-  Film, Search, Tv, Heart, Menu, X, ChevronDown, ChevronRight, User, Sparkles, Star, Smartphone
+  Film, Search, Tv, Heart, Menu, X, ChevronDown, ChevronRight, User, Sparkles, Star, Smartphone,
+  Flame, Ticket, Award, Calendar, UserCheck, Clapperboard, FileText, Users
 } from 'lucide-react';
 import MobileBottomNav from '@/components/layout/MobileBottomNav';
 import ExploreCategoriesModal from '@/components/layout/ExploreCategoriesModal';
+import CenteredSearchModal from '@/components/layout/CenteredSearchModal';
 import { useWatchlist } from '@/context/WatchlistContext';
 
 const defaultSpotlight = [
@@ -26,7 +28,7 @@ export default function Navbar() {
   const [exploreModalOpen, setExploreModalOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [spotlightActors, setSpotlightActors] = useState(defaultSpotlight);
+  const [spotlightActors, setSpotlightActors] = useState<any[]>(defaultSpotlight);
 
   useEffect(() => {
     async function loadSpotlightImages() {
@@ -129,12 +131,30 @@ export default function Navbar() {
                       <Film className="w-4 h-4 text-violet-400" /> Movies
                     </h4>
                     <div className="space-y-2 text-xs md:text-sm font-bold text-zinc-300">
-                      <Link href="/explore?type=movie&sort=popular&cat=Most+Popular+Movies" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all text-white font-extrabold">Most Popular Movies</Link>
-                      <Link href="/explore?type=movie&sort=top_rated&cat=Top+Rated+Movies" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Top Movies</Link>
-                      <Link href="/explore?type=movie&sort=newest&cat=Newest+Blockbusters" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Newest Blockbusters</Link>
-                      <Link href="/explore?type=movie&sort=upcoming&cat=Upcoming+Movies" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Upcoming Movies</Link>
-                      <Link href="/explore?type=movie&sort=top_rated&cat=Movie+Reviews" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Movie Reviews</Link>
-                      <Link href="/explore?type=movie&sort=popular&cat=Recommended+Movies" onClick={closeExplore} className="block text-violet-300 font-extrabold hover:text-white hover:translate-x-1 transition-all pt-2 border-t border-white/8">Recommendations</Link>
+                      <Link href="/explore?type=movie&sort=popular&cat=Most+Popular+Movies" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all text-white font-extrabold">
+                        <Flame className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        <span>Most Popular Movies</span>
+                      </Link>
+                      <Link href="/explore?type=movie&sort=top_rated&cat=Top+Rated+Movies" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Star className="w-3.5 h-3.5 text-amber-400 fill-current shrink-0" />
+                        <span>Top Movies</span>
+                      </Link>
+                      <Link href="/explore?type=movie&sort=newest&cat=Newest+Blockbusters" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Sparkles className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                        <span>Newest Blockbusters</span>
+                      </Link>
+                      <Link href="/explore?type=movie&sort=upcoming&cat=Upcoming+Movies" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Ticket className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>Upcoming Movies</span>
+                      </Link>
+                      <Link href="/explore?type=movie&sort=top_rated&cat=Movie+Reviews" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Film className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                        <span>Movie Reviews</span>
+                      </Link>
+                      <Link href="/explore?type=movie&sort=popular&cat=Recommended+Movies" onClick={closeExplore} className="flex items-center gap-2 text-violet-300 font-extrabold hover:text-white hover:translate-x-1 transition-all pt-2 border-t border-white/8">
+                        <Heart className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                        <span>Recommendations</span>
+                      </Link>
                     </div>
                   </div>
 
@@ -144,13 +164,34 @@ export default function Navbar() {
                       <Tv className="w-4 h-4 text-violet-400" /> TV Shows
                     </h4>
                     <div className="space-y-2 text-xs md:text-sm font-bold text-zinc-300">
-                      <Link href="/explore?type=tv&sort=popular&cat=Most+Popular+TV+Shows" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all text-white font-extrabold">Most Popular Shows</Link>
-                      <Link href="/explore?type=tv&sort=top_rated&cat=Top+TV+Shows+%26+Dramas" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Top Shows</Link>
-                      <Link href="/explore?type=tv&genre=10764&cat=Variety+Shows" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Variety Shows</Link>
-                      <Link href="/explore?type=tv&sort=newest&cat=Newest+TV+Releases" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Newest Releases</Link>
-                      <Link href="/explore?type=tv&sort=upcoming&cat=Upcoming+Dramas" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Upcoming Dramas</Link>
-                      <Link href="/explore?type=tv&sort=top_rated&cat=TV+Reviews+%26+Ratings" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Reviews & Ratings</Link>
-                      <Link href="/explore?type=tv&sort=popular&cat=Recommended+For+You" onClick={closeExplore} className="block text-violet-300 font-extrabold hover:text-white hover:translate-x-1 transition-all pt-2 border-t border-white/8">Recommended For You</Link>
+                      <Link href="/explore?type=tv&sort=popular&cat=Most+Popular+TV+Shows" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all text-white font-extrabold">
+                        <Flame className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        <span>Most Popular Shows</span>
+                      </Link>
+                      <Link href="/explore?type=tv&sort=top_rated&cat=Top+TV+Shows+%26+Dramas" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Award className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        <span>Top Shows</span>
+                      </Link>
+                      <Link href="/explore?type=tv&genre=10764&cat=Variety+Shows" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Tv className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                        <span>Variety Shows</span>
+                      </Link>
+                      <Link href="/explore?type=tv&sort=newest&cat=Newest+TV+Releases" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Sparkles className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                        <span>Newest Releases</span>
+                      </Link>
+                      <Link href="/explore?type=tv&sort=upcoming&cat=Upcoming+Dramas" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Calendar className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>Upcoming Dramas</span>
+                      </Link>
+                      <Link href="/explore?type=tv&sort=top_rated&cat=TV+Reviews+%26+Ratings" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Star className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        <span>Reviews & Ratings</span>
+                      </Link>
+                      <Link href="/explore?type=tv&sort=popular&cat=Recommended+For+You" onClick={closeExplore} className="flex items-center gap-2 text-violet-300 font-extrabold hover:text-white hover:translate-x-1 transition-all pt-2 border-t border-white/8">
+                        <Heart className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                        <span>Recommended For You</span>
+                      </Link>
                     </div>
                   </div>
 
@@ -160,10 +201,22 @@ export default function Navbar() {
                       <User className="w-4 h-4 text-violet-400" /> People
                     </h4>
                     <div className="space-y-2 text-xs md:text-sm font-bold text-zinc-300">
-                      <Link href="/explore?cat=Top+Actors" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Top Actors</Link>
-                      <Link href="/explore?cat=Popular+Directors" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Popular Directors</Link>
-                      <Link href="/explore?cat=Screenwriters" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Screenwriters</Link>
-                      <Link href="/explore?cat=Actor+Filmographies" onClick={closeExplore} className="block hover:text-white hover:translate-x-1 transition-all">Actor Filmographies</Link>
+                      <Link href="/explore?cat=Top+Actors" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <UserCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        <span>Top Actors</span>
+                      </Link>
+                      <Link href="/explore?cat=Popular+Directors" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Clapperboard className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                        <span>Popular Directors</span>
+                      </Link>
+                      <Link href="/explore?cat=Screenwriters" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <FileText className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                        <span>Screenwriters</span>
+                      </Link>
+                      <Link href="/explore?cat=Actor+Filmographies" onClick={closeExplore} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                        <Users className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>Actor Filmographies</span>
+                      </Link>
                     </div>
                   </div>
 
@@ -428,38 +481,11 @@ export default function Navbar() {
         spotlightActors={spotlightActors}
       />
 
-      {/* ── Search Overlay Modal ── */}
-      {searchOpen && (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-24 p-4 bg-black/80 backdrop-blur-md">
-          <div className="relative w-full max-w-2xl bg-[#14142f] border border-white/10 rounded-2xl p-4 shadow-2xl space-y-4">
-            <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
-              <Search className="w-5 h-5 text-violet-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search movies, TV shows, directors, actors..."
-                className="w-full bg-transparent text-white placeholder-zinc-500 focus:outline-none text-sm font-semibold"
-                autoFocus
-              />
-              <button onClick={() => setSearchOpen(false)} className="text-zinc-400 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            {searchQuery.trim() && (
-              <div className="pt-2 text-center">
-                <Link
-                  href={`/explore?q=${encodeURIComponent(searchQuery)}`}
-                  onClick={() => setSearchOpen(false)}
-                  className="inline-block px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-extrabold text-xs transition-all"
-                >
-                  Search for &ldquo;{searchQuery}&rdquo; in Explore Catalog &rarr;
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {/* ── Centered Instant Live Search Modal (Middle of Screen!) ── */}
+      <CenteredSearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
     </>
   );
 }

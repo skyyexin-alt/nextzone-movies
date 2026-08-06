@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { X, Film, Tv, User, Sparkles } from 'lucide-react';
+import { X, Film, Tv, User, Sparkles, Flame, Star, Ticket, Heart, Award, Calendar, UserCheck, Clapperboard, FileText, Users } from 'lucide-react';
 
 interface ExploreCategoriesModalProps {
   isOpen: boolean;
@@ -48,13 +48,31 @@ export default function ExploreCategoriesModal({
             <h4 className="text-sm font-black text-violet-300 uppercase tracking-wider border-b border-white/10 pb-2.5 flex items-center gap-2">
               <Film className="w-4 h-4 text-violet-400" /> MOVIES
             </h4>
-            <div className="space-y-2 text-xs sm:text-sm font-bold text-zinc-300">
-              <Link href="/explore?type=movie&sort=popular&cat=Most+Popular+Movies" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all text-white font-extrabold">Most Popular Movies</Link>
-              <Link href="/explore?type=movie&sort=top_rated&cat=Top+Rated+Movies" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Top Movies</Link>
-              <Link href="/explore?type=movie&sort=newest&cat=Newest+Blockbusters" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Newest Blockbusters</Link>
-              <Link href="/explore?type=movie&sort=upcoming&cat=Upcoming+Movies" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Upcoming Movies</Link>
-              <Link href="/explore?type=movie&sort=top_rated&cat=Movie+Reviews" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Movie Reviews</Link>
-              <Link href="/explore?type=movie&sort=popular&cat=Recommended+Movies" onClick={onClose} className="block text-violet-300 font-extrabold hover:text-white hover:translate-x-1 transition-all pt-2 border-t border-white/8">Recommendations</Link>
+            <div className="space-y-2.5 text-xs sm:text-sm font-bold text-zinc-300">
+              <Link href="/explore?type=movie&sort=popular&cat=Most+Popular+Movies" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all text-white font-extrabold">
+                <Flame className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span>Most Popular Movies</span>
+              </Link>
+              <Link href="/explore?type=movie&sort=top_rated&cat=Top+Rated+Movies" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Star className="w-3.5 h-3.5 text-amber-400 fill-current shrink-0" />
+                <span>Top Movies</span>
+              </Link>
+              <Link href="/explore?type=movie&sort=newest&cat=Newest+Blockbusters" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Sparkles className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                <span>Newest Blockbusters</span>
+              </Link>
+              <Link href="/explore?type=movie&sort=upcoming&cat=Upcoming+Movies" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Ticket className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>Upcoming Movies</span>
+              </Link>
+              <Link href="/explore?type=movie&sort=top_rated&cat=Movie+Reviews" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Film className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                <span>Movie Reviews</span>
+              </Link>
+              <Link href="/explore?type=movie&sort=popular&cat=Recommended+Movies" onClick={onClose} className="flex items-center gap-2 text-violet-300 font-extrabold hover:text-white hover:translate-x-1 transition-all pt-2 border-t border-white/8">
+                <Heart className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                <span>Recommendations</span>
+              </Link>
             </div>
           </div>
 
@@ -63,14 +81,35 @@ export default function ExploreCategoriesModal({
             <h4 className="text-sm font-black text-violet-300 uppercase tracking-wider border-b border-white/10 pb-2.5 flex items-center gap-2">
               <Tv className="w-4 h-4 text-violet-400" /> TV SHOWS
             </h4>
-            <div className="space-y-2 text-xs sm:text-sm font-bold text-zinc-300">
-              <Link href="/explore?type=tv&sort=popular&cat=Most+Popular+TV+Shows" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all text-white font-extrabold">Most Popular Shows</Link>
-              <Link href="/explore?type=tv&sort=top_rated&cat=Top+TV+Shows+%26+Dramas" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Top Shows</Link>
-              <Link href="/explore?type=tv&genre=10764&cat=Variety+Shows" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Variety Shows</Link>
-              <Link href="/explore?type=tv&sort=newest&cat=Newest+TV+Releases" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Newest Releases</Link>
-              <Link href="/explore?type=tv&sort=upcoming&cat=Upcoming+Dramas" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Upcoming Dramas</Link>
-              <Link href="/explore?type=tv&sort=top_rated&cat=TV+Reviews+%26+Ratings" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Reviews & Ratings</Link>
-              <Link href="/explore?type=tv&sort=popular&cat=Recommended+For+You" onClick={onClose} className="block text-violet-300 font-extrabold hover:text-white hover:translate-x-1 transition-all pt-2 border-t border-white/8">Recommended For You</Link>
+            <div className="space-y-2.5 text-xs sm:text-sm font-bold text-zinc-300">
+              <Link href="/explore?type=tv&sort=popular&cat=Most+Popular+TV+Shows" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all text-white font-extrabold">
+                <Flame className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span>Most Popular Shows</span>
+              </Link>
+              <Link href="/explore?type=tv&sort=top_rated&cat=Top+TV+Shows+%26+Dramas" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Award className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span>Top Shows</span>
+              </Link>
+              <Link href="/explore?type=tv&genre=10764&cat=Variety+Shows" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Tv className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                <span>Variety Shows</span>
+              </Link>
+              <Link href="/explore?type=tv&sort=newest&cat=Newest+TV+Releases" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Sparkles className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                <span>Newest Releases</span>
+              </Link>
+              <Link href="/explore?type=tv&sort=upcoming&cat=Upcoming+Dramas" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Calendar className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>Upcoming Dramas</span>
+              </Link>
+              <Link href="/explore?type=tv&sort=top_rated&cat=TV+Reviews+%26+Ratings" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Star className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span>Reviews & Ratings</span>
+              </Link>
+              <Link href="/explore?type=tv&sort=popular&cat=Recommended+For+You" onClick={onClose} className="flex items-center gap-2 text-violet-300 font-extrabold hover:text-white hover:translate-x-1 transition-all pt-2 border-t border-white/8">
+                <Heart className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                <span>Recommended For You</span>
+              </Link>
             </div>
           </div>
 
@@ -79,11 +118,23 @@ export default function ExploreCategoriesModal({
             <h4 className="text-sm font-black text-violet-300 uppercase tracking-wider border-b border-white/10 pb-2.5 flex items-center gap-2">
               <User className="w-4 h-4 text-violet-400" /> PEOPLE
             </h4>
-            <div className="space-y-2 text-xs sm:text-sm font-bold text-zinc-300">
-              <Link href="/explore?cat=Top+Actors" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Top Actors</Link>
-              <Link href="/explore?cat=Popular+Directors" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Popular Directors</Link>
-              <Link href="/explore?cat=Screenwriters" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Screenwriters</Link>
-              <Link href="/explore?cat=Actor+Filmographies" onClick={onClose} className="block hover:text-white hover:translate-x-1 transition-all">Actor Filmographies</Link>
+            <div className="space-y-2.5 text-xs sm:text-sm font-bold text-zinc-300">
+              <Link href="/explore?cat=Top+Actors" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <UserCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span>Top Actors</span>
+              </Link>
+              <Link href="/explore?cat=Popular+Directors" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Clapperboard className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                <span>Popular Directors</span>
+              </Link>
+              <Link href="/explore?cat=Screenwriters" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <FileText className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                <span>Screenwriters</span>
+              </Link>
+              <Link href="/explore?cat=Actor+Filmographies" onClick={onClose} className="flex items-center gap-2 hover:text-white hover:translate-x-1 transition-all">
+                <Users className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>Actor Filmographies</span>
+              </Link>
             </div>
           </div>
 

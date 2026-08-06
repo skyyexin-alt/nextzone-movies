@@ -79,7 +79,7 @@ export async function getAiringToday() {
 }
 
 export async function getDetails(type: 'movie' | 'tv', id: string) {
-  return fetchAPI(`/${type}/${id}`, { append_to_response: 'credits,videos,similar' });
+  return fetchAPI(`/${type}/${id}`, { append_to_response: 'credits,videos,similar,recommendations,images' });
 }
 
 export async function searchMedia(query: string) {
