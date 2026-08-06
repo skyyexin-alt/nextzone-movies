@@ -1,4 +1,4 @@
-# NextZone Development Workflow (Local / Offline Mode)
+# XFlix Movies Review Development Workflow (Local / Offline Mode)
 
 This project is strictly for **local / offline use**.
 

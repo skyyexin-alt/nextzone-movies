@@ -73,26 +73,26 @@ export default function Navbar() {
         <Container className="w-full flex items-center justify-between">
           
           {/* Brand Logo + Main MDL Nav */}
-          <div className="flex items-center gap-8 xl:gap-10">
+          <div className="flex items-center gap-4 xl:gap-8">
             
             {/* Movie Review Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-600 via-indigo-600 to-fuchsia-600 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-violet-600/40 border border-violet-400/40">
-                <Film className="w-6 h-6 text-white" />
+            <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 via-indigo-600 to-fuchsia-600 flex items-center justify-center group-hover:scale-105 transition-transform shadow-lg shadow-violet-600/40 border border-violet-400/40">
+                <Film className="w-5 h-5 text-white" />
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <div className="flex flex-col leading-none">
-                  <span className="text-2xl font-black text-white tracking-tight">XFlix</span>
-                  <span className="text-xs font-black text-violet-400 uppercase tracking-widest">REVIEWS</span>
+                  <span className="text-xl font-black text-white tracking-tight">XFlix</span>
+                  <span className="text-[10px] font-black text-violet-400 uppercase tracking-widest">REVIEWS</span>
                 </div>
-                <span className="bg-rose-600 text-white text-xs font-black px-2 py-0.5 rounded-md shadow">
+                <span className="bg-rose-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-md shadow">
                   v2.0
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-7 xl:gap-9 text-base xl:text-lg font-black tracking-wider">
+            <nav className="hidden lg:flex items-center gap-3.5 xl:gap-6 2xl:gap-8 text-xs xl:text-sm 2xl:text-base font-black tracking-wider">
               
               {/* HOME Link */}
               <Link
@@ -308,40 +308,40 @@ export default function Navbar() {
           </div>
 
           {/* Right Action Bar */}
-          <div className="flex items-center gap-3.5">
+          <div className="flex items-center gap-2 xl:gap-3.5">
             
             {/* Search Input Box */}
             <div 
               onClick={() => setSearchOpen(true)}
-              className="relative hidden sm:flex items-center cursor-pointer bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl px-4 py-2.5 text-xs md:text-sm text-zinc-400 transition-all w-56 xl:w-72 shadow-inner"
+              className="relative hidden sm:flex items-center cursor-pointer bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-3 py-2 text-xs text-zinc-400 transition-all w-44 xl:w-64 shadow-inner"
             >
-              <Search className="w-4 h-4 text-zinc-400 mr-2.5" />
+              <Search className="w-3.5 h-3.5 text-zinc-400 mr-2 shrink-0" />
               <span className="truncate font-semibold">Find Movies, Dramas...</span>
             </div>
 
             {/* Mobile Search Button */}
             <button 
               onClick={() => setSearchOpen(true)}
-              className="p-2.5 bg-white/5 border border-white/10 rounded-xl text-zinc-400 hover:text-white sm:hidden"
+              className="p-2 bg-white/5 border border-white/10 rounded-xl text-zinc-400 hover:text-white sm:hidden"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4" />
             </button>
 
             {/* Language Selector Pill (EN) */}
-            <span className="hidden md:inline-block bg-white/5 border border-white/10 text-zinc-300 font-black text-xs px-3 py-1.5 rounded-xl uppercase">
+            <span className="hidden xl:inline-block bg-white/5 border border-white/10 text-zinc-300 font-black text-xs px-2.5 py-1.5 rounded-xl uppercase">
               EN
             </span>
 
             {/* Watchlist Badge Button */}
             <Link
               href="/watchlist"
-              className="relative px-4 py-2.5 bg-violet-600/30 border border-violet-500/40 hover:bg-violet-600/50 rounded-2xl text-violet-200 hover:text-white transition-all flex items-center gap-2 text-xs md:text-sm font-black shadow-lg shadow-violet-600/20"
+              className="relative px-3 py-2 bg-violet-600/30 border border-violet-500/40 hover:bg-violet-600/50 rounded-xl text-violet-200 hover:text-white transition-all flex items-center gap-1.5 text-xs font-black shadow-lg shadow-violet-600/20"
               title="My Watchlist"
             >
-              <Heart className="w-4.5 h-4.5 text-violet-400 fill-violet-500/30" />
-              <span className="hidden xl:inline">My List</span>
+              <Heart className="w-4 h-4 text-violet-400 fill-violet-500/30 shrink-0" />
+              <span className="hidden sm:inline">My List</span>
               {watchlist.length > 0 && (
-                <span className="bg-violet-600 text-white text-xs font-black px-2 py-0.5 rounded-full shadow">
+                <span className="bg-violet-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full shadow">
                   {watchlist.length}
                 </span>
               )}
