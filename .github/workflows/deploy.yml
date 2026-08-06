@@ -7,41 +7,85 @@ on:
 
 jobs:
   deploy:
+    name: Auto Deploy XFlix Movies Review to Hetzner VPS
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to Hetzner VPS via Native SSH
+      - name: 🚀 Step 1: Install SSH & Deployment Tools
+        run: |
+          echo "Installing sshpass on runner..."
+          sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
+          echo "✅ SSH Tools Installed!"
+
+      - name: 🔍 Step 2: Connect to Hetzner VPS & Locate Project
         env:
           SERVER_IP: ${{ secrets.SERVER_IP }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
-          sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@"$SERVER_IP" << 'EOF'
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            export PATH=$PATH:/usr/local/bin:/usr/bin:/root/.nvm/versions/node/$(ls /root/.nvm/versions/node 2>/dev/null | tail -n 1)/bin
+          echo "Connecting to Hetzner VPS ($SERVER_IP)..."
+          sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@"$SERVER_IP" "
+            export NVM_DIR=\"\$HOME/.nvm\"
+            [ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\"
+            export PATH=\$PATH:/usr/local/bin:/usr/bin:/root/.nvm/versions/node/\$(ls /root/.nvm/versions/node 2>/dev/null | tail -n 1)/bin
             
-            echo "==== Searching and updating all matching repositories on Hetzner VPS ===="
+            echo 'Searching for XFlix repository...'
+            find /var/www /root /home /opt -name '.git' 2>/dev/null | while read -r gitdir; do
+              repo_dir=\$(dirname \"\$gitdir\")
+              echo 'Found git repo in:' \$repo_dir
+            done
+          "
+
+      - name: 📦 Step 3: Pull Latest Code & Build Production App
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          echo "Building production app on Hetzner VPS..."
+          sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@"$SERVER_IP" "
+            export NVM_DIR=\"\$HOME/.nvm\"
+            [ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\"
+            export PATH=\$PATH:/usr/local/bin:/usr/bin:/root/.nvm/versions/node/\$(ls /root/.nvm/versions/node 2>/dev/null | tail -n 1)/bin
             
-            find /var/www /root /home /opt -name ".git" 2>/dev/null | while read -r gitdir; do
-              repo_dir=$(dirname "$gitdir")
-              echo "Checking repository: $repo_dir"
-              cd "$repo_dir" || continue
-              
-              remote_url=$(git remote get-url origin 2>/dev/null || echo "")
-              if echo "$remote_url" | grep -qE "nextzone-movies|xflix"; then
-                echo "--> Updating repository in $repo_dir..."
+            find /var/www /root /home /opt -name '.git' 2>/dev/null | while read -r gitdir; do
+              repo_dir=\$(dirname \"\$gitdir\")
+              cd \"\$repo_dir\" || continue
+              remote_url=\$(git remote get-url origin 2>/dev/null || echo '')
+              if echo \"\$remote_url\" | grep -qE 'nextzone-movies|xflix'; then
+                echo '==== Updating repository at: '\$repo_dir' ===='
                 git fetch origin main
                 git reset --hard origin/main
+                echo '==== Running npm install ===='
                 npm install
+                echo '==== Cleaning build cache & running npm run build ===='
                 rm -rf .next
                 npm run build
-                echo "--> Successfully built in $repo_dir"
+                echo '✅ Build completed successfully in '\$repo_dir
               fi
             done
+          "
 
-            echo "==== Restarting PM2 processes and Nginx ===="
+      - name: ⚡ Step 4: Restart PM2 & Reload Nginx Web Server
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          echo "Restarting web servers..."
+          sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@"$SERVER_IP" "
+            export NVM_DIR=\"\$HOME/.nvm\"
+            [ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\"
+            export PATH=\$PATH:/usr/local/bin:/usr/bin:/root/.nvm/versions/node/\$(ls /root/.nvm/versions/node 2>/dev/null | tail -n 1)/bin
+            
+            echo 'Restarting PM2 application processes...'
             pm2 restart all || pm2 reload all --update-env || true
             pm2 save || true
+            
+            echo 'Reloading Nginx...'
             systemctl reload nginx || systemctl restart nginx || true
-            echo "==== Deployment Completed Successfully ===="
-          EOF
+            echo '🎉 Server processes & Nginx reloaded successfully!'
+          "
+
+      - name: 🎉 Step 5: Deployment Complete Notice
+        run: |
+          echo "=================================================="
+          echo "🎉 XFlix Movies Review Deployment Completed!"
+          echo "🌐 Live URL: https://xflix.ink"
+          echo "=================================================="
