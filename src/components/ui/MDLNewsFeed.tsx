@@ -48,7 +48,7 @@ function MovieCastRow({ itemId, mediaType }: { itemId: number; mediaType: 'movie
     let isMounted = true;
     async function fetchCast() {
       try {
-        const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '';
+        const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '5d067b9d81cc3970f1365e1e9862ce6b';
         if (!apiKey) return;
         const res = await fetch(`https://api.themoviedb.org/3/${mediaType}/${itemId}/credits?api_key=${apiKey}`);
         if (res.ok) {

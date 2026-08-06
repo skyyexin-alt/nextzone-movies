@@ -24,7 +24,7 @@ export default function CommunityList({ items, genreMap }: CommunityListProps) {
     const isMovie = item.media_type === 'movie' || !!item.title;
     
     try {
-      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
+      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '5d067b9d81cc3970f1365e1e9862ce6b';
       const tmdbId = item.id;
       const type = isMovie ? 'movie' : 'tv';
       const res = await fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}/videos?api_key=${apiKey}&language=en-US`);

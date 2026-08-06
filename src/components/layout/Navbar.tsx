@@ -32,7 +32,7 @@ export default function Navbar() {
 
   useEffect(() => {
     async function loadSpotlightImages() {
-      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '';
+      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '5d067b9d81cc3970f1365e1e9862ce6b';
       if (!apiKey) return;
 
       try {

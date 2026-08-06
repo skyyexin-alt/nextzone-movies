@@ -25,13 +25,7 @@ export default async function Home() {
   let upcomingList = [];
 
   try {
-    const [
-      trending,
-      popularMovies,
-      nowPlaying,
-      topRated,
-      upcoming
-    ] = await Promise.all([
+    const results = await Promise.allSettled([
       getTrending('all'),
       getPopularMovies(),
       getNowPlaying(),
@@ -39,11 +33,11 @@ export default async function Home() {
       getUpcoming()
     ]);
 
-    trendingItems = trending?.results || [];
-    popularList = popularMovies?.results || [];
-    nowPlayingList = nowPlaying?.results || [];
-    topRatedItems = topRated?.results || [];
-    upcomingList = upcoming?.results || [];
+    trendingItems = results[0].status === 'fulfilled' ? results[0].value?.results || [] : [];
+    popularList = results[1].status === 'fulfilled' ? results[1].value?.results || [] : [];
+    nowPlayingList = results[2].status === 'fulfilled' ? results[2].value?.results || [] : [];
+    topRatedItems = results[3].status === 'fulfilled' ? results[3].value?.results || [] : [];
+    upcomingList = results[4].status === 'fulfilled' ? results[4].value?.results || [] : [];
   } catch (e) {
     console.error("Home page TMDB fetch error:", e);
   }

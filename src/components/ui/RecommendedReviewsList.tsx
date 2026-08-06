@@ -32,7 +32,7 @@ export default function RecommendedReviewsList({ items, currentTitle }: { items:
     setTrailerTitle(itemTitle);
 
     try {
-      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '';
+      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '5d067b9d81cc3970f1365e1e9862ce6b';
       const url = `https://api.themoviedb.org/3/${isMovie ? 'movie' : 'tv'}/${item.id}/videos?api_key=${apiKey}`;
       const res = await fetch(url);
       if (res.ok) {

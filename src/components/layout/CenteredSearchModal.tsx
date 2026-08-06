@@ -36,7 +36,7 @@ export default function CenteredSearchModal({ isOpen, onClose }: CenteredSearchM
 
     const timer = setTimeout(async () => {
       setLoading(true);
-      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '';
+      const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || '5d067b9d81cc3970f1365e1e9862ce6b';
       try {
         const res = await fetch(
           `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${encodeURIComponent(query)}&include_adult=false`
