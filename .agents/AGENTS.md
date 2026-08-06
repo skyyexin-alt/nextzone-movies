@@ -8,7 +8,7 @@ This project is strictly for **local / offline use**.
 When the user requests changes to the XFlix Movies Review codebase:
 1. **Make changes locally**: Edit the necessary files in the codebase.
 2. **Local Preview**: Instruct the user to preview changes on their local server (`http://localhost:3000`).
-3. **No Deployment Required**: Do not prompt for git commit/push or server deployments (Hetzner / Vercel). Keep all changes local.
+3. **No Deployment Required**: Do not prompt for git commit/push or server deployments (Hetzner). Keep all changes local.
 
 # Clean Video Player Rule
 - **Clean Video Frame Standard**: Always use the custom chromeless XFlix Video Player Frame (`XFlixTrailerPlayer.tsx` / `CustomVideoPlayer.tsx`) for video embeds and trailers.
