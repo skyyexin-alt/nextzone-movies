@@ -17,6 +17,8 @@ interface StorylineSectionProps {
   sceneImages?: string[];
   videoKey?: string | null;
   customVideoUrl?: string | null;
+  mediaType?: 'movie' | 'tv';
+  mediaId?: string | number;
 }
 
 export default function StorylineSection({ 
@@ -29,7 +31,9 @@ export default function StorylineSection({
   backdropPath,
   sceneImages = [],
   videoKey,
-  customVideoUrl
+  customVideoUrl,
+  mediaType = 'movie',
+  mediaId
 }: StorylineSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [autoPlayTrailer, setAutoPlayTrailer] = useState(false);
@@ -400,14 +404,9 @@ export default function StorylineSection({
             </div>
 
             <a
-              href="#integrated-player"
-              onClick={(e) => {
-                const playerEl = document.getElementById('integrated-player') || document.getElementById('hero-player') || document.getElementById('storyline-section');
-                if (playerEl) {
-                  e.preventDefault();
-                  playerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }}
+              href={mediaId ? `https://movies.xflix.ink/watch/${mediaType}/${mediaId}` : `https://movies.xflix.ink/watch/movie/969681`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full sm:w-auto px-6 py-4 rounded-2xl bg-gradient-to-r from-violet-600 via-fuchsia-600 to-amber-500 hover:from-violet-500 hover:via-fuchsia-500 hover:to-amber-400 text-white font-black text-sm sm:text-base shadow-2xl shadow-violet-600/50 border border-white/20 transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 cursor-pointer group"
             >
               <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">

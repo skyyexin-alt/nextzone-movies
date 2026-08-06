@@ -201,9 +201,7 @@ export default async function DetailPage({
             </div>
           </div>
 
-          {trailer && (
-            <DetailTrailerButton videoKey={trailer.key} title={title} />
-          )}
+          <DetailTrailerButton videoKey={trailer?.key || ''} title={title} mediaType={type} mediaId={id} />
         </div>
       </div>
 
@@ -249,6 +247,8 @@ export default async function DetailPage({
             backdropPath={backdropPath}
             sceneImages={sceneImages}
             videoKey={trailer?.key}
+            mediaType={type}
+            mediaId={id}
           />
 
           {/* Key Details Card */}
