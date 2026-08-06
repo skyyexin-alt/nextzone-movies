@@ -29,38 +29,32 @@ jobs:
             echo "🚀 STARTING HETZNER VPS DEPLOYMENT FOR XFLIX"
             echo "=================================================="
 
-            echo "--> Step 1: Locating project repository directory..."
-            TARGET_DIR=""
-            for dir in /var/www/nextzone-movies /var/www/xflix-movies-review /var/www/nextzone /var/www/xflix; do
-              if [ -d "$dir" ]; then
-                TARGET_DIR="$dir"
-                break
+            DIRS=$(find /var/www /root /home /opt -name ".git" 2>/dev/null | xargs -r dirname)
+            FOUND=0
+            for d in $DIRS; do
+              if [ -f "$d/package.json" ]; then
+                echo "--> Found project directory at: $d"
+                FOUND=1
+                cd "$d"
+                echo "--> Fetching & resetting $d to origin/main..."
+                git fetch origin main
+                git reset --hard origin/main
+                
+                echo "--> Installing dependencies in $d..."
+                npm install --legacy-peer-deps || npm install
+                
+                echo "--> Building production Next.js app in $d..."
+                rm -rf .next
+                npm run build
               fi
             done
 
-            if [ -z "$TARGET_DIR" ]; then
-              TARGET_DIR=$(find /var/www /root /home /opt -name ".git" 2>/dev/null | head -n 1 | xargs -r dirname)
-            fi
-
-            echo "--> Step 2: Target Directory Found: $TARGET_DIR"
-            if [ -n "$TARGET_DIR" ] && [ -d "$TARGET_DIR" ]; then
-              cd "$TARGET_DIR"
-              echo "--> Step 3: Fetching & resetting to latest main branch..."
-              git fetch origin main
-              git reset --hard origin/main
-              
-              echo "--> Step 4: Installing dependencies..."
-              npm install
-              
-              echo "--> Step 5: Clearing cache & building production Next.js app..."
-              rm -rf .next
-              npm run build
-              
-              echo "--> Step 6: Restarting PM2 process..."
+            if [ "$FOUND" -eq 1 ]; then
+              echo "--> Restarting PM2 processes..."
               pm2 restart all || pm2 reload all --update-env || pm2 start npm --name "xflix-review" -- start
               pm2 save || true
               
-              echo "--> Step 7: Reloading Nginx web server..."
+              echo "--> Reloading Nginx web server..."
               systemctl reload nginx || systemctl restart nginx || true
               echo "=================================================="
               echo "🎉 DEPLOYMENT TO HETZNER COMPLETED SUCCESSFULLY!"
