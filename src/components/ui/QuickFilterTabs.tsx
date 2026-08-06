@@ -1,10 +1,11 @@
 "use client";
 
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Sparkles, Star, Layers, Tv } from 'lucide-react';
 
-export default function QuickFilterTabs() {
+function TabsContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const sort = searchParams?.get('sort');
@@ -69,5 +70,20 @@ export default function QuickFilterTabs() {
         <span className="truncate">My Watchlist Tracker</span>
       </Link>
     </div>
+  );
+}
+
+export default function QuickFilterTabs() {
+  return (
+    <Suspense fallback={
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5 pb-6 w-full animate-pulse">
+        <div className="h-12 bg-[#14142f] rounded-2xl border border-white/10"></div>
+        <div className="h-12 bg-[#14142f] rounded-2xl border border-white/10"></div>
+        <div className="h-12 bg-[#14142f] rounded-2xl border border-white/10"></div>
+        <div className="h-12 bg-[#14142f] rounded-2xl border border-white/10"></div>
+      </div>
+    }>
+      <TabsContent />
+    </Suspense>
   );
 }

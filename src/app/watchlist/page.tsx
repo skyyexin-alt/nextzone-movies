@@ -10,6 +10,8 @@ import MDLAddToListModal from '@/components/ui/MDLAddToListModal';
 
 import QuickFilterTabs from '@/components/ui/QuickFilterTabs';
 
+export const dynamic = 'force-dynamic';
+
 export default function WatchlistPage() {
   const { watchlist, getStats, isLoaded } = useWatchlist();
   const [mounted, setMounted] = useState(false);
