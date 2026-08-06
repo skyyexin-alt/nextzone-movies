@@ -97,25 +97,6 @@ export default function IntegratedPlayer({ title, backdrop, trailerKey, tmdbId, 
     setIframeOverlayVisible(true);
   }, [activeServer, activeSeason, activeEpisode]);
 
-  // Track viewer watching & interacting duration; trigger install app popup after 5 minutes (300 seconds)
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (localStorage.getItem('can_show_install_popup') === 'true') return;
-
-    const interval = setInterval(() => {
-      const currentSeconds = parseInt(localStorage.getItem('viewer_watch_time_seconds') || '0', 10);
-      const nextSeconds = currentSeconds + 1;
-      localStorage.setItem('viewer_watch_time_seconds', nextSeconds.toString());
-
-      if (nextSeconds >= 300) {
-        localStorage.setItem('can_show_install_popup', 'true');
-        window.dispatchEvent(new Event('trigger-install-popup'));
-        clearInterval(interval);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const handleIframePlay = () => {
     setIframeOverlayVisible(false);

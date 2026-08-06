@@ -13,25 +13,16 @@ export default function InstallAppButton() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      if (localStorage.getItem('can_show_install_popup') === 'true') {
-        setCanShowPopup(true);
-      }
-
-      // Wait for 6 minutes (360,000 ms) after user visits the site before showing popup automatically!
-      const timer = setTimeout(() => {
-        setCanShowPopup(true);
-        localStorage.setItem('can_show_install_popup', 'true');
-      }, 360000);
+      // Clear legacy auto-show key so it never shows automatically
+      localStorage.removeItem('can_show_install_popup');
 
       const handleTrigger = () => {
         setCanShowPopup(true);
-        setIsDismissed(false); // Re-open popup when user taps APP button
-        localStorage.setItem('can_show_install_popup', 'true');
+        setIsDismissed(false); // Re-open popup when user clicks APP nav item
       };
 
       window.addEventListener('trigger-install-popup', handleTrigger);
       return () => {
-        clearTimeout(timer);
         window.removeEventListener('trigger-install-popup', handleTrigger);
       };
     }
