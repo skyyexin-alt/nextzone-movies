@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Star, ThumbsUp, MessageSquare, Send, Award, CheckCircle } from 'lucide-react';
+import { Star, ThumbsUp, MessageSquare, Send, Award, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface MDLReviewSectionProps {
   mediaId: string;
@@ -53,6 +53,7 @@ const initialReviews: Review[] = [
 ];
 
 export default function MDLReviewSection({ mediaId, mediaTitle }: MDLReviewSectionProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [newComment, setNewComment] = useState('');
   const [newScore, setNewScore] = useState(9.0);
@@ -96,19 +97,34 @@ export default function MDLReviewSection({ mediaId, mediaTitle }: MDLReviewSecti
   };
 
   return (
-    <div className="bg-[#14142f] border border-white/8 rounded-3xl p-6 md:p-8 shadow-2xl space-y-6">
-      <div className="flex items-center justify-between border-b border-white/8 pb-4">
+    <div className={`bg-[#14142f] border border-white/8 rounded-3xl p-6 md:p-8 shadow-2xl transition-all duration-300 ${isExpanded ? 'space-y-6' : ''}`}>
+      <div 
+        onClick={() => setIsExpanded(!isExpanded)}
+        className={`flex items-center justify-between cursor-pointer select-none group ${isExpanded ? 'border-b border-white/8 pb-4' : ''}`}
+      >
         <div>
-          <h2 className="text-xl font-black text-white flex items-center gap-2">
+          <h2 className="text-xl font-black text-white flex items-center gap-2 group-hover:text-violet-300 transition-colors">
             <MessageSquare className="w-5 h-5 text-violet-400" />
             Audience Reviews & Detailed Breakdown
           </h2>
           <p className="text-xs text-zinc-400 mt-0.5">Read and share community scores for {mediaTitle}</p>
         </div>
-        <span className="text-xs font-bold text-violet-300 bg-violet-600/20 border border-violet-500/30 px-3 py-1 rounded-full">
-          {reviews.length} Reviews
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-bold text-violet-300 bg-violet-600/20 border border-violet-500/30 px-3 py-1 rounded-full">
+            {reviews.length} Reviews
+          </span>
+          <div className="p-1.5 rounded-xl bg-white/5 group-hover:bg-white/10 text-zinc-400 group-hover:text-white transition-colors">
+            {isExpanded ? (
+              <ChevronUp className="w-5 h-5" />
+            ) : (
+              <ChevronDown className="w-5 h-5" />
+            )}
+          </div>
+        </div>
       </div>
+
+      {isExpanded && (
+        <>
 
       {/* Submit New Review Form */}
       <form onSubmit={handleSubmitReview} className="bg-white/3 border border-white/8 rounded-2xl p-4 md:p-5 space-y-4">
@@ -202,6 +218,8 @@ export default function MDLReviewSection({ mediaId, mediaTitle }: MDLReviewSecti
           </div>
         ))}
       </div>
+        </>
+      )}
     </div>
   );
 }
