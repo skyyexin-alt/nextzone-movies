@@ -40,7 +40,18 @@ jobs:
               npm install
               rm -rf .next
               npm run build
-              pm2 restart xflix-review || pm2 restart nextzone || pm2 restart all
+              
+              if pm2 restart xflix-review 2>/dev/null; then
+                echo "Restarted xflix-review process"
+              elif pm2 restart nextzone 2>/dev/null; then
+                echo "Restarted nextzone process"
+              elif pm2 restart all 2>/dev/null; then
+                echo "Restarted PM2 processes"
+              else
+                echo "Starting new xflix-review PM2 process..."
+                pm2 start npm --name "xflix-review" -- start
+              fi
+              pm2 save
             else
               echo "Target directory not found!"
               exit 1
