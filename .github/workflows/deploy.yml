@@ -20,40 +20,28 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             export PATH=$PATH:/usr/local/bin:/usr/bin:/root/.nvm/versions/node/$(ls /root/.nvm/versions/node 2>/dev/null | tail -n 1)/bin
             
-            TARGET_DIR=""
-            for dir in /var/www/nextzone-movies /var/www/xflix-movies-review /var/www/nextzone /var/www/xflix; do
-              if [ -d "$dir" ]; then
-                TARGET_DIR="$dir"
-                break
+            echo "==== Searching and updating all matching repositories on Hetzner VPS ===="
+            
+            find /var/www /root /home /opt -name ".git" 2>/dev/null | while read -r gitdir; do
+              repo_dir=$(dirname "$gitdir")
+              echo "Checking repository: $repo_dir"
+              cd "$repo_dir" || continue
+              
+              remote_url=$(git remote get-url origin 2>/dev/null || echo "")
+              if echo "$remote_url" | grep -qE "nextzone-movies|xflix"; then
+                echo "--> Updating repository in $repo_dir..."
+                git fetch origin main
+                git reset --hard origin/main
+                npm install
+                rm -rf .next
+                npm run build
+                echo "--> Successfully built in $repo_dir"
               fi
             done
 
-            if [ -z "$TARGET_DIR" ]; then
-              TARGET_DIR=$(find /var/www /root /home /opt -name ".git" 2>/dev/null | head -n 1 | xargs -r dirname)
-            fi
-
-            if [ -n "$TARGET_DIR" ] && [ -d "$TARGET_DIR" ]; then
-              echo "Deploying to target directory: $TARGET_DIR"
-              cd "$TARGET_DIR"
-              git fetch origin main
-              git reset --hard origin/main
-              npm install
-              rm -rf .next
-              npm run build
-              
-              if pm2 restart xflix-review 2>/dev/null; then
-                echo "Restarted xflix-review process"
-              elif pm2 restart nextzone 2>/dev/null; then
-                echo "Restarted nextzone process"
-              elif pm2 restart all 2>/dev/null; then
-                echo "Restarted PM2 processes"
-              else
-                echo "Starting new xflix-review PM2 process..."
-                pm2 start npm --name "xflix-review" -- start
-              fi
-              pm2 save
-            else
-              echo "Target directory not found!"
-              exit 1
-            fi
+            echo "==== Restarting PM2 processes and Nginx ===="
+            pm2 restart all || pm2 reload all --update-env || true
+            pm2 save || true
+            systemctl reload nginx || systemctl restart nginx || true
+            echo "==== Deployment Completed Successfully ===="
           EOF
