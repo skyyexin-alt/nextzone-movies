@@ -279,15 +279,6 @@ export default function Navbar() {
                 </span>
               </Link>
 
-              {/* CALENDAR Link */}
-              <Link
-                href="/upcoming"
-                className={`transition-colors py-2 flex items-center gap-1 ${
-                  pathname === '/upcoming' ? 'text-white font-black' : 'text-zinc-300 hover:text-white'
-                }`}
-              >
-                CALENDAR
-              </Link>
 
               {/* APP Link with HOT badge */}
               <button
@@ -438,15 +429,6 @@ export default function Navbar() {
             >
               <span>MOVIES REVIEW</span>
               <span className="bg-emerald-500 text-black text-[9px] font-black px-1.5 py-0.5 rounded uppercase">NEW</span>
-            </Link>
-
-            <Link
-              href="/upcoming"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/5 hover:bg-violet-600/30 text-sm font-extrabold text-white transition-all border border-white/8"
-            >
-              <span>CALENDAR & RELEASES</span>
-              <ChevronRight className="w-4 h-4 text-violet-400" />
             </Link>
 
             <button
