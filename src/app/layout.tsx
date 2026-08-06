@@ -12,13 +12,13 @@ import AdskeeperNotification from "@/components/ui/AdskeeperNotification";
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://xflix.ink"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://movies.xflix.ink"),
   title: {
     default: "XFlix - Movies Review, Ratings, K-Dramas & Recommendations",
     template: "%s | XFlix",
   },
   description: "Discover honest movie reviews, user ratings, top Asian dramas, synopsis breakdowns, cast filmographies, and recommendations on XFlix Movies Review.",
-  keywords: ["XFlix", "xflix.ink", "movie reviews", "movies review", "film ratings", "K-Dramas", "Asian Dramas", "drama list", "top rated movies", "movie recommendations"],
+  keywords: ["XFlix", "movies.xflix.ink", "movie reviews", "movies review", "film ratings", "K-Dramas", "Asian Dramas", "drama list", "top rated movies", "movie recommendations"],
   authors: [{ name: "XFlix" }],
   creator: "XFlix",
   publisher: "XFlix",
@@ -29,17 +29,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: "XFlix - Movies Review, Ratings, K-Dramas & Recommendations",
     description: "Discover honest movie reviews, user ratings, top Asian dramas, synopsis breakdowns, cast filmographies, and recommendations on XFlix Movies Review.",
-    url: "https://xflix.ink",
+    url: "https://movies.xflix.ink",
     siteName: "XFlix",
     images: [
       {
-        url: "https://xflix.ink/opengraph-image",
+        url: "https://movies.xflix.ink/opengraph-image",
         width: 1200,
         height: 630,
         alt: "XFlix Movies Review & Ratings Platform",
       },
       {
-        url: "https://xflix.ink/icon-512.png",
+        url: "https://movies.xflix.ink/icon-512.png",
         width: 512,
         height: 512,
         alt: "XFlix Logo",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "XFlix - Movies Review, Ratings, K-Dramas & Recommendations",
     description: "Discover honest movie reviews, user ratings, top Asian dramas, synopsis breakdowns, cast filmographies, and recommendations on XFlix Movies Review.",
-    images: ["https://xflix.ink/opengraph-image", "https://xflix.ink/icon-512.png"],
+    images: ["https://movies.xflix.ink/opengraph-image", "https://movies.xflix.ink/icon-512.png"],
   },
   appleWebApp: {
     capable: true,
@@ -79,16 +79,16 @@ export default function RootLayout({
         <meta property="og:site_name" content="XFlix" />
         <meta property="og:title" content="XFlix - Movies Review, Ratings, K-Dramas & Recommendations" />
         <meta property="og:description" content="Discover honest movie reviews, user ratings, top Asian dramas, synopsis breakdowns, cast filmographies, and recommendations on XFlix Movies Review." />
-        <meta property="og:image" content="https://xflix.ink/opengraph-image" />
-        <meta property="og:image:secure_url" content="https://xflix.ink/icon-512.png" />
+        <meta property="og:image" content="https://movies.xflix.ink/opengraph-image" />
+        <meta property="og:image:secure_url" content="https://movies.xflix.ink/icon-512.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://xflix.ink" />
+        <meta property="og:url" content="https://movies.xflix.ink" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="XFlix - Movies Review, Ratings, K-Dramas & Recommendations" />
         <meta name="twitter:description" content="Discover honest movie reviews, user ratings, top Asian dramas, synopsis breakdowns, cast filmographies, and recommendations on XFlix Movies Review." />
-        <meta name="twitter:image" content="https://xflix.ink/opengraph-image" />
+        <meta name="twitter:image" content="https://movies.xflix.ink/opengraph-image" />
         <script src="https://jsc.adskeeper.com/site/1106781.js" async />
       </head>
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>

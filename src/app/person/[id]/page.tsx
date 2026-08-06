@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
     const profileUrl = person.profile_path
       ? `https://image.tmdb.org/t/p/w500${person.profile_path}`
-      : 'https://xflix.ink/icon-512.png';
+      : 'https://movies.xflix.ink/icon-512.png';
 
     return {
       title,
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       openGraph: {
         title,
         description,
-        url: `https://xflix.ink/person/${id}`,
+        url: `https://movies.xflix.ink/person/${id}`,
         siteName: 'XFlix',
         type: 'profile',
         images: [

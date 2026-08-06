@@ -32,9 +32,9 @@ export async function generateMetadata({
       ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
       : data.poster_path
       ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-      : 'https://xflix.ink/icon-512.png';
+      : 'https://movies.xflix.ink/icon-512.png';
 
-    const pageUrl = `https://xflix.ink/${type}/${id}`;
+    const pageUrl = `https://movies.xflix.ink/${type}/${id}`;
 
     return {
       title: displayTitle,

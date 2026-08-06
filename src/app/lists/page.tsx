@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Movies Review & Ratings - XFlix',
     description: 'Explore community ratings, movie reviews, and top trending Asian dramas and blockbusters on XFlix.',
-    url: 'https://xflix.ink/lists',
+    url: 'https://movies.xflix.ink/lists',
     siteName: 'XFlix',
     type: 'website',
   },
