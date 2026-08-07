@@ -19,6 +19,7 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: root
           password: ${{ secrets.SERVER_PASSWORD }}
+          command_timeout: 15m
           script_stop: false
           script: |
             export NVM_DIR="$HOME/.nvm"
@@ -29,37 +30,38 @@ jobs:
             echo "🚀 STARTING HETZNER VPS DEPLOYMENT FOR XFLIX"
             echo "=================================================="
 
-            DIRS=$(find /var/www /root /home /opt -maxdepth 3 -name "package.json" 2>/dev/null | xargs -r dirname)
-            FOUND=0
-            for d in $DIRS; do
-              if [ -f "$d/package.json" ]; then
-                echo "--> Found project directory at: $d"
-                FOUND=1
-                cd "$d"
-                echo "--> Fetching & resetting $d to origin/main..."
-                git config --global --add safe.directory "$d" || true
-                git checkout -f main || true
-                git fetch --all
-                git reset --hard origin/main || git pull origin main --force
-                
-                echo "--> Installing dependencies in $d..."
-                npm install --legacy-peer-deps || npm install
-                
-                echo "--> Building production Next.js app in $d..."
-                npm run build
+            TARGET_DIR=""
+            for dir in /var/www/* /root/* /home/* /opt/*; do
+              if [ -f "$dir/package.json" ]; then
+                TARGET_DIR="$dir"
+                break
               fi
             done
 
-            if [ "$FOUND" -eq 1 ]; then
-              echo "--> Executing Zero-Downtime PM2 Reload..."
+            if [ -z "$TARGET_DIR" ]; then
+              TARGET_DIR=$(find /var/www /root /home /opt -maxdepth 3 -name "package.json" 2>/dev/null | head -n 1 | xargs -r dirname)
+            fi
+
+            if [ -n "$TARGET_DIR" ] && [ -d "$TARGET_DIR" ]; then
+              echo "--> Target project directory: $TARGET_DIR"
+              cd "$TARGET_DIR"
+
+              echo "--> Fetching & resetting to origin/main..."
+              git config --global --add safe.directory "$TARGET_DIR" || true
+              git checkout -f main || true
+              git fetch origin main
+              git reset --hard origin/main
+
+              echo "--> Building production Next.js app..."
+              npm run build
+
+              echo "--> Reloading PM2 processes & Nginx..."
               pm2 reload all --update-env || pm2 restart all || pm2 start npm --name "xflix-review" -- start
               pm2 save || true
-              rm -rf .next_old 2>/dev/null || true
-              
-              echo "--> Reloading Nginx web server..."
               systemctl reload nginx || systemctl restart nginx || true
+
               echo "=================================================="
-              echo "🎉 DEPLOYMENT TO HETZNER COMPLETED SUCCESSFULLY!"
+              echo "🎉 DEPLOYMENT COMPLETED SUCCESSFULLY!"
               echo "=================================================="
             else
               echo "❌ Error: Project directory not found on VPS!"
