@@ -37,8 +37,10 @@ jobs:
                 FOUND=1
                 cd "$d"
                 echo "--> Fetching & resetting $d to origin/main..."
-                git fetch origin main
-                git reset --hard origin/main
+                git config --global --add safe.directory "$d" || true
+                git checkout -f main || true
+                git fetch --all
+                git reset --hard origin/main || git pull origin main --force
                 
                 echo "--> Installing dependencies in $d..."
                 npm install --legacy-peer-deps || npm install
