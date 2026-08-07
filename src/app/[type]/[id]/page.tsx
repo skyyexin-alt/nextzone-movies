@@ -11,6 +11,7 @@ import MDLReviewSection from '@/components/ui/MDLReviewSection';
 import RecommendedReviewsList from '@/components/ui/RecommendedReviewsList';
 import DetailTrailerButton from '@/components/ui/DetailTrailerButton';
 import StorylineSection from '@/components/ui/StorylineSection';
+import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 
 export async function generateMetadata({
   params,
@@ -235,6 +236,11 @@ export default async function DetailPage({
               ))}
             </div>
           )}
+
+          {/* Adsterra 728x90 Banner Ad Above Storyline & Full Plot Breakdown */}
+          <div className="my-3">
+            <AdsterraBannerAd />
+          </div>
 
           {/* Storyline & Detailed Plot Breakdown (Minimized by Default + 10x Extended Content + Scene Stills + Trailer Video) */}
           <StorylineSection 

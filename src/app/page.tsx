@@ -14,6 +14,7 @@ import {
 import { Star, Sparkles, Tv, Layers } from 'lucide-react';
 
 import QuickFilterTabs from '@/components/ui/QuickFilterTabs';
+import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,6 +48,12 @@ export default async function Home() {
       <Container>
         {/* ── Top Quick Database Chips (Touch-scrollable on mobile, non-sticky like before!) ── */}
         <QuickFilterTabs />
+
+        {/* ── Adsterra Banner Ad ── */}
+        <div className="my-4">
+          <AdsterraBannerAd />
+        </div>
+
         {/* ── Top Hero Feature News Grid (Spider-Man, Obsession, Devil's Mouth) ── */}
         <div id="explore-catalog" className="scroll-mt-28">
           <MDLHeroGrid items={trendingItems.length > 0 ? trendingItems : popularList} />
