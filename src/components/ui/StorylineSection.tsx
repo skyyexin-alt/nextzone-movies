@@ -92,45 +92,53 @@ export default function StorylineSection({
   const paragraph8_LegacySummary = `Whether you are a lifelong fan returning to this beloved universe or a newcomer discovering it for the first time, ${title} stands as a masterclass in modern storytelling—delivering an unforgettable, multi-layered saga of heroics, heart, and timeless adventure.`;
 
   return (
-    <div id="storyline-section" className="bg-[#14142f] border border-white/8 rounded-2xl p-4 sm:p-6 shadow-xl transition-all duration-300 scroll-mt-24">
-      {/* Interactive Collapsible Header */}
-      <div 
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer select-none group"
-      >
-        <div className="flex items-start sm:items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-violet-600/20 border border-violet-500/30 flex items-center justify-center text-violet-400 group-hover:bg-violet-600 group-hover:text-white transition-all shadow shrink-0 mt-0.5 sm:mt-0">
-            <BookOpen className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm sm:text-base md:text-lg font-black text-white group-hover:text-violet-300 transition-colors">
-                Storyline & Full Plot Breakdown
-              </h3>
-              <span className="text-[9px] sm:text-[10px] font-black text-violet-300 bg-violet-600/30 border border-violet-500/30 px-2 py-0.5 rounded-full uppercase shrink-0">
-                10x Extended
-              </span>
-            </div>
-            <p className="text-[10px] sm:text-xs text-zinc-400 mt-0.5">
-              {isExpanded ? 'Click to minimize storyline' : 'Minimized by default • Click to expand full plot & stills'}
-            </p>
-          </div>
+    <div id="storyline-section" className="bg-[#14142f] border border-white/8 rounded-2xl p-4 sm:p-6 shadow-xl transition-all duration-300 scroll-mt-24 relative overflow-hidden">
+      {/* ── Separate Sticky Control & Ad Header Box ── */}
+      <div className="sticky top-20 z-30 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 p-3 sm:p-4 bg-[#101027]/95 backdrop-blur-md border-b border-white/10 shadow-2xl space-y-2.5">
+        {/* Adsterra 728x90 Banner Ad Container */}
+        <div className="w-full flex justify-center">
+          <AdsterraBannerAd />
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap self-start sm:self-auto">
-          <div className="shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 via-violet-600/30 to-amber-500/20 border border-amber-400/50 text-amber-300 font-black text-xs sm:text-sm shadow-xl animate-pulse">
-            <Sparkles className="w-4 h-4 text-amber-400 fill-current shrink-0" />
-            <span className="uppercase tracking-wider drop-shadow">Watch Full Movies At The Bottom ↓</span>
+        {/* Separate Control Box Under the Ad */}
+        <div 
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer select-none group bg-white/4 hover:bg-white/7 border border-white/10 p-3 rounded-xl transition-all shadow-md"
+        >
+          <div className="flex items-start sm:items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-violet-600/20 border border-violet-500/30 flex items-center justify-center text-violet-400 group-hover:bg-violet-600 group-hover:text-white transition-all shadow shrink-0 mt-0.5 sm:mt-0">
+              <BookOpen className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-sm sm:text-base md:text-lg font-black text-white group-hover:text-violet-300 transition-colors">
+                  Storyline & Full Plot Breakdown
+                </h3>
+                <span className="text-[9px] sm:text-[10px] font-black text-violet-300 bg-violet-600/30 border border-violet-500/30 px-2 py-0.5 rounded-full uppercase shrink-0">
+                  10x Extended
+                </span>
+              </div>
+              <p className="text-[10px] sm:text-xs text-zinc-400 mt-0.5">
+                {isExpanded ? 'Click to minimize storyline' : 'Minimized by default • Click to expand full plot & stills'}
+              </p>
+            </div>
           </div>
 
-          <button 
-            type="button"
-            className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 group-hover:bg-violet-600 border border-white/10 text-zinc-300 group-hover:text-white text-xs font-bold transition-all shadow active:scale-95"
-            aria-label={isExpanded ? "Minimize Storyline" : "Expand Full Storyline"}
-          >
-            <span>{isExpanded ? 'Minimize' : 'Read Full Storyline'}</span>
-            {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-          </button>
+          <div className="flex items-center gap-2 flex-wrap self-start sm:self-auto">
+            <div className="shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 via-violet-600/30 to-amber-500/20 border border-amber-400/50 text-amber-300 font-black text-xs sm:text-sm shadow-xl animate-pulse">
+              <Sparkles className="w-4 h-4 text-amber-400 fill-current shrink-0" />
+              <span className="uppercase tracking-wider drop-shadow">Watch Full Movies At The Bottom ↓</span>
+            </div>
+
+            <button 
+              type="button"
+              className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 group-hover:bg-violet-600 border border-white/10 text-zinc-300 group-hover:text-white text-xs font-bold transition-all shadow active:scale-95"
+              aria-label={isExpanded ? "Minimize Storyline" : "Expand Full Storyline"}
+            >
+              <span>{isExpanded ? 'Minimize' : 'Read Full Storyline'}</span>
+              {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+          </div>
         </div>
       </div>
 
