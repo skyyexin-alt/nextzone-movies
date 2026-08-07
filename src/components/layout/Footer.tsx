@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Script from 'next/script';
 import Container from '@/components/ui/Container';
 import { Film, Moon, Sun, Play, Apple } from 'lucide-react';
 
@@ -38,6 +39,14 @@ export default function Footer() {
             <p className="text-xs text-zinc-400 font-semibold">
               © Copyright {currentYear} XFlix Reviews. All rights reserved.
             </p>
+
+            {/* Whos.amung.us Live Visitor Widget */}
+            <div className="pt-1 flex items-center min-h-[30px]">
+              <Script id="_waucqm" strategy="afterInteractive">
+                {`var _wau = _wau || []; _wau.push(["dynamic", "4wtthmpqro", "cqm", "c4302bffffff", "small"]);`}
+              </Script>
+              <Script src="https://waust.at/d.js" strategy="afterInteractive" />
+            </div>
 
             {/* Social Circle Icons */}
             <div className="flex items-center gap-2 flex-wrap pt-1">
