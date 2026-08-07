@@ -10,14 +10,17 @@ jobs:
     name: Deploy to Hetzner VPS
     runs-on: ubuntu-latest
     steps:
-      - name: Execute Fast Deployment on Hetzner VPS
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Execute Deployment on Hetzner VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_IP }}
           username: root
           password: ${{ secrets.SERVER_PASSWORD }}
-          command_timeout: 10m
-          script_stop: false
+          command_timeout: 15m
+          script_stop: true
           script: |
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -25,10 +28,9 @@ jobs:
             export NEXT_TELEMETRY_DISABLED=1
 
             echo "=================================================="
-            echo "⚡ STARTING SUPER FAST HETZNER DEPLOYMENT"
+            echo "🚀 STARTING HETZNER VPS DEPLOYMENT FOR XFLIX"
             echo "=================================================="
 
-            # Fast direct directory match
             TARGET_DIR=""
             for candidate in /var/www/XFlix-Movies-Review /root/XFlix-Movies-Review /var/www/xflix /root/xflix /opt/XFlix-Movies-Review /home/XFlix-Movies-Review /var/www/html; do
               if [ -f "$candidate/package.json" ]; then
@@ -37,7 +39,6 @@ jobs:
               fi
             done
 
-            # Fallback scan only if direct match not found
             if [ -z "$TARGET_DIR" ]; then
               for d in $(find /var/www /root /home /opt -maxdepth 3 -name "package.json" 2>/dev/null | xargs -r dirname); do
                 if [ -d "$d/.git" ]; then
@@ -51,34 +52,28 @@ jobs:
             fi
 
             if [ -n "$TARGET_DIR" ] && [ -d "$TARGET_DIR" ]; then
-              echo "--> Target directory: $TARGET_DIR"
+              echo "--> Target project directory matched: $TARGET_DIR"
               cd "$TARGET_DIR"
 
-              echo "--> Pulling latest code..."
+              echo "--> Fetching & resetting to origin/main..."
               git config --global --add safe.directory "$TARGET_DIR" || true
-              PREV_HEAD=$(git rev-parse HEAD 2>/dev/null || echo "")
+              git checkout -f main || true
               git fetch origin main
               git reset --hard origin/main
-              NEW_HEAD=$(git rev-parse HEAD 2>/dev/null || echo "")
 
-              # Only run npm install if dependencies changed or node_modules missing
-              if [ ! -d "node_modules" ] || [ -z "$PREV_HEAD" ] || ! git diff --quiet "$PREV_HEAD" "$NEW_HEAD" -- package.json package-lock.json 2>/dev/null; then
-                echo "--> Dependencies updated. Installing..."
-                npm install --prefer-offline --no-audit --no-fund --legacy-peer-deps
-              else
-                echo "--> No dependency changes detected. Skipping npm install!"
-              fi
+              echo "--> Installing dependencies..."
+              npm install --legacy-peer-deps --prefer-offline --no-audit || npm install --legacy-peer-deps
 
-              echo "--> Building Next.js application..."
+              echo "--> Building production Next.js app..."
               npm run build
 
-              echo "--> Reloading application..."
-              pm2 reload all --update-env || pm2 restart all || pm2 start npm --name "xflix-review" -- start
+              echo "--> Reloading PM2 processes & Nginx..."
+              pm2 restart all --update-env || pm2 reload all --update-env || pm2 start npm --name "xflix-review" -- start
               pm2 save || true
-              systemctl reload nginx || true
+              systemctl reload nginx || systemctl restart nginx || true
 
               echo "=================================================="
-              echo "⚡ DEPLOYMENT FINISHED IN RECORD TIME!"
+              echo "🎉 DEPLOYMENT COMPLETED SUCCESSFULLY!"
               echo "=================================================="
             else
               echo "❌ Error: Project directory not found on VPS!"
