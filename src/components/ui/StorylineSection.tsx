@@ -92,15 +92,15 @@ export default function StorylineSection({
   const paragraph8_LegacySummary = `Whether you are a lifelong fan returning to this beloved universe or a newcomer discovering it for the first time, ${title} stands as a masterclass in modern storytelling—delivering an unforgettable, multi-layered saga of heroics, heart, and timeless adventure.`;
 
   return (
-    <div id="storyline-section" className="bg-[#14142f] border border-white/8 rounded-2xl p-4 sm:p-6 shadow-xl transition-all duration-300 scroll-mt-24 relative overflow-hidden">
-      {/* ── Separate Sticky Control & Ad Header Box ── */}
-      <div className="sticky top-20 z-30 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 pt-1.5 pb-3 px-3 sm:px-4 sm:pt-2 bg-[#101027]/95 backdrop-blur-md border-b border-white/10 shadow-2xl space-y-2">
-        {/* Adsterra 728x90 Banner Ad Container */}
-        <div className="w-full flex justify-center">
+    <div id="storyline-section" className="bg-[#14142f] border border-white/8 rounded-2xl p-4 sm:p-6 shadow-xl transition-all duration-300 scroll-mt-24 space-y-4">
+      {/* ── Combined Sticky Header Box (Adsterra Banner + Storyline Controls Sticky Together) ── */}
+      <div className="sticky top-20 z-40 p-2.5 sm:p-3.5 pt-1.5 sm:pt-2 bg-[#101027]/98 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl space-y-2.5">
+        {/* Adsterra 728x90 Banner Ad (Sticky at top of container, no empty top space) */}
+        <div className="w-full flex justify-center items-center overflow-hidden">
           <AdsterraBannerAd />
         </div>
 
-        {/* Separate Control Box Under the Ad */}
+        {/* Storyline Controls Sub-Box (Sticky directly under the banner ad) */}
         <div 
           onClick={() => setIsExpanded(!isExpanded)}
           className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer select-none group bg-white/4 hover:bg-white/7 border border-white/10 p-3 rounded-xl transition-all shadow-md"
@@ -168,7 +168,7 @@ export default function StorylineSection({
 
       {/* Full Expanded 10x Storyline Content */}
       {isExpanded && (
-        <div className="mt-5 space-y-6 pt-4 border-t border-white/8 text-xs sm:text-base text-zinc-200 leading-relaxed font-normal animate-in fade-in duration-300">
+        <div className="relative z-10 mt-5 space-y-6 pt-4 border-t border-white/8 text-xs sm:text-base text-zinc-200 leading-relaxed font-normal animate-in fade-in duration-300">
           
           {/* 🎬 OFFICIAL HD VIDEO PLAYER AT TOP OF STORYLINE 🎬 */}
           {(customVideoUrl || videoKey) && (
