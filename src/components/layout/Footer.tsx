@@ -42,8 +42,8 @@ export default function Footer() {
 
             {/* Whos.amung.us Live Visitor Widget */}
             <div className="pt-1 flex items-center min-h-[30px]">
-              <Script id="_waucqm" strategy="afterInteractive">
-                {`var _wau = _wau || []; _wau.push(["dynamic", "4wtthmpqro", "cqm", "c4302bffffff", "small"]);`}
+              <Script id="_wau8bc" strategy="afterInteractive">
+                {`var _wau = _wau || []; _wau.push(["dynamic", "2t9n5mrulj", "8bc", "c4302bffffff", "small"]);`}
               </Script>
               <Script src="https://waust.at/d.js" strategy="afterInteractive" />
             </div>
