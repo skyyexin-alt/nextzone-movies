@@ -29,7 +29,7 @@ jobs:
             echo "🚀 STARTING HETZNER VPS DEPLOYMENT FOR XFLIX"
             echo "=================================================="
 
-            DIRS=$(find /var/www /root /home /opt -name ".git" 2>/dev/null | xargs -r dirname)
+            DIRS=$(find /var/www /root /home /opt -maxdepth 3 -name "package.json" 2>/dev/null | xargs -r dirname)
             FOUND=0
             for d in $DIRS; do
               if [ -f "$d/package.json" ]; then
@@ -45,14 +45,8 @@ jobs:
                 echo "--> Installing dependencies in $d..."
                 npm install --legacy-peer-deps || npm install
                 
-                echo "--> Building production Next.js app in $d (Isolated atomic build)..."
-                rm -rf .next_temp
-                NEXT_DIST_DIR=.next_temp npm run build
-                
-                echo "--> Performing atomic directory swap to .next..."
-                rm -rf .next_old
-                mv .next .next_old 2>/dev/null || true
-                mv .next_temp .next
+                echo "--> Building production Next.js app in $d..."
+                npm run build
               fi
             done
 
