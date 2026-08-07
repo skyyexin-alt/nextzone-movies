@@ -31,19 +31,19 @@ jobs:
             echo "=================================================="
 
             TARGET_DIR=""
-            for dir in /var/www/* /root/* /home/* /opt/*; do
-              if [ -f "$dir/package.json" ]; then
-                TARGET_DIR="$dir"
-                break
+            for d in $(find /var/www /root /home /opt -maxdepth 3 -name "package.json" 2>/dev/null | xargs -r dirname); do
+              if [ -d "$d/.git" ]; then
+                cd "$d"
+                REMOTE=$(git config --get remote.origin.url 2>/dev/null || true)
+                if [[ "$REMOTE" == *"XFlix-Movies-Review"* ]]; then
+                  TARGET_DIR="$d"
+                  break
+                fi
               fi
             done
 
-            if [ -z "$TARGET_DIR" ]; then
-              TARGET_DIR=$(find /var/www /root /home /opt -maxdepth 3 -name "package.json" 2>/dev/null | head -n 1 | xargs -r dirname)
-            fi
-
             if [ -n "$TARGET_DIR" ] && [ -d "$TARGET_DIR" ]; then
-              echo "--> Target project directory: $TARGET_DIR"
+              echo "--> Target project directory matched: $TARGET_DIR"
               cd "$TARGET_DIR"
 
               echo "--> Fetching & resetting to origin/main..."
@@ -51,6 +51,9 @@ jobs:
               git checkout -f main || true
               git fetch origin main
               git reset --hard origin/main
+
+              echo "--> Installing dependencies if needed..."
+              npm install --legacy-peer-deps || npm install
 
               echo "--> Building production Next.js app..."
               npm run build
