@@ -81,6 +81,11 @@ export default async function Home() {
             </Suspense>
           </div>
         </div>
+
+        {/* ── Bottom Sticky Adsterra Banner Ad ── */}
+        <div className="sticky top-20 z-30 my-8 bg-[#161633]/95 backdrop-blur-md p-2 rounded-2xl border border-white/10 shadow-2xl transition-all">
+          <AdsterraBannerAd />
+        </div>
       </Container>
     </div>
   );

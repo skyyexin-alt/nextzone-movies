@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { BookOpen, ChevronDown, ChevronUp, Sparkles, Layers, ShieldAlert, Award, Film, Flame, Camera, Play } from 'lucide-react';
 import CustomVideoPlayer from '@/components/ui/CustomVideoPlayer';
 import XFlixTrailerPlayer from '@/components/ui/XFlixTrailerPlayer';
+import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 
 interface StorylineSectionProps {
   title: string;
@@ -181,6 +182,11 @@ export default function StorylineSection({
               ) : videoKey ? (
                 <XFlixTrailerPlayer videoKey={videoKey} title={title} autoPlay={autoPlayTrailer} />
               ) : null}
+
+              {/* 🚀 STICKY ADSTERRA BANNER AD BELOW VIDEO STREAM 🚀 */}
+              <div className="sticky top-20 z-30 my-3 bg-[#14142f]/95 backdrop-blur-md p-2 rounded-2xl border border-white/10 shadow-2xl transition-all">
+                <AdsterraBannerAd />
+              </div>
             </div>
           )}
 

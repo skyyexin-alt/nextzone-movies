@@ -257,6 +257,11 @@ export default async function DetailPage({
             mediaId={id}
           />
 
+          {/* Adsterra 728x90 Banner Ad Below Storyline Box (Sticky) */}
+          <div className="sticky top-20 z-30 my-4 bg-[#14142f]/95 backdrop-blur-md p-2 rounded-2xl border border-white/10 shadow-2xl transition-all">
+            <AdsterraBannerAd />
+          </div>
+
           {/* Key Details Card */}
           <div className="bg-[#14142f] border border-white/8 rounded-2xl p-4 sm:p-6 space-y-3 sm:space-y-4 shadow-xl">
             <h3 className="text-base sm:text-lg font-black text-white">Production Details</h3>
