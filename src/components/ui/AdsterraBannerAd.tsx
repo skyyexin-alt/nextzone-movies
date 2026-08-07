@@ -111,7 +111,7 @@ export default function AdsterraBannerAd({
   return (
     <div
       ref={wrapperRef}
-      className="w-full flex justify-center items-center mt-1 mb-2 min-h-[90px] overflow-hidden bg-transparent border-none p-0 relative transition-[height] duration-200"
+      className="w-full flex justify-center items-center my-0 min-h-[90px] overflow-hidden bg-transparent border-none p-0 relative transition-[height] duration-200"
     >
       <div
         ref={containerRef}

@@ -94,7 +94,7 @@ export default function StorylineSection({
   return (
     <div id="storyline-section" className="bg-[#14142f] border border-white/8 rounded-2xl p-4 sm:p-6 shadow-xl transition-all duration-300 scroll-mt-24 relative overflow-hidden">
       {/* ── Separate Sticky Control & Ad Header Box ── */}
-      <div className="sticky top-20 z-30 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 p-3 sm:p-4 bg-[#101027]/95 backdrop-blur-md border-b border-white/10 shadow-2xl space-y-2.5">
+      <div className="sticky top-20 z-30 -mx-4 -mt-4 sm:-mx-6 sm:-mt-6 pt-1.5 pb-3 px-3 sm:px-4 sm:pt-2 bg-[#101027]/95 backdrop-blur-md border-b border-white/10 shadow-2xl space-y-2">
         {/* Adsterra 728x90 Banner Ad Container */}
         <div className="w-full flex justify-center">
           <AdsterraBannerAd />
@@ -190,11 +190,6 @@ export default function StorylineSection({
               ) : videoKey ? (
                 <XFlixTrailerPlayer videoKey={videoKey} title={title} autoPlay={autoPlayTrailer} />
               ) : null}
-
-              {/* 🚀 STICKY ADSTERRA BANNER AD BELOW VIDEO STREAM 🚀 */}
-              <div className="sticky top-20 z-30 my-3 bg-[#14142f]/95 backdrop-blur-md p-2 rounded-2xl border border-white/10 shadow-2xl transition-all">
-                <AdsterraBannerAd />
-              </div>
             </div>
           )}
 
