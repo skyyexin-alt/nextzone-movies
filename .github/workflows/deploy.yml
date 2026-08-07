@@ -45,8 +45,14 @@ jobs:
                 echo "--> Installing dependencies in $d..."
                 npm install --legacy-peer-deps || npm install
                 
-                echo "--> Building production Next.js app in $d (Atomic zero-downtime build)..."
-                npm run build
+                echo "--> Building production Next.js app in $d (Isolated atomic build)..."
+                rm -rf .next_temp
+                NEXT_DIST_DIR=.next_temp npm run build
+                
+                echo "--> Performing atomic directory swap to .next..."
+                rm -rf .next_old
+                mv .next .next_old 2>/dev/null || true
+                mv .next_temp .next
               fi
             done
 
@@ -54,6 +60,7 @@ jobs:
               echo "--> Executing Zero-Downtime PM2 Reload..."
               pm2 reload all --update-env || pm2 restart all || pm2 start npm --name "xflix-review" -- start
               pm2 save || true
+              rm -rf .next_old 2>/dev/null || true
               
               echo "--> Reloading Nginx web server..."
               systemctl reload nginx || systemctl restart nginx || true

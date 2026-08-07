@@ -9,6 +9,7 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig = {
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   devIndicators: {
     appIsrStatus: false,
     buildActivity: false,
