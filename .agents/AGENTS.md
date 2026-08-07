@@ -1,14 +1,8 @@
-# XFlix Movies Review Development Workflow (Local / Offline Mode)
+# Automatic Deployment & GitHub Push Workflow
 
-This project is strictly for **local / offline use**.
-
-# Implicit Fix & Organize Rule
-- **Empty Message / Screenshot-Only Requests**: Whenever the user sends an image/screenshot without typing any text, automatically analyze the image for red arrows, overlapping text, cramped headers, or layout issues, and immediately fix and organize the UI elements in the codebase.
-
-When the user requests changes to the XFlix Movies Review codebase:
-1. **Make changes locally**: Edit the necessary files in the codebase.
-2. **Local Preview**: Instruct the user to preview changes on their local server (`http://localhost:3000`).
-3. **No Deployment Required**: Do not prompt for git commit/push or server deployments (Hetzner). Keep all changes local.
+When making changes to the XFlix Movies Review codebase:
+1. **Make changes locally**: Edit and verify the necessary files in the codebase.
+2. **Auto Commit & Push**: Automatically stage (`git add`), commit with a descriptive message, and push (`git push origin main`) to GitHub so GitHub Actions triggers automatic deployment to Hetzner VPS.
 
 # Clean Video Player Rule
 - **Clean Video Frame Standard**: Always use the custom chromeless XFlix Video Player Frame (`XFlixTrailerPlayer.tsx` / `CustomVideoPlayer.tsx`) for video embeds and trailers.
