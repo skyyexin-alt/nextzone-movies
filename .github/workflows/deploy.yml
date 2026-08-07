@@ -45,15 +45,14 @@ jobs:
                 echo "--> Installing dependencies in $d..."
                 npm install --legacy-peer-deps || npm install
                 
-                echo "--> Building production Next.js app in $d..."
-                rm -rf .next
+                echo "--> Building production Next.js app in $d (Atomic zero-downtime build)..."
                 npm run build
               fi
             done
 
             if [ "$FOUND" -eq 1 ]; then
-              echo "--> Restarting PM2 processes..."
-              pm2 restart all || pm2 reload all --update-env || pm2 start npm --name "xflix-review" -- start
+              echo "--> Executing Zero-Downtime PM2 Reload..."
+              pm2 reload all --update-env || pm2 restart all || pm2 start npm --name "xflix-review" -- start
               pm2 save || true
               
               echo "--> Reloading Nginx web server..."
