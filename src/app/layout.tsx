@@ -89,7 +89,6 @@ export default function RootLayout({
         <meta name="twitter:title" content="XFlix - Movies Review, Ratings, K-Dramas & Recommendations" />
         <meta name="twitter:description" content="Discover honest movie reviews, user ratings, top Asian dramas, synopsis breakdowns, cast filmographies, and recommendations on XFlix Movies Review." />
         <meta name="twitter:image" content="https://movies.xflix.ink/opengraph-image" />
-        <script src="https://jsc.adskeeper.com/site/1106781.js" async />
       </head>
       <body className={`${inter.className} bg-[#0f0f23] text-white antialiased`} suppressHydrationWarning>
         <Providers>
@@ -102,6 +101,7 @@ export default function RootLayout({
           <AdskeeperNotification />
           <Footer />
         </Providers>
+        <Script src="https://jsc.adskeeper.com/site/1106781.js" strategy="lazyOnload" />
       </body>
     </html>
   );

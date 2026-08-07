@@ -16,7 +16,7 @@ import { Star, Sparkles, Tv, Layers } from 'lucide-react';
 import QuickFilterTabs from '@/components/ui/QuickFilterTabs';
 import AdsterraBannerAd from '@/components/ui/AdsterraBannerAd';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function Home() {
   let trendingItems = [];
