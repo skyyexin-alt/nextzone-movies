@@ -10,69 +10,75 @@ jobs:
     name: Deploy to Hetzner VPS
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Execute Deployment on Hetzner VPS
+      - name: Execute Fast Deployment on Hetzner VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_IP }}
           username: root
           password: ${{ secrets.SERVER_PASSWORD }}
-          command_timeout: 15m
+          command_timeout: 10m
           script_stop: false
           script: |
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             export PATH=$PATH:/usr/local/bin:/usr/bin:/root/.nvm/versions/node/$(ls /root/.nvm/versions/node 2>/dev/null | tail -n 1)/bin
+            export NEXT_TELEMETRY_DISABLED=1
 
             echo "=================================================="
-            echo "🚀 STARTING HETZNER VPS DEPLOYMENT FOR XFLIX"
+            echo "⚡ STARTING SUPER FAST HETZNER DEPLOYMENT"
             echo "=================================================="
 
+            # Fast direct directory match
             TARGET_DIR=""
-            for d in $(find /var/www /root /home /opt -maxdepth 3 -name "package.json" 2>/dev/null | xargs -r dirname); do
-              if [ -d "$d/.git" ]; then
-                REMOTE=$(cd "$d" && git config --get remote.origin.url 2>/dev/null || true)
-                if echo "$REMOTE" | grep -iq "XFlix"; then
-                  TARGET_DIR="$d"
-                  break
-                fi
+            for candidate in /var/www/XFlix-Movies-Review /root/XFlix-Movies-Review /var/www/xflix /root/xflix /opt/XFlix-Movies-Review /home/XFlix-Movies-Review /var/www/html; do
+              if [ -f "$candidate/package.json" ]; then
+                TARGET_DIR="$candidate"
+                break
               fi
             done
 
+            # Fallback scan only if direct match not found
             if [ -z "$TARGET_DIR" ]; then
-              for fallback in /var/www/XFlix-Movies-Review /root/XFlix-Movies-Review /var/www/xflix /root/xflix /var/www/html; do
-                if [ -f "$fallback/package.json" ]; then
-                  TARGET_DIR="$fallback"
-                  break
+              for d in $(find /var/www /root /home /opt -maxdepth 3 -name "package.json" 2>/dev/null | xargs -r dirname); do
+                if [ -d "$d/.git" ]; then
+                  REMOTE=$(cd "$d" && git config --get remote.origin.url 2>/dev/null || true)
+                  if echo "$REMOTE" | grep -iq "XFlix"; then
+                    TARGET_DIR="$d"
+                    break
+                  fi
                 fi
               done
             fi
 
             if [ -n "$TARGET_DIR" ] && [ -d "$TARGET_DIR" ]; then
-              echo "--> Target project directory matched: $TARGET_DIR"
+              echo "--> Target directory: $TARGET_DIR"
               cd "$TARGET_DIR"
 
-              echo "--> Fetching & resetting to origin/main..."
+              echo "--> Pulling latest code..."
               git config --global --add safe.directory "$TARGET_DIR" || true
-              git checkout -f main || true
+              PREV_HEAD=$(git rev-parse HEAD 2>/dev/null || echo "")
               git fetch origin main
               git reset --hard origin/main
+              NEW_HEAD=$(git rev-parse HEAD 2>/dev/null || echo "")
 
-              echo "--> Installing dependencies if needed..."
-              npm install --legacy-peer-deps || npm install
+              # Only run npm install if dependencies changed or node_modules missing
+              if [ ! -d "node_modules" ] || [ -z "$PREV_HEAD" ] || ! git diff --quiet "$PREV_HEAD" "$NEW_HEAD" -- package.json package-lock.json 2>/dev/null; then
+                echo "--> Dependencies updated. Installing..."
+                npm install --prefer-offline --no-audit --no-fund --legacy-peer-deps
+              else
+                echo "--> No dependency changes detected. Skipping npm install!"
+              fi
 
-              echo "--> Building production Next.js app..."
+              echo "--> Building Next.js application..."
               npm run build
 
-              echo "--> Reloading PM2 processes & Nginx..."
+              echo "--> Reloading application..."
               pm2 reload all --update-env || pm2 restart all || pm2 start npm --name "xflix-review" -- start
               pm2 save || true
-              systemctl reload nginx || systemctl restart nginx || true
+              systemctl reload nginx || true
 
               echo "=================================================="
-              echo "🎉 DEPLOYMENT COMPLETED SUCCESSFULLY!"
+              echo "⚡ DEPLOYMENT FINISHED IN RECORD TIME!"
               echo "=================================================="
             else
               echo "❌ Error: Project directory not found on VPS!"
