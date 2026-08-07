@@ -237,8 +237,8 @@ export default async function DetailPage({
             </div>
           )}
 
-          {/* Adsterra 728x90 Banner Ad Above Storyline & Full Plot Breakdown */}
-          <div className="my-3">
+          {/* Adsterra 728x90 Banner Ad Above Storyline & Full Plot Breakdown (Sticky) */}
+          <div className="sticky top-20 z-30 my-3 bg-[#14142f]/95 backdrop-blur-md p-2 rounded-2xl border border-white/10 shadow-2xl transition-all">
             <AdsterraBannerAd />
           </div>
 

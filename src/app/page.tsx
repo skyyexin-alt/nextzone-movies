@@ -49,8 +49,8 @@ export default async function Home() {
         {/* ── Top Quick Database Chips (Touch-scrollable on mobile, non-sticky like before!) ── */}
         <QuickFilterTabs />
 
-        {/* ── Adsterra Banner Ad ── */}
-        <div className="my-4">
+        {/* ── Adsterra Banner Ad (Sticky) ── */}
+        <div className="sticky top-20 z-30 my-4 bg-[#161633]/95 backdrop-blur-md p-2 rounded-2xl border border-white/10 shadow-2xl transition-all">
           <AdsterraBannerAd />
         </div>
 
